@@ -1,0 +1,320 @@
+openapi: 3.0.0
+info:
+  title: Fastcash Cashin Bank Slip - API
+  description: Endpoints
+  version: '10'
+  contact:
+    email: dev@fastcash.com.br
+servers:
+  - url: 'https://dev.meu.cash/apiv10'
+    description: Desenvolvimento
+paths:
+  /transaction/in/bank-slip:
+    post:
+      description: >
+        Creates a cashin transaction with generating a bank slip.
+        ⚠️ These transactions can only be canceled after half hour after created ⚠️
+      summary: Create bankslip transaction
+      operationId: CreateBankSlipCashin
+      tags:
+        - bank-slip
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBankSlipCashinRequest'
+      responses:
+        '200':
+          description: Transaction Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateBankSlipCashinReply'
+        '400':
+          description: Invalid Request
+  /transaction/in/bank-slip/:
+      patch:
+        description: Update bankslip transaction
+        summary: Update bankslip transaction
+        operationId: UpdateBankSlipCashin
+        tags:
+          - bank-slip
+        requestBody:
+          description: > 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateBankSlipCashinRequest'
+        responses:
+          '200':
+            description: ""
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/CreateBankSlipCashinReply'
+          '400':
+            description: ""
+          '404':
+            description: ""
+  /transaction/in/bank-slip/{id}:
+    get:
+      description: >
+        Gets a bank-slip image for transaction
+      summary: Get image of bank-slip
+      operationId: GetBankSlipCashin
+      tags:
+        - bank-slip
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: Id to get bankslip image
+        - in: query
+          name: format
+          schema:
+            type: string
+            enum: [pdf, html]
+          required: true
+          description: Format of response (pdf or html) 
+      responses:
+        '200':
+          description: Bank-Slip Transaction found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBankSlipCashinReply'
+        '400':
+          description: Invalid request
+        '404':
+          description: Transaction not found
+components:
+  schemas:
+    BaseReply:
+      properties:
+        Success:
+          type: boolean
+        Message:
+          type: string
+        StatusCode:
+          type: integer
+    BaseCreateCashinReply:
+      allOf:
+        - $ref: '#/components/schemas/BaseReply'
+      properties:
+        Result:
+          properties:
+            Transaction:
+              $ref: '#/components/schemas/Transaction'
+            Parameters:
+              type: array
+              items:
+                $ref: '#/components/schemas/TransactionParameter'
+    BaseGetCashinBankSlipReply:
+      allOf:
+        - $ref: '#/components/schemas/BaseReply'
+      properties:
+        Result:
+          properties:
+            ImageUrl:
+              type: string
+    BaseRequest:
+      properties:
+        Pid:
+          type: integer
+        ProdId:
+          type: integer
+    BaseCreateCashinRequest:
+      allOf:
+        - $ref: '#/components/schemas/BaseRequest'
+      properties:
+        Tid:
+          type: string
+        Custom:
+          type: string
+        Amount:
+          type: number
+        Description:
+          type: string
+        Instructions:
+          type: string
+    TransactionParameter:
+      properties:
+        Id:
+          type: string
+        Name:
+          type: string
+        Value:
+          type: string
+    Transaction:
+      properties:
+        Tid:
+          type: string
+        Pid:
+          type: integer
+        ProdId:
+          type: integer
+        Custom:
+          type: string
+        Amount:
+          type: number
+        Description:
+          type: string
+        PaymentMethod:
+          type: integer
+        SubPaymentMethod:
+          type: integer
+        Status:
+          type: integer
+        StatusName:
+          type: string
+        BankSlip:
+          $ref: '#/components/schemas/BankSlip'
+    BankSlip:
+      properties:
+        Id:
+          type: string
+        Barcode:
+          type: string
+        ImageUrl:
+          type: string
+        DueDate:
+          type: string
+    Recipient:
+      properties:
+        Agency:
+          type: string
+        AccountNumber:
+          type: string
+        Document:
+          type: string
+        Name:
+          type: string
+        Email:
+          type: string
+        Address:
+          $ref: '#/components/schemas/Address'
+    Customer:
+      properties:
+        Document:
+          type: string
+        Name:
+          type: string
+        Email:
+          type: string
+        MobilePhone:
+          type: string
+        Address:
+          $ref: '#/components/schemas/Address'
+    Address:
+      properties:
+        PostalCode:
+          type: string
+        Street:
+          type: string
+        Number:
+          type: string
+        City:
+          type: string
+        District:
+          type: string
+        State:
+          type: string
+    Overdue:
+      properties:
+        Date:
+          type: string
+        Amount:
+          type: number
+    DailyInterestRate:
+      properties:
+        Amount:
+          type: number
+        Percentage:
+          type: integer
+    Discount:
+      properties:
+        Amount:
+          type: number
+        Date:
+          type: integer
+    DerogatoryMark:
+      properties:
+        Type:
+          type: integer
+          description: "Código para identificação do tipo de Negativação que deverá ser aplicado ao Boleto. Valores a informar: 1 - Incluir Negativação 2 - Alterar Negativação 3 - Cancelar Negativação 4 - Excluir Negativação"
+        AddDays:
+          type: integer
+    OverdueDeadline:
+      allOf:
+        - $ref: '#/components/schemas/Overdue'      
+      properties:
+        AddDays:
+          type: integer
+    InterestRate:
+      properties:
+        Amount:
+          type: number
+    UpdateBankSlipCashinRequest:
+        allOf:
+          - $ref: '#/components/schemas/BaseRequest'
+        properties:
+          Tid:
+            type: string
+          DueDate:
+            properties:
+              NewDate:
+                type: string
+          Protest:
+            properties:
+              AddDays:
+                type: integer
+              Stop:
+                type: boolean
+              Cancel:
+                type: boolean
+          DerogatoryMark:
+            $ref: '#/components/schemas/DerogatoryMark'
+          Overdue:
+            $ref: '#/components/schemas/OverdueDeadline'
+          CustomerAddress:
+            $ref: '#/components/schemas/Address'
+          DailyInterestRate:
+            $ref: '#/components/schemas/InterestRate' 
+          Discounts:
+            type: array
+            items:
+              $ref: '#/components/schemas/Discount'
+    CreateBankSlipCashinRequest:
+      allOf:
+        - $ref: '#/components/schemas/BaseCreateCashinRequest'
+      properties:
+        Accept:
+          type: string
+        DueDate:
+          type: string
+        Customer:
+          $ref: '#/components/schemas/Customer'
+        Recipient:
+          allOf: 
+           - $ref: '#/components/schemas/Recipient'
+          description: ⚠️ Some banks not allow change the recipient.
+        Overdue:
+          $ref: '#/components/schemas/Overdue'
+        DailyInterestRate:
+          $ref: '#/components/schemas/DailyInterestRate' 
+        Discounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Discount'
+          description:  ⚠️ Maximum three.            
+    CreateBankSlipCashinReply:
+      allOf:
+        - $ref: '#/components/schemas/BaseCreateCashinReply'
+    GetBankSlipCashinReply:
+      allOf:
+        - $ref: '#/components/schemas/BaseGetCashinBankSlipReply'
+tags:
+  - name: bank-slip
+    description: bankslip operations
