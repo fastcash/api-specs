@@ -1,0 +1,376 @@
+openapi: 3.0.0
+info:
+  title: Fastcash Pix - API
+  description: Endpoints
+  version: '10'
+  contact:
+    email: dev@fastcash.com.br
+servers:
+  - url: 'https://dev.meu.cash/apiv10'
+    description: Desenvolvimento
+paths:
+  /transaction/in/pix/v1:
+    post:
+      description: >
+        Creates a cashin pix transaction.
+      summary: Create pix transaction
+      operationId: CreatePixCashin
+      tags:
+        - pix
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePixCashinRequest'
+      responses:
+        '200':
+          description: Pix Transaction Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePixCashinReply'
+        '400':
+          description: Invalid Request
+  /pix/v1/location:
+      post:
+        description: N/A
+        summary: N/A
+        operationId: CreatePixLocationCashin
+        tags:
+          - pix
+        requestBody:
+          description: > 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePixLocationCashinRequest'
+        responses:
+          '200':
+            description: ""
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/CreatePixLocationCashinReply'
+  /pix/v1/unlink-location/{id}:
+    post:
+      description: N/A
+      summary: N/A
+      operationId: UnlinkPixLocation
+      tags:
+        - pix
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: Id to update pix transaction
+      responses:
+        '200':
+          description: N/A
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnlikPixLocationCashinReply'
+        '400':
+          description: Invalid request
+        '404':
+          description: Transaction not found
+  /pix/v1/show/qr-code/{format}/{locationId}:
+    get:
+      description: N/A
+      summary: N/A
+      operationId: ShowQRCodePixLocation
+      tags:
+        - pix
+      parameters:
+        - in: path
+          name: format
+          schema:
+            type: string
+          required: true
+          description: N/A
+        - in: path
+          name: locationId
+          schema:
+            type: string
+          required: true
+          description: N/A
+      responses:
+        '200':
+          description: N/A
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShowQrCodePixCashinReply'
+  /pix/v1/show/qr-code/{format}/pid/tid:
+    get:
+      description: N/A
+      summary: N/A
+      operationId: ShowQRCodePix
+      tags:
+        - pix
+      parameters:
+        - in: path
+          name: format
+          schema:
+            type: string
+          required: true
+          description: N/A
+      responses:
+        '200':
+          description: N/A
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShowQrCodePixCashinReply'
+  /pix/v1/refund:
+    post:
+      description: N/A
+      summary: N/A
+      operationId: PixRefund
+      tags:
+        - pix
+      requestBody:
+        description: > 
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PixRefundRequest'
+      responses:
+        '200':
+          description: Pix Transaction found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PixRefundReply'
+  /pix/v1/refunds/tid/{tid}/pid/{pid}:
+    get:
+      description: N/A
+      summary: N/A
+      operationId: PixRefunds
+      tags:
+        - pix
+      parameters:
+        - in: path
+          name: tid
+          schema:
+            type: string
+          required: true
+          description: N/A
+        - in: path
+          name: pid
+          schema:
+            type: number
+          required: true
+          description: N/A
+      responses:
+        '200':
+          description: Pix Transaction found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PixRefundsReply'
+components:
+  schemas:
+    BaseReply:
+      properties:
+        Success:
+          type: boolean
+        Message:
+          type: string
+        StatusCode:
+          type: integer
+    BaseCreateCashinReply:
+      allOf:
+        - $ref: '#/components/schemas/BaseReply'
+      properties:
+        Result:
+          properties:
+            Transaction:
+              $ref: '#/components/schemas/Transaction'
+            Parameters:
+              type: array
+              items:
+                $ref: '#/components/schemas/TransactionParameter'
+          allOf:
+            - $ref: '#/components/schemas/PixTransaction'
+    BaseCreatePixLocationCashinReply:
+      allOf:
+        - $ref: '#/components/schemas/BaseReply'
+      properties:
+        Result:
+          allOf:
+            - $ref: '#/components/schemas/LocationEntity'
+    BaseShowQrCodePixCashinReply:
+      allOf:
+        - $ref: '#/components/schemas/BaseReply'
+      properties:
+        Result:
+          allOf:
+            - $ref: '#/components/schemas/ImageEntity'
+    BaseRequest:
+      properties:
+        Pid:
+          type: integer
+        ProdId:
+          type: integer
+    BaseCreateCashinRequest:
+      allOf:
+        - $ref: '#/components/schemas/BaseRequest'
+      properties:
+        Tid:
+          type: string
+        Custom:
+          type: string
+        Amount:
+          type: number
+        Description:
+          type: string
+        Instructions:
+          type: string
+    TransactionParameter:
+      properties:
+        Id:
+          type: string
+        Name:
+          type: string
+        Value:
+          type: string
+    Transaction:
+      properties:
+        Tid:
+          type: string
+        Pid:
+          type: integer
+        ProdId:
+          type: integer
+        Custom:
+          type: string
+        Amount:
+          type: number
+        Description:
+          type: string
+        PaymentMethod:
+          type: integer
+        SubPaymentMethod:
+          type: integer
+    Customer:
+      properties:
+        Document:
+          type: string
+        Name:
+          type: string
+        Email:
+          type: string
+        MobilePhone:
+          type: string
+    PixTransaction:
+      allOf:
+        - $ref: '#/components/schemas/RequestTypeEntity'
+        - $ref: '#/components/schemas/LocationEntity'
+      properties:
+        FixedAmount:
+          type: boolean
+        Lifecycle:
+          $ref: '#/components/schemas/Lifecycle' 
+    RequestTypeEntity:
+      properties:
+        RequestType:
+          type: string
+          enum:             
+            - Standard
+            - DueDate
+          description: >
+            Sort order:
+             * `Standard` - Standard
+             * `DueDate` - DueDate
+    LocationEntity:
+      properties:
+        Location:
+          properties:
+            Id:
+              type: string
+              format: uuid
+            Location:
+              type: string
+    ImageEntity:
+      properties:
+        Image:
+          properties:
+            Data:
+              type: string
+              format: byte
+            Format:
+              type: string
+    Lifecycle:
+      properties:
+        Ttl:
+          type: number
+          description: In seconds
+        DueDate:
+          type: string
+        OverdueLimit:
+          type: number
+          description: Limits in days
+    Refund:
+      properties:
+        RefundId:
+          type: number
+        RefundDate:
+          type: string
+        RefundAmount:
+          type: number
+        Status:
+          type: number
+        StatusName:
+          type: string
+    CreatePixLocationCashinRequest:
+      allOf:
+        - $ref: '#/components/schemas/RequestTypeEntity'
+    CreatePixCashinRequest:
+      allOf:
+        - $ref: '#/components/schemas/BaseCreateCashinRequest'
+        - $ref: '#/components/schemas/PixTransaction'
+      properties:
+        Customer:
+          $ref: '#/components/schemas/Customer'
+    CreatePixCashinReply:
+      allOf:
+        - $ref: '#/components/schemas/BaseCreateCashinReply'
+    CreatePixLocationCashinReply:
+      allOf:
+        - $ref: '#/components/schemas/BaseCreatePixLocationCashinReply'
+    UnlikPixLocationCashinReply:
+      allOf:
+        - $ref: '#/components/schemas/BaseCreatePixLocationCashinReply'
+    ShowQrCodePixCashinReply:
+      allOf:
+        - $ref: '#/components/schemas/BaseShowQrCodePixCashinReply'
+    PixRefundRequest:
+      properties:
+        Tid:
+          type: string
+        Pid:
+          type: integer
+        Amount:
+          type: number
+    PixRefundReply:
+      allOf:
+        - $ref: '#/components/schemas/BaseReply'
+    PixRefundsReply:
+      allOf:
+        - $ref: '#/components/schemas/BaseReply'
+      properties:
+        Result:
+          properties:
+            Tid:
+              type: string
+            Pid:
+              type: integer
+            Refunds:
+              items:
+                $ref: '#/components/schemas/Refund'
+tags:
+  - name: pix
+    description: pix operations
