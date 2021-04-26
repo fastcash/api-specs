@@ -34,7 +34,7 @@ paths:
   /pix/v1/location:
       post:
         description: N/A
-        summary: N/A
+        summary: Create a PIX Location (Payable URL)
         operationId: CreatePixLocationCashin
         tags:
           - pix
@@ -51,10 +51,10 @@ paths:
               application/json:
                 schema:
                   $ref: '#/components/schemas/CreatePixLocationCashinReply'
-  /pix/v1/unlink-location/{id}:
+  /pix/v1/location/{id}/unlink:
     post:
       description: N/A
-      summary: N/A
+      summary: Unlink a PIX Payable URL from a PIX Transaction
       operationId: UnlinkPixLocation
       tags:
         - pix
@@ -76,10 +76,10 @@ paths:
           description: Invalid request
         '404':
           description: Transaction not found
-  /pix/v1/show/qr-code/{format}/{locationId}:
+  /pix/v1/show/qrcode/{format}/{locationId}:
     get:
       description: N/A
-      summary: N/A
+      summary: Generate a PIX dynamic qrcode image
       operationId: ShowQRCodePixLocation
       tags:
         - pix
@@ -103,16 +103,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ShowQrCodePixCashinReply'
-  /pix/v1/show/qr-code/{format}/pid/tid:
+  /pix/v1/show/qrcode/{format}/pid/{pid}/tid/{tid}:
     get:
       description: N/A
-      summary: N/A
+      summary: Generate a PIX dynamic qrcode image
       operationId: ShowQRCodePix
       tags:
         - pix
       parameters:
         - in: path
           name: format
+          schema:
+            type: string
+          required: true
+          description: N/A
+        - in: path
+          name: pid
+          schema:
+            type: number
+          required: true
+          description: N/A
+        - in: path
+          name: tid
           schema:
             type: string
           required: true
@@ -127,7 +139,7 @@ paths:
   /pix/v1/refund:
     post:
       description: N/A
-      summary: N/A
+      summary: Refund a received PIX transaction
       operationId: PixRefund
       tags:
         - pix
@@ -144,10 +156,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PixRefundReply'
-  /pix/v1/refunds/tid/{tid}/pid/{pid}:
+  /pix/v1/refunds/pid/{pid}/tid/{tid}:
     get:
       description: N/A
-      summary: N/A
+      summary: List the PIX Refunds issued for a pix transaction
       operationId: PixRefunds
       tags:
         - pix
@@ -171,6 +183,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PixRefundsReply'
+  /pix/v1/query/pid/{pid}/tid/{tid}:
+    get:
+      description: N/A
+      summary: Query a PIX transaction
+      operationId: GetPixTransaction
+      tags:
+        - pix
+      parameters:
+        - in: path
+          name: tid
+          schema:
+            type: string
+          required: true
+          description: N/A
+        - in: path
+          name: pid
+          schema:
+            type: number
+          required: true
+          description: N/A
+      responses:
+        '200':
+          description: Pix Transaction found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPixCashinReply'
 components:
   schemas:
     BaseReply:
@@ -188,13 +227,14 @@ components:
         Result:
           properties:
             Transaction:
-              $ref: '#/components/schemas/Transaction'
+              allOf:
+                - $ref: '#/components/schemas/Transaction'
+                - $ref: '#/components/schemas/TransactionStatus'
+                - $ref: '#/components/schemas/PixTransaction'
             Parameters:
               type: array
               items:
                 $ref: '#/components/schemas/TransactionParameter'
-          allOf:
-            - $ref: '#/components/schemas/PixTransaction'
     BaseCreatePixLocationCashinReply:
       allOf:
         - $ref: '#/components/schemas/BaseReply'
@@ -215,6 +255,12 @@ components:
           type: integer
         ProdId:
           type: integer
+    TransactionStatus:
+      properties:
+        Status:
+          type: integer
+        StatusName:
+          type: string
     BaseCreateCashinRequest:
       allOf:
         - $ref: '#/components/schemas/BaseRequest'
@@ -371,6 +417,21 @@ components:
             Refunds:
               items:
                 $ref: '#/components/schemas/Refund'
+    GetPixCashinReply:
+      allOf:
+        - $ref: '#/components/schemas/BaseReply'
+      properties:
+        Result:
+          properties:
+            Transaction:
+              allOf:
+                - $ref: '#/components/schemas/Transaction'
+                - $ref: '#/components/schemas/TransactionStatus'
+                - $ref: '#/components/schemas/PixTransaction'
+            Parameters:
+              type: array
+              items:
+                $ref: '#/components/schemas/TransactionParameter'
 tags:
   - name: pix
     description: pix operations
