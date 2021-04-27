@@ -9,7 +9,7 @@ servers:
   - url: 'https://dev.meu.cash/apiv10'
     description: Desenvolvimento
 paths:
-  /transaction/in/pix/v1:
+  /pix/v1/receive:
     post:
       description: >
         Creates a cashin pix transaction.
@@ -76,7 +76,7 @@ paths:
           description: Invalid request
         '404':
           description: Transaction not found
-  /pix/v1/show/qrcode/{format}/{locationId}:
+  /pix/v1/qrcode/generate/{format}/{locationId}:
     get:
       description: N/A
       summary: Generate a PIX dynamic qrcode image
@@ -103,7 +103,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ShowQrCodePixCashinReply'
-  /pix/v1/show/qrcode/{format}/pid/{pid}/tid/{tid}:
+  /pix/v1/qrcode/generate/{format}/pid/{pid}/tid/{tid}:
     get:
       description: N/A
       summary: Generate a PIX dynamic qrcode image
@@ -156,7 +156,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PixRefundReply'
-  /pix/v1/refunds/pid/{pid}/tid/{tid}:
+  /pix/v1/consult/refunds/pid/{pid}/tid/{tid}:
     get:
       description: N/A
       summary: List the PIX Refunds issued for a pix transaction
@@ -183,7 +183,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PixRefundsReply'
-  /pix/v1/query/pid/{pid}/tid/{tid}:
+  /pix/v1/consult/pid/{pid}/tid/{tid}:
     get:
       description: N/A
       summary: Query a PIX transaction
