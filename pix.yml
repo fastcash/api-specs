@@ -210,6 +210,113 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetPixCashinReply'
+  /pix/v1/send:
+    post:
+      description: N/A
+      summary: N/A
+      operationId: SendPixTransaction
+      tags:
+        - pix
+      requestBody:
+        description: > 
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendPixRequest'
+      responses:
+        '200':
+          description: Pix Transaction found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendPixReply'
+  /pix/v1/initiate-send:
+    post:
+      description: N/A
+      summary: N/A
+      operationId: InitiateSendPixTransaction
+      tags:
+        - pix
+      requestBody:
+        description: > 
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InitiateSendPixRequest'
+      responses:
+        '200':
+          description: Pix Transaction found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiateSendPixReply'
+  /pix/v1/confirm-send:
+    post:
+      description: N/A
+      summary: N/A
+      operationId: ConfirmSendPixTransaction
+      tags:
+        - pix
+      requestBody:
+        description: > 
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfirmSendPixRequest'
+      responses:
+        '200':
+          description: Pix Transaction found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfirmSendPixReply'
+  /pix/v1/qrcode/parse:
+    post:
+      description: N/A
+      summary: N/A
+      operationId: QrCodePardePixTransaction
+      tags:
+        - pix
+      requestBody:
+        description: > 
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QrCodeParsePixRequest'
+      responses:
+        '200':
+          description: Pix Transaction found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QrCodeParsePixReply'
+  /pix/v1/send/consult/pid/{pid}/tid/{tid}:
+    get:
+      description: N/A
+      summary: Query a Send PIX transaction
+      operationId: ConsultSendPixTransaction
+      tags:
+        - pix
+      parameters:
+        - in: path
+          name: tid
+          schema:
+            type: string
+          required: true
+          description: N/A
+        - in: path
+          name: pid
+          schema:
+            type: number
+          required: true
+          description: N/A
+      responses:
+        '200':
+          description: Pix Transaction found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsultSendPixReply'
 components:
   schemas:
     BaseReply:
@@ -273,8 +380,6 @@ components:
           type: number
         Description:
           type: string
-        Instructions:
-          type: string
     TransactionParameter:
       properties:
         Id:
@@ -316,10 +421,22 @@ components:
         - $ref: '#/components/schemas/RequestTypeEntity'
         - $ref: '#/components/schemas/LocationEntity'
       properties:
+        Instructions:
+          type: string
         FixedAmount:
           type: boolean
         Lifecycle:
           $ref: '#/components/schemas/Lifecycle' 
+    SendTransaction:
+      allOf:
+        - $ref: '#/components/schemas/BaseCreateCashinRequest'
+      properties:
+        RemittanceInformation:
+          type: string
+        Destinatary:
+         $ref: '#/components/schemas/DestinataryEntity'
+        Schedule:
+         $ref: '#/components/schemas/ScheduleEntity'
     RequestTypeEntity:
       properties:
         RequestType:
@@ -340,6 +457,33 @@ components:
               format: uuid
             Location:
               type: string
+    DestinataryEntity:
+      properties:
+        DictKey:
+          type: string
+        Emv:
+          type: string
+        BankAccount:
+          $ref: '#/components/schemas/BankAccountEntity'
+    BankAccountEntity:
+      properties:
+        BankNumber:
+          type: string
+        BranchNumber:
+          type: string
+        AccountNumber:
+          type: string
+        AccountType:
+          type: string
+        HolderName:
+          type: string
+        HolderDocument:
+          type: string
+    ScheduleEntity:
+      properties:
+        SendAt:
+          type: string
+          format: date-time
     ImageEntity:
       properties:
         Image:
@@ -371,6 +515,14 @@ components:
           type: number
         StatusName:
           type: string
+    Error:
+      properties:
+        PropertyName:
+          type: string
+        ErrorMessage:
+          type: string
+        AttemptedValue:
+          type: string
     CreatePixLocationCashinRequest:
       allOf:
         - $ref: '#/components/schemas/RequestTypeEntity'
@@ -381,6 +533,28 @@ components:
       properties:
         Customer:
           $ref: '#/components/schemas/Customer'
+    SendPixRequest:
+      allOf:
+        - $ref: '#/components/schemas/SendTransaction'
+      properties:
+        Customer:
+          $ref: '#/components/schemas/Customer'
+    InitiateSendPixRequest:
+      allOf:
+        - $ref: '#/components/schemas/SendTransaction'
+      properties:
+        Customer:
+          $ref: '#/components/schemas/Customer'
+    ConfirmSendPixRequest:
+      properties:
+        Pid:
+          type: number
+        Tid:
+          type: string
+    QrCodeParsePixRequest:
+      properties:
+        EMV:
+          type: string
     CreatePixCashinReply:
       allOf:
         - $ref: '#/components/schemas/BaseCreateCashinReply'
@@ -432,6 +606,72 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/TransactionParameter'
+    SendPixReply:
+      allOf:
+        - $ref: '#/components/schemas/BaseReply'
+      properties:
+        Errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+        Result:
+          properties:
+            Transaction:
+              allOf:
+                - $ref: '#/components/schemas/SendTransaction'
+              properties:
+                Status:
+                  type: number
+    InitiateSendPixReply:
+      allOf:
+        - $ref: '#/components/schemas/BaseReply'
+      properties:
+        Errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+        Result:
+          properties:
+            Transaction:
+              allOf:
+                - $ref: '#/components/schemas/SendTransaction'
+              properties:
+                Status:
+                  type: number
+    ConfirmSendPixReply:
+      allOf:
+        - $ref: '#/components/schemas/BaseReply'
+      properties:
+        Errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+    QrCodeParsePixReply:
+      allOf:
+        - $ref: '#/components/schemas/BaseReply'
+      properties:
+        Result:
+          type: string
+        Errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+    ConsultSendPixReply:
+      allOf:
+        - $ref: '#/components/schemas/BaseReply'
+      properties:
+        Errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+        Result:
+          properties:
+            Transaction:
+              allOf:
+                - $ref: '#/components/schemas/SendTransaction'
+              properties:
+                Status:
+                  type: number
 tags:
   - name: pix
     description: pix operations
