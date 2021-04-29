@@ -76,7 +76,7 @@ paths:
           description: Invalid request
         '404':
           description: Transaction not found
-  /pix/v1/qrcode/generate/{format}/{locationId}:
+  /pix/v1/qrcode/generate/{format}/{sizepx}/{locationId}:
     get:
       description: N/A
       summary: Generate a PIX dynamic qrcode image
@@ -96,6 +96,12 @@ paths:
             type: string
           required: true
           description: N/A
+        - in: path
+          name: sizepx
+          schema:
+            type: string
+          required: true
+          description: N/A
       responses:
         '200':
           description: N/A
@@ -103,7 +109,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ShowQrCodePixCashinReply'
-  /pix/v1/qrcode/generate/{format}/pid/{pid}/tid/{tid}:
+  /pix/v1/qrcode/generate/{format}/{sizepx}/pid/{pid}/tid/{tid}:
     get:
       description: N/A
       summary: Generate a PIX dynamic qrcode image
@@ -125,6 +131,12 @@ paths:
           description: N/A
         - in: path
           name: tid
+          schema:
+            type: string
+          required: true
+          description: N/A
+        - in: path
+          name: sizepx
           schema:
             type: string
           required: true
