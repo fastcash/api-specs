@@ -212,8 +212,9 @@ paths:
                 $ref: '#/components/schemas/GetPixCashinReply'
   /pix/v1/send:
     post:
-      description: N/A
-      summary: N/A
+      description: >
+        Send a PIX Payment.
+      summary: Send a PIX Payment
       operationId: SendPixTransaction
       tags:
         - pix
@@ -232,8 +233,8 @@ paths:
                 $ref: '#/components/schemas/SendPixReply'
   /pix/v1/initiate-send:
     post:
-      description: N/A
-      summary: N/A
+      description: Initiate a send pix operation (POS)
+      summary: Initiate a send pix operation (POS)
       operationId: InitiateSendPixTransaction
       tags:
         - pix
@@ -252,8 +253,8 @@ paths:
                 $ref: '#/components/schemas/InitiateSendPixReply'
   /pix/v1/confirm-send:
     post:
-      description: N/A
-      summary: N/A
+      description: Confirm an initiated send pix operation (POS)
+      summary: Confirm an initiated send pix operation (POS)
       operationId: ConfirmSendPixTransaction
       tags:
         - pix
@@ -272,8 +273,8 @@ paths:
                 $ref: '#/components/schemas/ConfirmSendPixReply'
   /pix/v1/qrcode/parse:
     post:
-      description: N/A
-      summary: N/A
+      description: Parse a QR code EMV (pix qrcode content) 
+      summary: Parse a QR code EMV (pix qrcode content)
       operationId: QrCodePardePixTransaction
       tags:
         - pix
@@ -674,4 +675,4 @@ components:
                   type: number
 tags:
   - name: pix
-    description: pix operations
+    description: PIX Transactions
