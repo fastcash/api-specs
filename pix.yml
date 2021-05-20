@@ -52,7 +52,7 @@ paths:
                 schema:
                   $ref: '#/components/schemas/CreatePixLocationCashinReply'
   /pix/v1/location/{id}/unlink:
-    post:
+    put:
       description: N/A
       summary: Unlink a PIX Payable URL from a PIX Transaction
       operationId: UnlinkPixLocation
@@ -76,32 +76,27 @@ paths:
           description: Invalid request
         '404':
           description: Transaction not found
-  /pix/v1/qrcode/generate/{format}/{sizepx}/{locationId}:
-    get:
+  /pix/v1/qrcode/by-location:
+    post:
       description: N/A
       summary: Generate a PIX dynamic qrcode image
       operationId: ShowQRCodePixLocation
       tags:
         - pix
-      parameters:
-        - in: path
-          name: format
-          schema:
-            type: string
-          required: true
-          description: N/A
-        - in: path
-          name: locationId
-          schema:
-            type: string
-          required: true
-          description: N/A
-        - in: path
-          name: sizepx
-          schema:
-            type: string
-          required: true
-          description: N/A
+      requestBody:
+        description: > 
+        content:
+          application/json:
+            schema:
+              properties:
+                Format:
+                  type: string
+                LocationId:
+                  type: string
+                Sizepx:
+                  type: number
+                Description:
+                  type: string
       responses:
         '200':
           description: N/A
@@ -109,38 +104,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ShowQrCodePixCashinReply'
-  /pix/v1/qrcode/generate/{format}/{sizepx}/pid/{pid}/tid/{tid}:
-    get:
+  /pix/v1/qrcode/by-tid:
+    post:
       description: N/A
       summary: Generate a PIX dynamic qrcode image
       operationId: ShowQRCodePix
       tags:
         - pix
-      parameters:
-        - in: path
-          name: format
-          schema:
-            type: string
-          required: true
-          description: N/A
-        - in: path
-          name: pid
-          schema:
-            type: number
-          required: true
-          description: N/A
-        - in: path
-          name: tid
-          schema:
-            type: string
-          required: true
-          description: N/A
-        - in: path
-          name: sizepx
-          schema:
-            type: string
-          required: true
-          description: N/A
+      requestBody:
+        description: > 
+        content:
+          application/json:
+            schema:
+              properties:
+                Format:
+                  type: string
+                Tid:
+                  type: string
+                Sizepx:
+                  type: number
       responses:
         '200':
           description: N/A
@@ -351,6 +333,9 @@ components:
                 - $ref: '#/components/schemas/Transaction'
                 - $ref: '#/components/schemas/TransactionStatus'
                 - $ref: '#/components/schemas/PixTransaction'
+              properties:
+                EMV:
+                  type: string
             Parameters:
               type: array
               items:
@@ -438,8 +423,10 @@ components:
           type: string
         FixedAmount:
           type: boolean
-        Lifecycle:
-          $ref: '#/components/schemas/Lifecycle' 
+        OnDemand:
+          $ref: '#/components/schemas/OnDemand' 
+        Scheduled:
+          $ref: '#/components/schemas/Scheduled' 
     SendTransaction:
       allOf:
         - $ref: '#/components/schemas/BaseCreateCashinRequest'
@@ -455,12 +442,12 @@ components:
         RequestType:
           type: string
           enum:             
-            - Standard
-            - DueDate
+            - OnDemand
+            - Scheduled
           description: >
             Sort order:
-             * `Standard` - Standard
-             * `DueDate` - DueDate
+             * `OnDemand` - OnDemand
+             * `Scheduled` - Scheduled
     LocationEntity:
       properties:
         Location:
@@ -506,11 +493,13 @@ components:
               format: byte
             Format:
               type: string
-    Lifecycle:
+    OnDemand:
       properties:
         Ttl:
           type: number
           description: In seconds
+    Scheduled:
+      properties:
         DueDate:
           type: string
         OverdueLimit:
