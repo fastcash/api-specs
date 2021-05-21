@@ -95,8 +95,6 @@ paths:
                   type: string
                 Sizepx:
                   type: number
-                Description:
-                  type: string
       responses:
         '200':
           description: N/A
@@ -121,6 +119,8 @@ paths:
                   type: string
                 Tid:
                   type: string
+                Pid:
+                  type: number
                 Sizepx:
                   type: number
       responses:
