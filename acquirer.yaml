@@ -1,0 +1,1314 @@
+swagger: "2.0"
+info:
+  description: "Acquirer API"
+  version: "1.0.0"
+  title: "Acquirer API"
+  contact:
+    email: "dev@fastcash.com.br"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "acquirer.fastcash.network"
+#basePath: "/v2"
+tags:
+- name: "Transactions"
+  description: "Transações do parceiro"
+    
+- name: "Pricings"
+  description: "Precificação do parceiro"
+    
+- name: "Merchants"
+  description: "Lojista"
+    
+- name: "Wallets"
+  description: "Carteira"
+    
+- name: "Split"
+  description: ""
+schemes:
+- "https"
+paths:
+  /v2/devices/init:
+    post:
+      tags:
+      - "Transactions"
+      summary: "Inicializando..."
+      description: ""
+      operationId: "Initial"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: ""
+        required: true
+        schema:
+          $ref: "#/definitions/Init"
+      responses:
+        "405":
+          description: "Invalid input"
+      security:
+      - api_key: []
+
+  /v2/transactions:
+    post:
+      tags:
+      - "Transactions"
+      summary: "Adiciona nova transação"
+      description: ""
+      operationId: "addTransaction"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: ""
+        required: true
+        schema:
+          $ref: "#/definitions/Transactions"
+      responses:
+        "405":
+          description: "Invalid input"
+      security:
+      - api_key: []
+      
+  /v2/transactions/{nsu}:
+    get:
+      tags:
+      - "Transactions"
+      summary: "Lista as transações"
+      description: ""
+      operationId: "getTransactions"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "nsu"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+        "400":
+          description: "Invalid tag value"
+      security:
+      - api_key: []
+
+  /v2/transactions/{nsu_original}/reverse:
+    post:
+      tags:
+      - "Transactions"
+      summary: "Pega transação por NSU"
+      description: ""
+      operationId: "getTransactionReverse"
+      parameters:
+      - name: "nsu_original"
+        in: "path"
+        description: ""
+        required: true
+        type: "string"
+      responses:
+        "405":
+          description: "Invalid input"
+      security:
+      - api_key: []
+
+  /v2/transactions/{nsu_original}/refund:
+    post:
+      tags:
+      - "Transactions"
+      summary: "Pega transação por NSU"
+      description: ""
+      operationId: "getTransactionRefund"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "nsu_original"
+        in: "path"
+        description: ""
+        required: true
+        type: "string"
+      responses:
+        "405":
+          description: "Invalid input"
+      security:
+      - api_key: []
+
+  /v2/transactions/{nsu_original}/confirm:
+    post:
+      tags:
+      - "Transactions"
+      summary: "Pega transação por NSU"
+      description: ""
+      operationId: "getTransactionConfirm"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "nsu_original"
+        in: "path"
+        description: ""
+        required: true
+        type: "string"
+      responses:
+        "405":
+          description: "Invalid input"
+      security:
+      - api_key: []
+
+  /v1/transactions:
+    get:
+      tags:
+      - "Transactions"
+      summary: "Lista as transações"
+      description: ""
+      operationId: "getTransactionsV1"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "since"
+        in: "query"
+        required: true
+        type: "string"
+      - name: "until"
+        in: "query"
+        required: true
+        type: "string"
+      - name: "page"
+        in: "query"
+        required: true
+        type: "integer"
+      - name: "limit"
+        in: "query"
+        required: true
+        type: "integer"
+      responses:
+        "200":
+          description: "successful operation"
+        "400":
+          description: "Invalid tag value"
+      security:
+      - api_key: []
+
+  /v1/transactions/{transaction_id}:
+    get:
+      tags:
+      - "Transactions"
+      summary: "Lista as transações"
+      description: ""
+      operationId: "getTransactionsId"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "transaction_id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+        "400":
+          description: "Invalid tag value"
+      security:
+      - api_key: []
+
+  /v1/pricings:
+    get:
+      tags:
+      - "Pricings"
+      summary: "Listar precificações"
+      description: ""
+      operationId: "getpricings"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+        "400":
+          description: "Invalid tag value"
+      security:
+      - api_key: []
+  
+  /v1/pricings/{mcc_or_cnae_or_cnpj}:
+    get:
+      tags:
+      - "Pricings"
+      summary: "Get Precificação"
+      description: ""
+      operationId: "getpricing"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "mcc_or_cnae_or_cnpj"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+        "400":
+          description: "Invalid tag value"
+      security:
+      - api_key: []
+  
+  /v1/merchants:
+    post:
+      tags:
+      - "Merchants"
+      summary: "Criar lojista"
+      description: ""
+      operationId: "postMerchants"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "merchant"
+        description: ""
+        required: true
+        schema:
+          $ref: "#/definitions/Merchant"
+      responses:
+        "405":
+          description: "Invalid input"
+      security:
+      - api_key: []
+    get:
+      tags:
+      - "Merchants"
+      summary: "Listar lojistas"
+      description: ""
+      responses:
+        200:
+          description: OK
+      security:
+      - api_key: []
+
+  /v1/merchants/{wallet_id}:
+    get:
+      tags:
+      - "Merchants"
+      summary: "Mostrar lojista"
+      description: ""
+      operationId: "getMerchant"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "wallet_id"
+        in: "path"
+        description: "ID to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "405":
+          description: "Invalid input"
+      security:
+      - api_key: []
+    patch:
+      tags:
+      - "Merchants"
+      summary: "Atualizar nome do lojista"
+      description: ""
+      parameters:
+      - name: "wallet_id"
+        in: "path"
+        description: "ID to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "merchant"
+        description: ""
+        required: true
+        schema:
+          $ref: "#/definitions/MerchantName"
+      responses:
+        200:
+          description: OK
+      security:
+      - api_key: []
+    
+  /v1/business_categories:
+    get:
+      tags:
+      - "Merchants"
+      summary: "Listar categorias"
+      description: ""
+      operationId: "getCategories"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        "405":
+          description: "Invalid input"
+      security:
+      - api_key: []
+  
+  /v1/merchants/{wallet_id}/documents:
+    get:
+      tags:
+      - "Merchants"
+      summary: "Listar documentos"
+      description: ""
+      operationId: "getDocuments"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "wallet_id"
+        in: "path"
+        description: "ID to return"
+        required: true
+        type: "string"
+      responses:
+        "405":
+          description: "Invalid input"
+      security:
+      - api_key: []
+    put:
+      tags:
+      - "Merchants"
+      summary: "Atualizar documentos"
+      description: ""
+      operationId: "putMerchants"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "wallet_id"
+        in: "path"
+        description: "ID to return"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "merchant"
+        description: ""
+        required: true
+        schema:
+          $ref: "#/definitions/Document"
+      responses:
+        "405":
+          description: "Invalid input"
+      security:
+      - api_key: []
+  
+  /v1/merchants/{wallet_id}/transactions:
+    get:
+      tags:
+      - "Merchants"
+      summary: "Listar transações do lojista"
+      description: ""
+      parameters:
+      - name: "wallet_id"
+        in: "path"
+        description: "ID to return"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: OK
+      security:
+      - api_key: []
+  
+  /v1/merchants/{wallet_id}/pricing:
+    get:
+      tags:
+      - "Merchants"
+      summary: "Mostrar pricing"
+      description: ""
+      parameters:
+      - name: "wallet_id"
+        in: "path"
+        description: "ID to return"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: OK
+      security:
+      - api_key: []
+    
+  /v1/merchants/{wallet_id}/anticipation:
+    get:
+      tags:
+      - "Merchants"
+      summary: "Mostrar anticipation"
+      description: ""
+      parameters:
+      - name: "wallet_id"
+        in: "path"
+        description: "ID to return"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: OK
+      security:
+      - api_key: []
+    
+  /v1/wallets:
+    get:
+      tags:
+      - "Wallets"
+      summary: "Mostrar wallets"
+      description: ""
+      operationId: "getWallets"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        "405":
+          description: "Invalid input"
+      security:
+      - api_key: []
+    post:
+      tags:
+      - "Wallets"
+      summary: "Criar carteira"
+      description: ""
+      operationId: "postWallts"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "wallet"
+        description: ""
+        required: true
+        schema:
+          $ref: "#/definitions/Wallet"
+      responses:
+        "405":
+          description: "Invalid input"
+      security:
+      - api_key: []
+    
+  /v1/wallets/{wallet_id}:
+    get:
+      tags:
+      - "Wallets"
+      summary: "Mostrar wallet"
+      description: ""
+      operationId: "getWallet"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "wallet_id"
+        in: "path"
+        description: "ID to return"
+        required: true
+        type: "string"
+      responses:
+        "405":
+          description: "Invalid input"
+      security:
+      - api_key: []
+    patch:
+      tags:
+      - "Wallets"
+      summary: "Atualizar carteira"
+      description: ""
+      parameters:
+      - name: "wallet_id"
+        in: "path"
+        description: "ID to return"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "wallet"
+        description: ""
+        required: true
+        schema:
+          $ref: "#/definitions/WalletUp"
+      responses:
+        200:
+          description: OK
+      security:
+      - api_key: []
+  
+  /v1/wallets/{wallet_id}/balance:
+    get:
+      tags:
+      - "Wallets"
+      summary: "Mostrar wallet"
+      description: ""
+      operationId: "getWalletBalance"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "wallet_id"
+        in: "path"
+        description: "ID to return"
+        required: true
+        type: "string"
+      responses:
+        "405":
+          description: "Invalid input"
+      security:
+      - api_key: []
+ 
+  /v1/wallets/{wallet_id}/receivables:
+    get:
+      tags:
+      - "Wallets"
+      summary: "Listar recebíveis por asset"
+      description: ""
+      operationId: "getWalletReceivables"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "wallet_id"
+        in: "path"
+        description: "ID to return"
+        required: true
+        type: "string"
+      responses:
+        "405":
+          description: "Invalid input"
+      security:
+      - api_key: []
+  
+  /v1/wallets/{wallet_id}/receivables/{asset}:
+    get:
+      tags:
+      - "Wallets"
+      summary: "Listar recebíveis por data"
+      description: ""
+      operationId: "getWalletReceivablesAsset"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "wallet_id"
+        in: "path"
+        description: "ID to return"
+        required: true
+        type: "string"
+      - name: "asset"
+        in: "path"
+        description: "ID to return"
+        required: true
+        type: "string"
+      - name: "since"
+        in: "query"
+        required: true
+        type: "string"
+      - name: "until"
+        in: "query"
+        required: true
+        type: "string"
+      - name: "page"
+        in: "query"
+        required: true
+        type: "integer"
+      - name: "limit"
+        in: "query"
+        required: true
+        type: "integer"
+      responses:
+        "405":
+          description: "Invalid input"
+      security:
+      - api_key: []
+
+  /v1/wallets/{wallet_id}/receivables/{asset}/{payment_date}:
+    get:
+      tags:
+      - "Wallets"
+      summary: "Detalhar recebíveis"
+      description: ""
+      operationId: "getWalletReceivablesDate"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "wallet_id"
+        in: "path"
+        description: "ID to return"
+        required: true
+        type: "string"
+      - name: "asset"
+        in: "path"
+        description: "ID to return"
+        required: true
+        type: "string"
+      - name: "payment_date"
+        in: "path"
+        description: "ID to return"
+        required: true
+        type: "string"
+      responses:
+        "405":
+          description: "Invalid input"
+      security:
+      - api_key: []
+
+  /v1/wallets/{wallet_id}/withdraw:
+    post:
+      tags:
+      - "Wallets"
+      summary: "Mostrar withdraw"
+      description: ""
+      operationId: "postwithdraw"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "wallet_id"
+        in: "path"
+        description: "ID to return"
+        required: true
+        type: "string"
+      - name: "asset"
+        in: "body"
+        description: "ID to return"
+        required: true
+        schema:
+          $ref: "#/definitions/Asset"
+      responses:
+        "405":
+          description: "Invalid input"
+      security:
+      - api_key: []
+  
+  /v1/wallets/{wallet_id}/bank_transfers:
+    get:
+      tags:
+      - "Wallets"
+      summary: "Listar recebíveis por asset"
+      description: ""
+      operationId: "getBankTransfers"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "wallet_id"
+        in: "path"
+        description: "ID to return"
+        required: true
+        type: "string"
+      responses:
+        "405":
+          description: "Invalid input"
+      security:
+      - api_key: []
+  
+  /v1/wallets/{wallet_id}/transfers:
+    post:
+      tags:
+      - "Wallets"
+      summary: "Transferir fundos"
+      description: ""
+      operationId: "postTransfers"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "wallet_id"
+        in: "path"
+        description: "ID to return"
+        required: true
+        type: "string"
+      - name: "asset"
+        in: "body"
+        description: "ID to return"
+        required: true
+        schema:
+          $ref: "#/definitions/Transfers"
+      responses:
+        "405":
+          description: "Invalid input"
+      security:
+      - api_key: []
+  
+  /v1/wallets/{wallet_id}/billings:
+    get:
+      tags:
+      - "Wallets"
+      summary: "Listar cobranças"
+      description: ""
+      operationId: "getBilling"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "wallet_id"
+        in: "path"
+        description: "ID to return"
+        required: true
+        type: "string"
+      responses:
+        "405":
+          description: "Invalid input"
+      security:
+      - api_key: []
+    post:
+      tags:
+      - "Wallets"
+      summary: "Criar cobrança"
+      description: ""
+      operationId: "postbillings"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "wallet_id"
+        in: "path"
+        description: "ID to return"
+        required: true
+        type: "string"
+      - name: "asset"
+        in: "body"
+        description: "ID to return"
+        required: true
+        schema:
+          $ref: "#/definitions/Billings"
+      responses:
+        "405":
+          description: "Invalid input"
+      security:
+      - api_key: []
+      
+  /v1/wallets/{wallet_id}/billings/{billing_id}:
+    post:
+      tags:
+      - "Wallets"
+      summary: "Atualizar cobrança"
+      description: ""
+      operationId: "postbilling"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "wallet_id"
+        in: "path"
+        description: "ID to return"
+        required: true
+        type: "string"
+      - name: "billing_id"
+        in: "path"
+        description: "ID to return"
+        required: true
+        type: "string"
+      - name: "asset"
+        in: "body"
+        description: "ID to return"
+        required: true
+        schema:
+          $ref: "#/definitions/Schedule"
+      responses:
+        "405":
+          description: "Invalid input"
+      security:
+      - api_key: []  
+  
+  /v1/merchants/{wallet_id}/split_payment:
+    get:
+      tags:
+      - "Split"
+      summary: "Mostrar split"
+      description: ""
+      operationId: "getSplitPayment"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "wallet_id"
+        in: "path"
+        description: "ID to return"
+        required: true
+        type: "string"
+      responses:
+        "405":
+          description: "Invalid input"
+      security:
+      - api_key: []
+    put:
+      tags:
+      - "Split"
+      summary: "Atualizar split"
+      description: ""
+      operationId: "putSplitPayment"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "wallet_id"
+        in: "path"
+        description: "ID to return"
+        required: true
+        type: "string"
+      - name: "asset"
+        in: "body"
+        description: "ID to return"
+        required: true
+        schema:
+          type: "array"
+          items:
+            $ref: "#/definitions/Account"
+      responses:
+        "405":
+          description: "Invalid input"
+      security:
+      - api_key: []
+  
+  
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
+    
+definitions:
+  Init:
+    type: "object"
+    properties:
+      serial_number:
+        type: "string"
+      crc_hex:
+        type: "string"
+      metadata:
+        $ref: "#/definitions/Metadata"
+    xml:
+      name: "Init"
+  Metadata:
+    type: "object"
+    properties:
+      Media:
+        type: "string"
+      Geo-Cell-Info:
+        type: "string"
+      Signal:
+        type: "string"
+      Battery:
+        type: "string"
+      IccId:
+        type: "string"
+      Brand:
+        type: "string"
+      Model:
+        type: "string"
+      OsVersion:
+        type: "string"
+      SdkVersion:
+        type: "string"
+      EmvVersion:
+        type: "string"
+      PinpadVersion:
+        type: "string"
+      Signature:
+        type: "string"
+    xml:
+      name: "metadata"
+  Payment:
+    type: "object"
+    properties:
+      amount:
+        type: number
+      capture_method:
+        type: "string"
+      payment_method:
+        type: "string"
+    xml:
+      name: "payment"
+  Transactions:
+    type: "object"
+    properties:
+      payment:
+        $ref: "#/definitions/Payment"
+      card:
+        $ref: "#/definitions/Card"
+      metadata:
+        $ref: "#/definitions/Metadata"
+    xml:
+      name: "transactions"
+  Card:
+    type: "object"
+    properties:
+      cvv:
+        type: "string"
+      card_number:
+        type: "string"
+      card_holder_name:
+        type: "string"
+      card_expiration_year:
+        type: "string"
+      card_expiration_month:
+        type: "string"
+    xml:
+      name: "card"
+  Merchant:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+      merchant_name:
+        type: "string"
+      business_category:
+        type: "integer"
+      income:
+        type: "number"
+      wealth:
+        type: "number"
+      max_devices: 
+        type: "integer"
+      phone_number:
+        type: "string"
+      documents:
+        type: "array"
+        items: 
+          $ref: "#/definitions/Document"
+      legal_representative:
+        $ref: "#/definitions/LegalRepresentative"
+      address:
+        $ref: "#/definitions/Address"
+      bank:
+        $ref: "#/definitions/Bank"
+      anticipation:
+        $ref: "#/definitions/Anticipation"
+      pricing:
+        $ref: "#/definitions/Pricing"
+    xml:
+      name: "merchant"
+  Document:
+    type: "object"
+    properties:
+      type:
+        type: "string"
+      name:
+        type: "string"
+    xml:
+      name: "document"
+  LegalRepresentative:
+    type: "object"
+    properties:
+      full_name:
+        type: "string"
+      cpf:
+        type: "string"
+      phone_number:
+        type: "string"
+      birthday:
+        type: "string"
+      job:
+        type: "string"
+    xml:
+      name: "legal_representative"
+  Address:
+    type: "object"
+    properties:
+      zip_code:
+        type: "string"
+      street:
+        type: "string"
+      number:
+        type: "string"
+      complement:
+        type: "string"
+      neighborhood:
+        type: "string"
+      city:
+        type: "string"
+      state:
+        type: "string"
+    xml:
+      name: "address"
+  Bank:
+    type: "object"
+    properties:
+      legal_name:
+        type: "string"
+      document_number:
+        type: "string"
+      bank_code:
+        type: "string"
+      branch_number:
+        type: "string"
+      branch_dv:
+        type: "integer"
+      account_number:
+        type: "string"
+      account_dv:
+        type: "string"
+      automatic_transfer:
+        type: "boolean"
+      minimum_transfer_amount: 
+        type: "string"
+    xml:
+      name: "bank"
+  BankWallet:
+    type: "object"
+    properties:
+      legal_name:
+        type: "string"
+      document_number:
+        type: "string"
+    xml:
+      name: "bankWallet"
+  Anticipation:
+    type: "object"
+    properties:
+      rate:
+        type: "number"
+    xml:
+      name: "anticipation"
+  Pricing:
+    type: "object"
+    properties:
+      rules:
+        $ref: "#/definitions/Rules"
+    xml:
+      name: "pricing"
+  Rules:
+    type: "object"
+    properties:
+      visa:
+        $ref: "#/definitions/Visa"
+      mastercard:
+        $ref: "#/definitions/Mastercard"
+      elo:
+        $ref: "#/definitions/Elo"
+      hipercard:
+        $ref: "#/definitions/Hipercard"
+    xml:
+      name: "rules"
+  Visa:
+    type: "object"
+    properties:
+      debit:
+        $ref: "#/definitions/Debit"
+      credit_1:
+        $ref: "#/definitions/Credit1"
+      credit_2:
+        $ref: "#/definitions/Credit2"
+      credit_7:
+        $ref: "#/definitions/Credit7"
+    xml:
+      name: "visa"
+  Mastercard:
+    type: "object"
+    properties:
+      debit:
+        $ref: "#/definitions/Debit"
+      credit_1:
+        $ref: "#/definitions/Credit1"
+      credit_2:
+        $ref: "#/definitions/Credit2"
+      credit_7:
+        $ref: "#/definitions/Credit7"
+    xml:
+      name: "mastercard"
+  Elo:
+    type: "object"
+    properties:
+      debit:
+        $ref: "#/definitions/Debit"
+      credit_1:
+        $ref: "#/definitions/Credit1"
+      credit_2:
+        $ref: "#/definitions/Credit2"
+      credit_7:
+        $ref: "#/definitions/Credit7"
+    xml:
+      name: "elo"
+  Hipercard:
+    type: "object"
+    properties:
+      credit_1:
+        $ref: "#/definitions/Credit1"
+      credit_2:
+        $ref: "#/definitions/Credit2"
+      credit_7:
+        $ref: "#/definitions/Credit7"
+    xml:
+      name: "hipercard"
+  Debit:
+    type: "object"
+    properties:
+      percentage:
+        type: "number"
+    xml:
+      name: "debit"
+  Credit1:
+    type: "object"
+    properties:
+      percentage:
+        type: "number"
+    xml:
+      name: "credit_1"
+  Credit2:
+    type: "object"
+    properties:
+      percentage:
+        type: "number"
+    xml:
+      name: "credit_2"
+  Credit7:
+    type: "object"
+    properties:
+      percentage:
+        type: "number"
+    xml:
+      name: "credit_7"
+  MerchantName:
+    type: "object"
+    properties:
+      merchant_name:
+        type: "string"
+    xml:
+      name: "merchantName"
+  Wallet:
+    type: "object"
+    properties:
+      phone_number:
+        type: "string"
+      email:
+        type: "string"
+      bank:
+        $ref: "#/definitions/Bank"
+      callback_url:
+        type: "string"
+    xml:
+      name: "wallet"
+  WalletUp:
+    type: "object"
+    properties:
+      bank:
+        $ref: "#/definitions/BankWallet"
+      anticipation:
+        $ref: "#/definitions/Anticipation"
+    xml:
+      name: "walletUp"
+  Asset:
+    type: "object"
+    properties:
+      asset:
+        type: "string"
+    xml:
+      name: "asset"
+  Transfers:
+    type: "object"
+    properties:
+      asset:
+        type: "string"
+      amount:
+        type: "string"
+      wallet_id_receiver:
+        type: "string"
+      metadata:
+        type: "object"
+        properties:
+          description:
+            type: "string"
+    xml:
+      name: "transfers"
+  Billings:
+    type: "object"
+    properties:
+      billings:
+        type: "string"
+      amount:
+        type: "number"
+      schedule:
+        type: "string"
+      description:
+        type: "string"
+    xml:
+      name: "billings"
+  Schedule:
+    type: "object"
+    properties:
+      schedule:
+        type: "string"
+    xml:
+      name: "schedule"
+  Account:
+    type: "object"
+    properties:
+      account_id:
+        type: "string"
+      chargeable:
+        type: "boolean"
+      percentage:
+        type: "number"
+    xml:
+      name: "account"
+
+#  TransactionsCardFull:
+#    type: "object"
+#    properties:
+#      payment:
+#        $ref: "#/definitions/Payment"
+#      card:
+#        $ref: "#/definitions/CardFull"
+#      metadata:
+#        $ref: "#/definitions/Metadata"
+#    xml:
+#      name: "transactionsCardFull"
+#  CardFull:
+#    type: "object"
+#    properties:
+#      cvv:
+#        type: "string"
+#      card_number:
+#        type: "string"
+#      card_holder_name:
+#        type: "string"
+#      card_expiration_year:
+#        type: "string"
+#      card_expiration_month:
+#        type: "string"
+#      data_ksn:
+#        type: "string"
+#      data_encrypted:
+#        type: "string"
+#      card_track_2:
+#        type: "string"
+#      card_sequence_number:
+#        type: "string"
+#      card_emv_data:
+#        type: "string"
+#    xml:
+#      name: "card"
