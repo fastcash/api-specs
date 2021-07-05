@@ -427,6 +427,16 @@ components:
           $ref: '#/components/schemas/OnDemand' 
         Scheduled:
           $ref: '#/components/schemas/Scheduled' 
+    SendTransactionWithBankAccount:
+      allOf:
+        - $ref: '#/components/schemas/BaseCreateCashinRequest'
+      properties:
+        RemittanceInformation:
+          type: string
+        Destinatary:
+         $ref: '#/components/schemas/DestinataryEntityWithBankAccount'
+        Schedule:
+         $ref: '#/components/schemas/ScheduleEntity'
     SendTransaction:
       allOf:
         - $ref: '#/components/schemas/BaseCreateCashinRequest'
@@ -463,6 +473,10 @@ components:
           type: string
         Emv:
           type: string
+    DestinataryEntityWithBankAccount:
+      allOf:
+        - $ref: '#/components/schemas/DestinataryEntity'
+      properties:
         BankAccount:
           $ref: '#/components/schemas/BankAccountEntity'
     BankAccountEntity:
@@ -537,7 +551,7 @@ components:
           $ref: '#/components/schemas/Customer'
     SendPixRequest:
       allOf:
-        - $ref: '#/components/schemas/SendTransaction'
+        - $ref: '#/components/schemas/SendTransactionWithBankAccount'
       properties:
         Customer:
           $ref: '#/components/schemas/Customer'
@@ -552,6 +566,10 @@ components:
         Pid:
           type: number
         Tid:
+          type: string
+        Amount:
+          type: number
+        RemittanceInformation:
           type: string
     QrCodeParsePixRequest:
       properties:
@@ -620,7 +638,7 @@ components:
           properties:
             Transaction:
               allOf:
-                - $ref: '#/components/schemas/SendTransaction'
+                - $ref: '#/components/schemas/SendTransactionWithBankAccount'
               properties:
                 Status:
                   type: number
@@ -670,7 +688,7 @@ components:
           properties:
             Transaction:
               allOf:
-                - $ref: '#/components/schemas/SendTransaction'
+                - $ref: '#/components/schemas/SendTransactionWithBankAccount'
               properties:
                 Status:
                   type: number
