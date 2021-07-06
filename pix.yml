@@ -84,17 +84,19 @@ paths:
       tags:
         - pix
       requestBody:
-        description: > 
+        description: >
+          Format:
+            * `base64`
+            * `svg`
+
+          Base64.Type
+            * `gif`
+            * `png`
+            * `jpeg`
         content:
           application/json:
             schema:
-              properties:
-                Format:
-                  type: string
-                LocationId:
-                  type: string
-                Sizepx:
-                  type: number
+              $ref: '#/components/schemas/ShowQRCodePixLocationRequest'
       responses:
         '200':
           description: N/A
@@ -110,19 +112,19 @@ paths:
       tags:
         - pix
       requestBody:
-        description: > 
+        description: >
+            Format:
+             * `base64`
+             * `svg`
+
+            Base64.Type
+              * `gif`
+              * `png`
+              * `jpeg`
         content:
           application/json:
             schema:
-              properties:
-                Format:
-                  type: string
-                Tid:
-                  type: string
-                Pid:
-                  type: number
-                Sizepx:
-                  type: number
+              $ref: '#/components/schemas/ShowQRCodePixRequest'
       responses:
         '200':
           description: N/A
@@ -314,69 +316,11 @@ paths:
                 $ref: '#/components/schemas/ConsultSendPixReply'
 components:
   schemas:
-    BaseReply:
-      properties:
-        Success:
-          type: boolean
-        Message:
-          type: string
-        StatusCode:
-          type: integer
-    BaseCreateCashinReply:
-      allOf:
-        - $ref: '#/components/schemas/BaseReply'
-      properties:
-        Result:
-          properties:
-            Transaction:
-              allOf:
-                - $ref: '#/components/schemas/Transaction'
-                - $ref: '#/components/schemas/TransactionStatus'
-                - $ref: '#/components/schemas/PixTransaction'
-              properties:
-                EMV:
-                  type: string
-            Parameters:
-              type: array
-              items:
-                $ref: '#/components/schemas/TransactionParameter'
-    BaseCreatePixLocationCashinReply:
-      allOf:
-        - $ref: '#/components/schemas/BaseReply'
-      properties:
-        Result:
-          allOf:
-            - $ref: '#/components/schemas/LocationEntity'
-    BaseShowQrCodePixCashinReply:
-      allOf:
-        - $ref: '#/components/schemas/BaseReply'
-      properties:
-        Result:
-          allOf:
-            - $ref: '#/components/schemas/ImageEntity'
-    BaseRequest:
-      properties:
-        Pid:
-          type: integer
-        ProdId:
-          type: integer
     TransactionStatus:
       properties:
         Status:
           type: integer
         StatusName:
-          type: string
-    BaseCreateCashinRequest:
-      allOf:
-        - $ref: '#/components/schemas/BaseRequest'
-      properties:
-        Tid:
-          type: string
-        Custom:
-          type: string
-        Amount:
-          type: number
-        Description:
           type: string
     TransactionParameter:
       properties:
@@ -416,8 +360,8 @@ components:
           type: string
     PixTransaction:
       allOf:
-        - $ref: '#/components/schemas/RequestTypeEntity'
-        - $ref: '#/components/schemas/LocationEntity'
+        - $ref: '#/components/schemas/RequestType'
+        - $ref: '#/components/schemas/Location'
       properties:
         Instructions:
           type: string
@@ -434,9 +378,9 @@ components:
         RemittanceInformation:
           type: string
         Destinatary:
-         $ref: '#/components/schemas/DestinataryEntityWithBankAccount'
+         $ref: '#/components/schemas/DestinataryWithBankAccount'
         Schedule:
-         $ref: '#/components/schemas/ScheduleEntity'
+         $ref: '#/components/schemas/Schedule'
     SendTransaction:
       allOf:
         - $ref: '#/components/schemas/BaseCreateCashinRequest'
@@ -444,10 +388,10 @@ components:
         RemittanceInformation:
           type: string
         Destinatary:
-         $ref: '#/components/schemas/DestinataryEntity'
+         $ref: '#/components/schemas/Destinatary'
         Schedule:
-         $ref: '#/components/schemas/ScheduleEntity'
-    RequestTypeEntity:
+         $ref: '#/components/schemas/Schedule'
+    RequestType:
       properties:
         RequestType:
           type: string
@@ -458,7 +402,7 @@ components:
             Sort order:
              * `OnDemand` - OnDemand
              * `Scheduled` - Scheduled
-    LocationEntity:
+    Location:
       properties:
         Location:
           properties:
@@ -467,19 +411,19 @@ components:
               format: uuid
             Location:
               type: string
-    DestinataryEntity:
+    Destinatary:
       properties:
         DictKey:
           type: string
         Emv:
           type: string
-    DestinataryEntityWithBankAccount:
+    DestinataryWithBankAccount:
       allOf:
-        - $ref: '#/components/schemas/DestinataryEntity'
+        - $ref: '#/components/schemas/Destinatary'
       properties:
         BankAccount:
-          $ref: '#/components/schemas/BankAccountEntity'
-    BankAccountEntity:
+          $ref: '#/components/schemas/BankAccountInfo'
+    BankAccountInfo:
       properties:
         BankNumber:
           type: string
@@ -493,12 +437,12 @@ components:
           type: string
         HolderDocument:
           type: string
-    ScheduleEntity:
+    Schedule:
       properties:
         SendAt:
           type: string
           format: date-time
-    ImageEntity:
+    Image:
       properties:
         Image:
           properties:
@@ -507,6 +451,14 @@ components:
               format: byte
             Format:
               type: string
+    Base64Image:
+      properties:
+        Type:
+          type: string
+          enum:
+            - gif
+            - png
+            - jpeg
     OnDemand:
       properties:
         Ttl:
@@ -532,16 +484,74 @@ components:
         StatusName:
           type: string
     Error:
-      properties:
+     properties:
         PropertyName:
           type: string
         ErrorMessage:
           type: string
         AttemptedValue:
           type: string
+    BaseReply:
+      properties:
+        Success:
+          type: boolean
+        Message:
+          type: string
+        StatusCode:
+          type: integer
+    BaseCreateCashinReply:
+      allOf:
+        - $ref: '#/components/schemas/BaseReply'
+      properties:
+        Result:
+          properties:
+            Transaction:
+              allOf:
+                - $ref: '#/components/schemas/Transaction'
+                - $ref: '#/components/schemas/TransactionStatus'
+                - $ref: '#/components/schemas/PixTransaction'
+              properties:
+                EMV:
+                  type: string
+            Parameters:
+              type: array
+              items:
+                $ref: '#/components/schemas/TransactionParameter'
+    BaseCreatePixLocationCashinReply:
+      allOf:
+        - $ref: '#/components/schemas/BaseReply'
+      properties:
+        Result:
+          allOf:
+            - $ref: '#/components/schemas/Location'
+    BaseShowQrCodePixCashinReply:
+      allOf:
+        - $ref: '#/components/schemas/BaseReply'
+      properties:
+        Result:
+          allOf:
+            - $ref: '#/components/schemas/Image'
+    BaseRequest:
+      properties:
+        Pid:
+          type: integer
+        ProdId:
+          type: integer
+    BaseCreateCashinRequest:
+      allOf:
+        - $ref: '#/components/schemas/BaseRequest'
+      properties:
+        Tid:
+          type: string
+        Custom:
+          type: string
+        Amount:
+          type: number
+        Description:
+          type: string     
     CreatePixLocationCashinRequest:
       allOf:
-        - $ref: '#/components/schemas/RequestTypeEntity'
+        - $ref: '#/components/schemas/RequestType'
     CreatePixCashinRequest:
       allOf:
         - $ref: '#/components/schemas/BaseCreateCashinRequest'
@@ -571,6 +581,37 @@ components:
           type: number
         RemittanceInformation:
           type: string
+    ShowQRCodePixRequest:
+      properties:
+        Format:
+          type: string
+          enum:             
+            - base64
+            - svg 
+        Tid:
+          type: string
+        Pid:
+          type: number
+          format: int32
+        Sizepx:
+          type: number
+          format: int32
+        Base64:
+          $ref: '#/components/schemas/Base64Image'
+    ShowQRCodePixLocationRequest:
+      properties:
+        Format:
+          type: string
+          enum:             
+            - base64
+            - svg
+        LocationId:
+          type: string
+        Sizepx:
+          type: number
+          format: int32
+        Base64:
+          $ref: '#/components/schemas/Base64Image'
     QrCodeParsePixRequest:
       properties:
         EMV:
