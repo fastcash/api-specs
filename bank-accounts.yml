@@ -1,0 +1,158 @@
+openapi: 3.0.0
+info:
+  title: Fastcash API
+  description: Bank Accounts Endpoints
+  version: "10"
+  contact:
+    email: dev@fastcash.com.br
+servers:
+  - url: "https://dev.meu.cash/apiv10"
+    description: Desenvolvimento
+paths:
+  /user/listbankaccounts:
+    post:
+      tags:
+        - Bank Accounts
+      operationId: ListUsersBankAccounts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ListUsersBankAccountsRequest"
+            examples:
+              schame:
+                $ref: "#/components/examples/ListUsersBankAccountsRequest"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListUsersBankAccountsReply"
+              examples:
+                schame:
+                  $ref: "#/components/examples/ListUsersBankAccountsReply"
+components:
+  schemas:
+    BaseRequest:
+      allOf:
+        - $ref: "#/components/schemas/CompanyConfiguration"
+    BaseReply:
+      properties:
+        Success:
+          type: boolean
+        Message:
+          type: string
+        StatusCode:
+          format: int32
+          type: integer
+    CompanyConfiguration:
+      properties:
+        Pid:
+          type: integer
+          format: int32
+        ProdId:
+          type: integer
+          format: int32
+      required:
+        - Pid
+        - ProdId
+    UserBankAccount:
+      properties:
+        BankAccountId:
+          format: int32
+          type: integer
+        Pid:
+          format: int32
+          type: integer
+        ProdId:
+          format: int32
+          type: integer
+        ExternalCustomerId:
+          type: string
+        CustomerName:
+          type: string
+        CustomerDocument:
+          type: string
+        BankNumber:
+          type: string
+        BankBranchNumber:
+          type: string
+        BankAccountNumber:
+          type: string
+        BankAccountType:
+          type: string
+        BankAccountHolderName:
+          type: string
+        BankAccountHolderDocument:
+          type: string
+        CreatedDate:
+          format: date-time
+          type: string
+        Validated:
+          type: boolean
+        Blacklisted:
+          type: boolean
+        UpdatedDate:
+          format: date-time
+          type: string
+    ListUsersBankAccountsRequest:
+      allOf:
+        - $ref: "#/components/schemas/BaseRequest"
+      properties:
+        CustomerDocument:
+          type: string
+          pattern: "/(^\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}$)|(^\\d{2}\\.\\d{3}\\.\\d{3}\\/\\d{4}\\-\\d{2}$)/"
+        ExternalCustomerId:
+          type: string
+    ListUsersBankAccountsReply:
+      allOf:
+        - $ref: "#/components/schemas/BaseReply"
+      properties:
+        Result:
+          type: array
+          items:
+            $ref: "#/components/schemas/UserBankAccount"
+  examples:
+    ListUsersBankAccountsRequest:
+      summary: OK
+      value: |
+        {
+          "Pid": 110,
+          "ProdId": 4957,
+          "CustomerDocument": null,
+          "ExternalCustomerId": null
+        }
+    ListUsersBankAccountsReply:
+      summary: OK
+      value: |
+        {
+            "Errors": null,
+            "Result": [
+                {
+                    "BankAccountId": 34,
+                    "Pid": 110,
+                    "ProdId": 3509,
+                    "ExternalCustomerId": "9999",
+                    "CustomerName": "Johnnie Bayer",
+                    "CustomerDocument": "157.855.433-03",
+                    "BankNumber": "341",
+                    "BankBranchNumber": "3765",
+                    "BankAccountNumber": "04485-8",
+                    "BankAccountType": "001",
+                    "BankAccountHolderName": "Johnnie Bayer",
+                    "BankAccountHolderDocument": "157.855.433-03",
+                    "CreatedDate": "2020-08-17T22:43:21.06-03:00",
+                    "Validated": false,
+                    "Blacklisted": false,
+                    "UpdatedDate": null
+                }
+            ],
+            "Success": true,
+            "Message": null,
+            "StatusCode": 200
+        }
+tags:
+  - name: Bank Accounts
+    description: ""
