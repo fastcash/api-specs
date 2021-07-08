@@ -7,7 +7,7 @@ info:
     email: dev@fastcash.com.br
 servers:
   - url: 'https://dev.meu.cash/apiv10'
-    description: Desenvolvimento
+    description: Development
 paths:
   /pix/v1/receive:
     post:
