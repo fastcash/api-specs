@@ -94,7 +94,7 @@ tags:
     \ request '1'. In the same way Batch API could handle a deeply nested dependent\
     \ value, such as {..[..{..,$.parameter_name,..}..]}."
 - name: Audits
-  description: "Every non-read Mifos API request is audited. A fully processed request\
+  description: "Every non-read BaaS API request is audited. A fully processed request\
     \ can not be changed or deleted. See maker checker api for situations where an\
     \ audit is not fully processed.\n\nPermissions: To search and look at audit entries\
     \ a user needs to be attached to a role that has one of the ALL_FUNCTIONS, ALL_FUNCTIONS_READ\
@@ -180,7 +180,7 @@ tags:
     \ Pattern as client_identifiers\nGroups: URL Pattern as groups"
 - name: Hooks
   description: 'Hooks are a mechanism to trigger custom code on the occurence of events. '
-- name: MIFOSX-BATCH JOBS
+- name: BaaS-BATCH JOBS
   description: "Batch jobs (also known as cron jobs on Unix-based systems) are a series\
     \ of back-end jobs executed on a computer at a particular time defined in job's\
     \ cron expression.\n\n At any point, you can view the list of batch jobs scheduled\
@@ -377,8 +377,8 @@ tags:
     \ more general and indicate the order in which payments are processed.\n\nRefer\
     \ to the Payment Application Logic / Transaction Processing Strategy section in\
     \ the appendix for more detailed overview of each available payment application\
-    \ logic provided out of the box.\n\nList of current approaches:\n1 = Mifos style\
-    \ (Similar to Old Mifos)\n2 = Heavensfamily (Custom MFI approach)\n3 = Creocore\
+    \ logic provided out of the box.\n\nList of current approaches:\n1 = BaaS style\
+    \ (Similar to Old BaaS)\n2 = Heavensfamily (Custom MFI approach)\n3 = Creocore\
     \ (Custom MFI approach)\n4 = RBI (India)\n5 = Principal Interest Penalties Fees\
     \ Order\n6 = Interest Principal Penalties Fees Order\n7 = Early Payment Strategy\n\
     loanType\nTo represent different type of loans.\nAt present there are three type\
@@ -494,8 +494,8 @@ tags:
     \ MFIs, some are more general and indicate the order in which payments are processed.\n\
     \nRefer to the Payment Application Logic / Transaction Processing Strategy section\
     \ in the appendix for more detailed overview of each available payment application\
-    \ logic provided out of the box.\n\nList of current approaches:\n1 = Mifos style\
-    \ (Similar to Old Mifos)\n2 = Heavensfamily (Custom MFI approach)\n3 = Creocore\
+    \ logic provided out of the box.\n\nList of current approaches:\n1 = BaaS style\
+    \ (Similar to Old BaaS)\n2 = Heavensfamily (Custom MFI approach)\n3 = Creocore\
     \ (Custom MFI approach)\n4 = RBI (India)\n5 = Principal Interest Penalties Fees\
     \ Order\n6 = Interest Principal Penalties Fees Order\n7 = Early Payment Strategy\n\
     graceOnPrincipalPayment\nOptional: Integer - represents the number of repayment\
@@ -5212,7 +5212,7 @@ paths:
   /jobs/{jobId}:
     get:
       tags:
-      - MIFOSX-BATCH JOBS
+      - BaaS-BATCH JOBS
       summary: Retrieve a Job
       description: |-
         Returns the details of a Job.
@@ -5238,7 +5238,7 @@ paths:
                 $ref: '#/components/schemas/GetJobsResponse'
     put:
       tags:
-      - MIFOSX-BATCH JOBS
+      - BaaS-BATCH JOBS
       summary: Update a Job
       description: Updates the details of a job.
       operationId: updateJobDetail
@@ -5261,7 +5261,7 @@ paths:
           description: OK
     post:
       tags:
-      - MIFOSX-BATCH JOBS
+      - BaaS-BATCH JOBS
       summary: Run a Job
       description: Manually Execute Specific Job.
       operationId: executeJob
@@ -5284,7 +5284,7 @@ paths:
   /jobs:
     get:
       tags:
-      - MIFOSX-BATCH JOBS
+      - BaaS-BATCH JOBS
       summary: Retrieve Scheduler Jobs
       description: |-
         Returns the list of jobs.
@@ -5305,7 +5305,7 @@ paths:
   /jobs/{jobId}/runhistory:
     get:
       tags:
-      - MIFOSX-BATCH JOBS
+      - BaaS-BATCH JOBS
       summary: Retrieve Job Run History
       description: |-
         Example Requests:
@@ -13663,7 +13663,7 @@ paths:
       summary: Create a Loan Product
       description: "Depending of the Accounting Rule (accountingRule) selected, additional\
         \ fields with details of the appropriate Ledger Account identifiers would\
-        \ need to be passed in.\n\nRefer MifosX Accounting Specs Draft for more details\
+        \ need to be passed in.\n\nRefer BaaS Accounting Specs Draft for more details\
         \ regarding the significance of the selected accounting rule\n\nMandatory\
         \ Fields: name, shortName, currencyCode, digitsAfterDecimal, inMultiplesOf,\
         \ principal, numberOfRepayments, repaymentEvery, repaymentFrequencyType, interestRatePerPeriod,\
@@ -19985,14 +19985,14 @@ components:
           example: 1
         createdByUsername:
           type: string
-          example: mifos
+          example: BaaS
         lastUpdatedByUserId:
           type: integer
           format: int64
           example: 1
         lastUpdatedByUsername:
           type: string
-          example: mifos
+          example: BaaS
         comments:
           type: string
           example: closed
@@ -21300,7 +21300,7 @@ components:
       properties:
         username:
           type: string
-          example: test@mifos.org
+          example: test@BaaS.org
         password:
           type: string
           example: XXXX
@@ -23893,7 +23893,7 @@ components:
       properties:
         username:
           type: string
-          example: mifos
+          example: BaaS
         userId:
           type: integer
           format: int64
@@ -23944,7 +23944,7 @@ components:
       properties:
         username:
           type: string
-          example: mifos
+          example: BaaS
         userId:
           type: integer
           format: int64
@@ -23968,7 +23968,7 @@ components:
           example: 1
         staffDisplayName:
           type: string
-          example: mifosStaffDisplayName
+          example: BaaSStaffDisplayName
         organisationalRole:
           $ref: '#/components/schemas/EnumOptionData'
         roles:
@@ -25042,7 +25042,7 @@ components:
           example: High Risk Products Criteria
         createdBy:
           type: string
-          example: mifos
+          example: BaaS
       description: GetProvisioningCriteriaResponse
     GetProvisioningCriteriaCriteriaIdResponse:
       type: object
@@ -25056,7 +25056,7 @@ components:
           example: High Risk Products Criteria
         createdBy:
           type: string
-          example: mifos
+          example: BaaS
         loanProducts:
           type: array
           items:
@@ -26540,7 +26540,7 @@ components:
           format: date
         submittedByUsername:
           type: string
-          example: mifos
+          example: BaaS
         submittedByFirstname:
           type: string
           example: App
@@ -26552,7 +26552,7 @@ components:
           format: date
         activatedByUsername:
           type: string
-          example: mifos
+          example: BaaS
         activatedByFirstname:
           type: string
           example: App
@@ -27814,7 +27814,7 @@ components:
           format: date
         submittedByUsername:
           type: string
-          example: mifos
+          example: BaaS
         submittedByFirstname:
           type: string
           example: App
@@ -27826,7 +27826,7 @@ components:
           format: date
         approvedByUsername:
           type: string
-          example: mifos
+          example: BaaS
         approvedByFirstname:
           type: string
           example: App
@@ -29356,7 +29356,7 @@ components:
           format: date
         submittedByUsername:
           type: string
-          example: mifos
+          example: BaaS
         submittedByFirstname:
           type: string
           example: App
@@ -29368,7 +29368,7 @@ components:
           format: date
         activatedByUsername:
           type: string
-          example: mifos
+          example: BaaS
         activatedByFirstname:
           type: string
           example: App
@@ -29801,13 +29801,13 @@ components:
           example: true
         createdBy:
           type: string
-          example: mifos
+          example: BaaS
         createdOn:
           type: string
           example: "Nov 18, 2015"
         modifiedBy:
           type: string
-          example: mifos
+          example: BaaS
         modifiedOn:
           type: string
           example: "Nov 18, 2015"
@@ -29830,13 +29830,13 @@ components:
           example: true
         createdBy:
           type: string
-          example: mifos
+          example: BaaS
         createdOn:
           type: string
           example: "Nov 18, 2015"
         modifiedBy:
           type: string
-          example: mifos
+          example: BaaS
         modifiedOn:
           type: string
           example: "Nov 18, 2015"
@@ -29868,13 +29868,13 @@ components:
           example: true
         createdBy:
           type: string
-          example: mifos
+          example: BaaS
         createdOn:
           type: string
           example: "Nov 18, 2015"
         modifiedBy:
           type: string
-          example: mifos
+          example: BaaS
         modifiedOn:
           type: string
           example: "Nov 18, 2015"
@@ -30212,7 +30212,7 @@ components:
           format: date
         submittedByUsername:
           type: string
-          example: mifos
+          example: BaaS
         submittedByFirstname:
           type: string
           example: App
@@ -30764,7 +30764,7 @@ components:
           format: date
         activatedByUsername:
           type: string
-          example: mifos
+          example: BaaS
         activatedByFirstname:
           type: string
           example: App
@@ -33153,7 +33153,7 @@ components:
           example: 1
         transactionProcessingStrategyName:
           type: string
-          example: Mifos style
+          example: BaaS style
         principalVariationsForBorrowerCycle:
           type: array
           example: []
@@ -33491,7 +33491,7 @@ components:
           example: 1
         transactionProcessingStrategyName:
           type: string
-          example: Mifos style
+          example: BaaS style
         charges:
           type: array
           example: []
@@ -34100,7 +34100,7 @@ components:
           example: 1
         code:
           type: string
-          example: mifos-standard-strategy
+          example: BaaS-standard-strategy
         name:
           type: string
           example: "Penalties, Fees, Interest, Principal order"
@@ -34113,7 +34113,7 @@ components:
           example: 2
         code:
           type: string
-          example: mifos-standard-strategyLoanProductValueConditionType.equal
+          example: BaaS-standard-strategyLoanProductValueConditionType.equal
         description:
           type: string
           example: equals
@@ -34238,7 +34238,7 @@ components:
           example: 1
         createdByUsername:
           type: string
-          example: mifos
+          example: BaaS
         createdOn:
           type: string
           format: date-time
@@ -34248,7 +34248,7 @@ components:
           example: 1
         updatedByUsername:
           type: string
-          example: mifos
+          example: BaaS
         updatedOn:
           type: string
           format: date-time
@@ -34275,7 +34275,7 @@ components:
           example: 1
         createdByUsername:
           type: string
-          example: mifos
+          example: BaaS
         createdOn:
           type: string
           format: date-time
@@ -34285,7 +34285,7 @@ components:
           example: 1
         updatedByUsername:
           type: string
-          example: mifos
+          example: BaaS
         updatedOn:
           type: string
           format: date-time
@@ -35457,7 +35457,7 @@ components:
           format: date
         submittedByUsername:
           type: string
-          example: mifos
+          example: BaaS
         submittedByFirstname:
           type: string
           example: App
@@ -37142,7 +37142,7 @@ components:
           format: date
         submittedByUsername:
           type: string
-          example: mifos
+          example: BaaS
         submittedByFirstname:
           type: string
           example: App
@@ -40661,7 +40661,7 @@ components:
           format: date
         submittedByUsername:
           type: string
-          example: mifos
+          example: BaaS
         submittedByFirstname:
           type: string
           example: App
@@ -40673,7 +40673,7 @@ components:
           format: date
         activatedByUsername:
           type: string
-          example: mifos
+          example: BaaS
         activatedByFirstname:
           type: string
           example: App
@@ -41891,7 +41891,7 @@ components:
       properties:
         username:
           type: string
-          example: mifos
+          example: BaaS
         userId:
           type: integer
           format: int32
@@ -41974,7 +41974,7 @@ components:
       properties:
         username:
           type: string
-          example: mifos
+          example: BaaS
         userId:
           type: integer
           format: int32
@@ -43283,7 +43283,7 @@ components:
           example: User
         email:
           type: string
-          example: whatever@mifos.org
+          example: whatever@BaaS.org
         officeId:
           type: integer
           format: int64
@@ -43339,7 +43339,7 @@ components:
           example: 1
         username:
           type: string
-          example: mifos
+          example: BaaS
         officeId:
           type: integer
           format: int64
@@ -43355,7 +43355,7 @@ components:
           example: Administrator
         email:
           type: string
-          example: demomfi@mifos.org
+          example: demomfi@BaaS.org
         passwordNeverExpires:
           type: boolean
           example: false
@@ -43375,7 +43375,7 @@ components:
           example: 1
         username:
           type: string
-          example: mifos
+          example: BaaS
         officeId:
           type: integer
           format: int64
@@ -43391,7 +43391,7 @@ components:
           example: Administrator
         email:
           type: string
-          example: demomfi@mifos.org
+          example: demomfi@BaaS.org
         passwordNeverExpires:
           type: boolean
           example: false
