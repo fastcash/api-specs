@@ -152,7 +152,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PixRefundReply'
-  /pix/v1/consult/refunds/pid/{pid}/tid/{tid}:
+  /pix/v1/consult/refunds/tid/{tid}:
     get:
       description: N/A
       summary: List the PIX Refunds issued for a pix transaction
@@ -166,12 +166,6 @@ paths:
             type: string
           required: true
           description: N/A
-        - in: path
-          name: pid
-          schema:
-            type: number
-          required: true
-          description: N/A
       responses:
         '200':
           description: Pix Transaction found
@@ -179,7 +173,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PixRefundsReply'
-  /pix/v1/consult/pid/{pid}/tid/{tid}:
+  /pix/v1/consult/tid/{tid}:
     get:
       description: N/A
       summary: Query a PIX transaction
@@ -191,12 +185,6 @@ paths:
           name: tid
           schema:
             type: string
-          required: true
-          description: N/A
-        - in: path
-          name: pid
-          schema:
-            type: number
           required: true
           description: N/A
       responses:
@@ -227,7 +215,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SendPixReply'
-  /pix/v1/initiate-send:
+  /pix/v1/send/initiate:
     post:
       description: Initiate a send pix operation (POS)
       summary: Initiate a send pix operation (POS)
@@ -247,7 +235,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InitiateSendPixReply'
-  /pix/v1/confirm-send:
+  /pix/v1/send/confirm:
     post:
       description: Confirm an initiated send pix operation (POS)
       summary: Confirm an initiated send pix operation (POS)
@@ -287,7 +275,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/QrCodeParsePixReply'
-  /pix/v1/send/consult/pid/{pid}/tid/{tid}:
+  /pix/v1/send/consult/tid/{tid}:
     get:
       description: N/A
       summary: Query a Send PIX transaction
@@ -299,12 +287,6 @@ paths:
           name: tid
           schema:
             type: string
-          required: true
-          description: N/A
-        - in: path
-          name: pid
-          schema:
-            type: number
           required: true
           description: N/A
       responses:
