@@ -13,6 +13,8 @@ paths:
     post:
       tags:
         - Bank Accounts
+      security:
+        - apikey: []
       operationId: ListUsersBankAccounts
       requestBody:
         required: true
@@ -33,6 +35,34 @@ paths:
               examples:
                 schame:
                   $ref: "#/components/examples/ListUsersBankAccountsReply"
+  /nearby/banks:
+    get:
+      tags:
+        - Bank Accounts
+      security:
+        - apikey: []
+      operationId: GetNearbyBanks
+      parameters:
+        - name: latitude
+          in: query
+          required: true
+          schema:
+            type: number
+        - name: longitude
+          in: query
+          required: true
+          schema:
+            type: number
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetNearbyBanksReply"
+              examples:
+                schame:
+                  $ref: "#/components/examples/GetNearbyBanksReply"
 components:
   schemas:
     BaseRequest:
@@ -97,6 +127,40 @@ components:
         UpdatedDate:
           format: date-time
           type: string
+    NearbyPlaces:
+      properties:
+        Results:
+          type: array
+          items:
+            $ref: "#/components/schemas/NearbyPlace"
+        Status:
+          type: string
+    NearbyPlace:
+      properties:
+        Geometry:
+          $ref: "#/components/schemas/NearbyPlaceGeometry"
+        Name:
+          type: string
+        OpeningHours:
+          $ref: "#/components/schemas/NearbyPlaceOpeningHours"
+        Vicinity:
+          type: string
+    NearbyPlaceGeometry:
+      properties:
+        Location:
+          $ref: "#/components/schemas/NearbyPlaceLocation"
+    NearbyPlaceLocation:
+      properties:
+        Lat:
+          format: double
+          type: number
+        Lng:
+          format: double
+          type: number
+    NearbyPlaceOpeningHours:
+      properties:
+        open_now:
+          type: boolean
     ListUsersBankAccountsRequest:
       allOf:
         - $ref: "#/components/schemas/BaseRequest"
@@ -114,6 +178,12 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/UserBankAccount"
+    GetNearbyBanksReply:
+      allOf:
+        - $ref: "#/components/schemas/BaseReply"
+      properties:
+        Result:
+          $ref: "#/components/schemas/NearbyPlaces"
   examples:
     ListUsersBankAccountsRequest:
       summary: OK
@@ -153,6 +223,38 @@ components:
             "Message": null,
             "StatusCode": 200
         }
+    GetNearbyBanksReply:
+      summary: OK
+      value: |
+        {
+          "Result": {
+            "Results": [
+              {
+                "Geometry": {
+                  "Location": {
+                    "Lat": -23.5480521,
+                    "Lng": -46.6592421
+                  }
+                },
+                "Name": "Banco Santander - Polo Higienópolis - Agência 2703",
+                "OpeningHours": {
+                  "open_now": false
+                },
+                "Vicinity": "Avenida Angélica, 1784 - Consolação, São Paulo"
+              }
+            ],
+            "Status": "OK"
+          },
+          "Success": true,
+          "Message": null,
+          "StatusCode": 200
+        }
+  securitySchemes:
+    apikey:
+      type: apiKey
+      description: APIKey Authentication
+      name: Authorization
+      in: header
 tags:
   - name: Bank Accounts
     description: ""
