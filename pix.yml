@@ -349,6 +349,8 @@ components:
           type: string
         FixedAmount:
           type: boolean
+          description: >
+            determines whether the final amount of the document can be changed by the payer. In the absence of this field, it is assumed that the amount of the dunning document cannot be changed, that is, the value 'true' is assumed. If the field is present and has a value of 'false', then it is determined that the final dunning amount can be changed by the payer
         OnDemand:
           $ref: '#/components/schemas/OnDemand' 
         Scheduled:
