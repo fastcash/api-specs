@@ -104,8 +104,8 @@ paths:
     post:
       tags:
       - "Transactions"
-      summary: "Pega transação por NSU"
-      description: ""
+      summary: "Desfaz transação a partir do NSU"
+      description: "Uma transação de desfazimento é aconselhada para processos iniciados sistemicamente, os critérios de aprovação de uma transação de desfazimento são os mesmos de um cancelamento"
       operationId: "getTransactionReverse"
       parameters:
       - name: "nsu_original"
@@ -123,8 +123,8 @@ paths:
     post:
       tags:
       - "Transactions"
-      summary: "Pega transação por NSU"
-      description: ""
+      summary: "Cancela transação a partir do NSU"
+      description: "Uma transação de cancelamento é aconselhada para processos iniciados pelo usuário, os critérios de aprovação de uma transação de cancelamento são os mesmos de um desfazimento"
       operationId: "getTransactionRefund"
       consumes:
       - "application/json"
@@ -146,8 +146,8 @@ paths:
     post:
       tags:
       - "Transactions"
-      summary: "Pega transação por NSU"
-      description: ""
+      summary: "Confirma transação a partir do NSU"
+      description: "Para confirmação de uma transação que foi pré-autorizada"
       operationId: "getTransactionConfirm"
       consumes:
       - "application/json"
@@ -205,7 +205,7 @@ paths:
     get:
       tags:
       - "Transactions"
-      summary: "Lista as transações"
+      summary: "Mostrar transação"
       description: ""
       operationId: "getTransactionsId"
       consumes:
