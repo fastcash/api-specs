@@ -80,9 +80,9 @@ paths:
     get:
       tags:
       - "Transactions"
-      summary: "Lista as transações"
-      description: ""
-      operationId: "getTransactions"
+      summary: "Verifica uma transação a partir do NSU"
+      description: "Em um cenário de timeout / problema de comunicação durante a criação de uma transação, é possível consultar o processamento dessa transação e ter exatamente o payload de resposta."
+      operationId: "getTransactionsByNsu"
       consumes:
       - "application/json"
       produces:
