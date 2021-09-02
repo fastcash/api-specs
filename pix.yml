@@ -31,6 +31,27 @@ paths:
                 $ref: "#/components/schemas/CreatePixCashinReply"
         "400":
           description: Invalid Request
+    put:
+      description: >
+        Change a cashin pix transaction.
+      summary: Change pix transaction
+      operationId: ChangePixCashin
+      tags:
+        - Receive
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChangePixCashinRequest"
+      responses:
+        "200":
+          description: Pix Transaction Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreatePixCashinReply"
+        "400":
+          description: Invalid Request
   /pix/v1/location:
     post:
       description: N/A
@@ -465,10 +486,13 @@ components:
         Discount:
           $ref: "#/components/schemas/Discount"
     Abatement:
+      required:
+        - Modality
+        - Value
       properties:
         Modality:
-          type: "integer"
-          format: "int32"
+          type: integer
+          format: int32
           description: >
             Abatement applied on the charge:
               * 1: fixed value
@@ -477,12 +501,15 @@ components:
           maximum: 2
         Value:
           type: number
-          description: "Abatement or others deductions applied on the charge. Can be fixed or percent"
+          description: Abatement or others deductions applied on the charge. Can be fixed or percent
     Fine:
+      required:
+        - Modality
+        - Value
       properties:
         Modality:
-          type: "integer"
-          format: "int32"
+          type: integer
+          format: int32
           description: >
             Fine applied on the charge:
               * 1: fixed value
@@ -491,12 +518,15 @@ components:
           maximum: 2
         Value:
           type: number
-          description: "Fine applied on the charge. Can be fixed or percent"
+          description: Fine applied on the charge. Can be fixed or percent
     Interest:
+      required:
+        - Modality
+        - Value
       properties:
         Modality:
-          type: "integer"
-          format: "int32"
+          type: integer
+          format: int32
           description: >
             Interest applied on the charge:
               * 1: fixed value by day
@@ -511,12 +541,19 @@ components:
           maximum: 8
         Value:
           type: number
-          description: "Interest applied on the charge. Can be fixed or percent according to modality"
+          description: Interest applied on the charge. Can be fixed or percent according to modality
     Discount:
+      oneOf:
+        - required:
+            - Modality
+            - Value
+        - required:
+            - Modality
+            - Values
       properties:
         Modality:
-          type: "integer"
-          format: "int32"
+          type: integer
+          format: int32
           description: >
             Interest applied on the charge:
               * 1: fixed value until informed dates
@@ -529,7 +566,17 @@ components:
           maximum: 6
         Value:
           type: number
-          description: "Discount applied on the charge. Can be fixed or percent according to modality"
+          description: Discount applied on the charge. Can be fixed or percent according to modality. [When Modality equals 3, 4, 5 or 6]
+        Values:
+          type: array
+          items:
+            properties:
+              Date:
+                type: string
+                format: date-time
+              Value:
+                type: number
+          description: Discount applied on the charge. Can be fixed or percent according to modality. [When Modality equals 1 or 2]
     Refund:
       properties:
         RefundId:
@@ -608,6 +655,14 @@ components:
           type: number
         Description:
           type: string
+    BaseChangeCashinRequest:
+      properties:
+        Pid:
+          type: integer
+        Tid:
+          type: string
+        Amount:
+          type: number
     CreatePixLocationCashinRequest:
       allOf:
         - $ref: "#/components/schemas/RequestType"
@@ -618,6 +673,10 @@ components:
       properties:
         Customer:
           $ref: "#/components/schemas/Customer"
+    ChangePixCashinRequest:
+      allOf:
+        - $ref: "#/components/schemas/BaseCreateCashinRequest"
+        - $ref: "#/components/schemas/PixTransaction"
     SendPixRequest:
       allOf:
         - $ref: "#/components/schemas/SendTransactionWithBankAccount"
