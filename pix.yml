@@ -49,7 +49,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CreatePixCashinReply"
+                $ref: "#/components/schemas/ChangePixCashinReply"
         "400":
           description: Invalid Request
   /pix/v1/location:
@@ -352,6 +352,11 @@ components:
         SubPaymentMethod:
           type: integer
     Customer:
+      required:
+        - Document
+        - Name
+        - Email
+        - MobilePhone
       properties:
         Document:
           type: string
@@ -365,14 +370,15 @@ components:
       allOf:
         - $ref: "#/components/schemas/RequestType"
         - $ref: "#/components/schemas/Location"
-      description: If RequestType is OnDemand should fill OnDemand property, else should fill Scheduled field
+      description: > 
+        If RequestType is OnDemand should fill OnDemand property, else should fill Scheduled field
       properties:
         Instructions:
           type: string
         FixedAmount:
           type: boolean
           description: >
-            determines whether the final amount of the document can be changed by the payer. In the absence of this field, it is assumed that the amount of the dunning document cannot be changed, that is, the value 'true' is assumed. If the field is present and has a value of 'false', then it is determined that the final dunning amount can be changed by the payer
+            Determines whether the final amount of the document can be changed by the payer. In the absence of this field, it is assumed that the amount of the dunning document cannot be changed, that is, the value 'true' is assumed. If the field is present and has a value of 'false', then it is determined that the final dunning amount can be changed by the payer
         OnDemand:
           $ref: "#/components/schemas/OnDemand"
         Scheduled:
@@ -411,10 +417,12 @@ components:
     Location:
       properties:
         Location:
+          required:
+            - Id
+            - Location
           properties:
             Id:
               type: string
-              format: uuid
             Location:
               type: string
     Destinatary:
@@ -638,6 +646,9 @@ components:
           allOf:
             - $ref: "#/components/schemas/Image"
     BaseRequest:
+      required:
+        - Pid
+        - ProdId
       properties:
         Pid:
           type: integer
@@ -646,6 +657,9 @@ components:
     BaseCreateCashinRequest:
       allOf:
         - $ref: "#/components/schemas/BaseRequest"
+      required:
+        - Tid
+        - Amount
       properties:
         Tid:
           type: string
@@ -656,6 +670,9 @@ components:
         Description:
           type: string
     BaseChangeCashinRequest:
+      required:
+        - Tid
+        - Pid
       properties:
         Pid:
           type: integer
@@ -670,13 +687,26 @@ components:
       allOf:
         - $ref: "#/components/schemas/BaseCreateCashinRequest"
         - $ref: "#/components/schemas/PixTransaction"
+      required:
+        - Pid
+        - ProdId
+        - Tid
+        - Amount
+        - Instructions
+        - RequestType
+        - Location
+        - Customer
       properties:
         Customer:
           $ref: "#/components/schemas/Customer"
     ChangePixCashinRequest:
       allOf:
-        - $ref: "#/components/schemas/BaseCreateCashinRequest"
-        - $ref: "#/components/schemas/PixTransaction"
+        - $ref: "#/components/schemas/BaseChangeCashinRequest"
+      properties:
+        Instructions:
+          type: string
+        Scheduled:
+          $ref: "#/components/schemas/Scheduled"
     SendPixRequest:
       allOf:
         - $ref: "#/components/schemas/SendTransactionWithBankAccount"
@@ -735,6 +765,9 @@ components:
         EMV:
           type: string
     CreatePixCashinReply:
+      allOf:
+        - $ref: "#/components/schemas/BaseCreateCashinReply"
+    ChangePixCashinReply:
       allOf:
         - $ref: "#/components/schemas/BaseCreateCashinReply"
     CreatePixLocationCashinReply:
@@ -852,5 +885,5 @@ components:
                 Status:
                   type: number
 tags:
-  - name: pix
-    description: PIX Transactions
+  - name: Receive
+    description: PIX Transactions where a customer is charged to pay an amount
