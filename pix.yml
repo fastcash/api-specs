@@ -2,11 +2,11 @@ openapi: 3.0.0
 info:
   title: Fastcash Pix - API
   description: Endpoints
-  version: '10'
+  version: "10"
   contact:
     email: dev@fastcash.com.br
 servers:
-  - url: 'https://dev.meu.cash/apiv10'
+  - url: "https://dev.meu.cash/apiv10"
     description: Development
 paths:
   /pix/v1/receive:
@@ -21,36 +21,36 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreatePixCashinRequest'
+              $ref: "#/components/schemas/CreatePixCashinRequest"
       responses:
-        '200':
+        "200":
           description: Pix Transaction Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreatePixCashinReply'
-        '400':
+                $ref: "#/components/schemas/CreatePixCashinReply"
+        "400":
           description: Invalid Request
   /pix/v1/location:
-      post:
-        description: N/A
-        summary: Create a PIX Location (Payable URL)
-        operationId: CreatePixLocationCashin
-        tags:
-          - Receive
-        requestBody:
-          description: > 
+    post:
+      description: N/A
+      summary: Create a PIX Location (Payable URL)
+      operationId: CreatePixLocationCashin
+      tags:
+        - Receive
+      requestBody:
+        description: >
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePixLocationCashinRequest"
+      responses:
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreatePixLocationCashinRequest'
-        responses:
-          '200':
-            description: ""
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/CreatePixLocationCashinReply'
+                $ref: "#/components/schemas/CreatePixLocationCashinReply"
   /pix/v1/location/{id}/unlink:
     put:
       description: N/A
@@ -66,15 +66,15 @@ paths:
           required: true
           description: Id to update pix transaction
       responses:
-        '200':
+        "200":
           description: N/A
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UnlikPixLocationCashinReply'
-        '400':
+                $ref: "#/components/schemas/UnlikPixLocationCashinReply"
+        "400":
           description: Invalid request
-        '404':
+        "404":
           description: Transaction not found
   /pix/v1/qrcode/by-location:
     post:
@@ -96,14 +96,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ShowQRCodePixLocationRequest'
+              $ref: "#/components/schemas/ShowQRCodePixLocationRequest"
       responses:
-        '200':
+        "200":
           description: N/A
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ShowQrCodePixCashinReply'
+                $ref: "#/components/schemas/ShowQrCodePixCashinReply"
   /pix/v1/qrcode/by-tid:
     post:
       description: N/A
@@ -113,25 +113,25 @@ paths:
         - Receive
       requestBody:
         description: >
-            Format:
-             * `base64`
-             * `svg`
+          Format:
+           * `base64`
+           * `svg`
 
-            Base64.Type
-              * `gif`
-              * `png`
-              * `jpeg`
+          Base64.Type
+            * `gif`
+            * `png`
+            * `jpeg`
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ShowQRCodePixRequest'
+              $ref: "#/components/schemas/ShowQRCodePixRequest"
       responses:
-        '200':
+        "200":
           description: N/A
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ShowQrCodePixCashinReply'
+                $ref: "#/components/schemas/ShowQrCodePixCashinReply"
   /pix/v1/refund:
     post:
       description: N/A
@@ -140,18 +140,18 @@ paths:
       tags:
         - Receive
       requestBody:
-        description: > 
+        description: >
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PixRefundRequest'
+              $ref: "#/components/schemas/PixRefundRequest"
       responses:
-        '200':
+        "200":
           description: Pix Transaction found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PixRefundReply'
+                $ref: "#/components/schemas/PixRefundReply"
   /pix/v1/consult/refunds/tid/{tid}:
     get:
       description: N/A
@@ -167,12 +167,12 @@ paths:
           required: true
           description: N/A
       responses:
-        '200':
+        "200":
           description: Pix Transaction found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PixRefundsReply'
+                $ref: "#/components/schemas/PixRefundsReply"
   /pix/v1/consult/tid/{tid}:
     get:
       description: N/A
@@ -188,12 +188,12 @@ paths:
           required: true
           description: N/A
       responses:
-        '200':
+        "200":
           description: Pix Transaction found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetPixCashinReply'
+                $ref: "#/components/schemas/GetPixCashinReply"
   /pix/v1/send:
     post:
       description: >
@@ -203,18 +203,18 @@ paths:
       tags:
         - Receive
       requestBody:
-        description: > 
+        description: >
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SendPixRequest'
+              $ref: "#/components/schemas/SendPixRequest"
       responses:
-        '200':
+        "200":
           description: Pix Transaction found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SendPixReply'
+                $ref: "#/components/schemas/SendPixReply"
   /pix/v1/send/initiate:
     post:
       description: Initiate a send pix operation (POS)
@@ -223,18 +223,18 @@ paths:
       tags:
         - Receive
       requestBody:
-        description: > 
+        description: >
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/InitiateSendPixRequest'
+              $ref: "#/components/schemas/InitiateSendPixRequest"
       responses:
-        '200':
+        "200":
           description: Pix Transaction found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InitiateSendPixReply'
+                $ref: "#/components/schemas/InitiateSendPixReply"
   /pix/v1/send/confirm:
     post:
       description: Confirm an initiated send pix operation (POS)
@@ -243,38 +243,38 @@ paths:
       tags:
         - Receive
       requestBody:
-        description: > 
+        description: >
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ConfirmSendPixRequest'
+              $ref: "#/components/schemas/ConfirmSendPixRequest"
       responses:
-        '200':
+        "200":
           description: Pix Transaction found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ConfirmSendPixReply'
+                $ref: "#/components/schemas/ConfirmSendPixReply"
   /pix/v1/qrcode/parse:
     post:
-      description: Parse a QR code EMV (pix qrcode content) 
+      description: Parse a QR code EMV (pix qrcode content)
       summary: Parse a QR code EMV (pix qrcode content)
       operationId: QrCodePardePixTransaction
       tags:
         - Receive
       requestBody:
-        description: > 
+        description: >
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/QrCodeParsePixRequest'
+              $ref: "#/components/schemas/QrCodeParsePixRequest"
       responses:
-        '200':
+        "200":
           description: Pix Transaction found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/QrCodeParsePixReply'
+                $ref: "#/components/schemas/QrCodeParsePixReply"
   /pix/v1/send/consult/tid/{tid}:
     get:
       description: N/A
@@ -290,12 +290,12 @@ paths:
           required: true
           description: N/A
       responses:
-        '200':
+        "200":
           description: Pix Transaction found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ConsultSendPixReply'
+                $ref: "#/components/schemas/ConsultSendPixReply"
 components:
   schemas:
     TransactionStatus:
@@ -342,8 +342,9 @@ components:
           type: string
     PixTransaction:
       allOf:
-        - $ref: '#/components/schemas/RequestType'
-        - $ref: '#/components/schemas/Location'
+        - $ref: "#/components/schemas/RequestType"
+        - $ref: "#/components/schemas/Location"
+      description: If RequestType is OnDemand should fill OnDemand property, else should fill Scheduled field
       properties:
         Instructions:
           type: string
@@ -352,34 +353,34 @@ components:
           description: >
             determines whether the final amount of the document can be changed by the payer. In the absence of this field, it is assumed that the amount of the dunning document cannot be changed, that is, the value 'true' is assumed. If the field is present and has a value of 'false', then it is determined that the final dunning amount can be changed by the payer
         OnDemand:
-          $ref: '#/components/schemas/OnDemand' 
+          $ref: "#/components/schemas/OnDemand"
         Scheduled:
-          $ref: '#/components/schemas/Scheduled' 
+          $ref: "#/components/schemas/Scheduled"
     SendTransactionWithBankAccount:
       allOf:
-        - $ref: '#/components/schemas/BaseCreateCashinRequest'
+        - $ref: "#/components/schemas/BaseCreateCashinRequest"
       properties:
         RemittanceInformation:
           type: string
         Destinatary:
-         $ref: '#/components/schemas/DestinataryWithBankAccount'
+          $ref: "#/components/schemas/DestinataryWithBankAccount"
         Schedule:
-         $ref: '#/components/schemas/Schedule'
+          $ref: "#/components/schemas/Schedule"
     SendTransaction:
       allOf:
-        - $ref: '#/components/schemas/BaseCreateCashinRequest'
+        - $ref: "#/components/schemas/BaseCreateCashinRequest"
       properties:
         RemittanceInformation:
           type: string
         Destinatary:
-         $ref: '#/components/schemas/Destinatary'
+          $ref: "#/components/schemas/Destinatary"
         Schedule:
-         $ref: '#/components/schemas/Schedule'
+          $ref: "#/components/schemas/Schedule"
     RequestType:
       properties:
         RequestType:
           type: string
-          enum:             
+          enum:
             - OnDemand
             - Scheduled
           description: >
@@ -403,10 +404,10 @@ components:
           type: string
     DestinataryWithBankAccount:
       allOf:
-        - $ref: '#/components/schemas/Destinatary'
+        - $ref: "#/components/schemas/Destinatary"
       properties:
         BankAccount:
-          $ref: '#/components/schemas/BankAccountInfo'
+          $ref: "#/components/schemas/BankAccountInfo"
     BankAccountInfo:
       properties:
         BankNumber:
@@ -455,6 +456,80 @@ components:
         OverdueLimit:
           type: number
           description: Limits in days
+        Abatement:
+          $ref: "#/components/schemas/Abatement"
+        Fine:
+          $ref: "#/components/schemas/Fine"
+        Interest:
+          $ref: "#/components/schemas/Interest"
+        Discount:
+          $ref: "#/components/schemas/Discount"
+    Abatement:
+      properties:
+        Modality:
+          type: "integer"
+          format: "int32"
+          description: >
+            Abatement applied on the charge:
+              * 1: fixed value
+              * 2: percent value
+          minimum: 1
+          maximum: 2
+        Value:
+          type: number
+          description: "Abatement or others deductions applied on the charge. Can be fixed or percent"
+    Fine:
+      properties:
+        Modality:
+          type: "integer"
+          format: "int32"
+          description: >
+            Fine applied on the charge:
+              * 1: fixed value
+              * 2: percent value
+          minimum: 1
+          maximum: 2
+        Value:
+          type: number
+          description: "Fine applied on the charge. Can be fixed or percent"
+    Interest:
+      properties:
+        Modality:
+          type: "integer"
+          format: "int32"
+          description: >
+            Interest applied on the charge:
+              * 1: fixed value by day
+              * 2: percent value by day
+              * 3: percent value by month
+              * 4: percent value by year
+              * 5: fixed value by business day
+              * 6: percent value by business day
+              * 7: percent value by business month
+              * 8: percent value by business year
+          minimum: 1
+          maximum: 8
+        Value:
+          type: number
+          description: "Interest applied on the charge. Can be fixed or percent according to modality"
+    Discount:
+      properties:
+        Modality:
+          type: "integer"
+          format: "int32"
+          description: >
+            Interest applied on the charge:
+              * 1: fixed value until informed dates
+              * 2: percent value until informed dates
+              * 3: fixed value per day in advance
+              * 4: fixed value per business day in advance
+              * 5: percent value per day in advance
+              * 6: percent value per business day in advance
+          minimum: 1
+          maximum: 6
+        Value:
+          type: number
+          description: "Discount applied on the charge. Can be fixed or percent according to modality"
     Refund:
       properties:
         RefundId:
@@ -468,7 +543,7 @@ components:
         StatusName:
           type: string
     Error:
-     properties:
+      properties:
         PropertyName:
           type: string
         ErrorMessage:
@@ -485,36 +560,36 @@ components:
           type: integer
     BaseCreateCashinReply:
       allOf:
-        - $ref: '#/components/schemas/BaseReply'
+        - $ref: "#/components/schemas/BaseReply"
       properties:
         Result:
           properties:
             Transaction:
               allOf:
-                - $ref: '#/components/schemas/Transaction'
-                - $ref: '#/components/schemas/TransactionStatus'
-                - $ref: '#/components/schemas/PixTransaction'
+                - $ref: "#/components/schemas/Transaction"
+                - $ref: "#/components/schemas/TransactionStatus"
+                - $ref: "#/components/schemas/PixTransaction"
               properties:
                 EMV:
                   type: string
             Parameters:
               type: array
               items:
-                $ref: '#/components/schemas/TransactionParameter'
+                $ref: "#/components/schemas/TransactionParameter"
     BaseCreatePixLocationCashinReply:
       allOf:
-        - $ref: '#/components/schemas/BaseReply'
+        - $ref: "#/components/schemas/BaseReply"
       properties:
         Result:
           allOf:
-            - $ref: '#/components/schemas/Location'
+            - $ref: "#/components/schemas/Location"
     BaseShowQrCodePixCashinReply:
       allOf:
-        - $ref: '#/components/schemas/BaseReply'
+        - $ref: "#/components/schemas/BaseReply"
       properties:
         Result:
           allOf:
-            - $ref: '#/components/schemas/Image'
+            - $ref: "#/components/schemas/Image"
     BaseRequest:
       properties:
         Pid:
@@ -523,7 +598,7 @@ components:
           type: integer
     BaseCreateCashinRequest:
       allOf:
-        - $ref: '#/components/schemas/BaseRequest'
+        - $ref: "#/components/schemas/BaseRequest"
       properties:
         Tid:
           type: string
@@ -532,29 +607,29 @@ components:
         Amount:
           type: number
         Description:
-          type: string     
+          type: string
     CreatePixLocationCashinRequest:
       allOf:
-        - $ref: '#/components/schemas/RequestType'
+        - $ref: "#/components/schemas/RequestType"
     CreatePixCashinRequest:
       allOf:
-        - $ref: '#/components/schemas/BaseCreateCashinRequest'
-        - $ref: '#/components/schemas/PixTransaction'
+        - $ref: "#/components/schemas/BaseCreateCashinRequest"
+        - $ref: "#/components/schemas/PixTransaction"
       properties:
         Customer:
-          $ref: '#/components/schemas/Customer'
+          $ref: "#/components/schemas/Customer"
     SendPixRequest:
       allOf:
-        - $ref: '#/components/schemas/SendTransactionWithBankAccount'
+        - $ref: "#/components/schemas/SendTransactionWithBankAccount"
       properties:
         Customer:
-          $ref: '#/components/schemas/Customer'
+          $ref: "#/components/schemas/Customer"
     InitiateSendPixRequest:
       allOf:
-        - $ref: '#/components/schemas/SendTransaction'
+        - $ref: "#/components/schemas/SendTransaction"
       properties:
         Customer:
-          $ref: '#/components/schemas/Customer'
+          $ref: "#/components/schemas/Customer"
     ConfirmSendPixRequest:
       properties:
         Pid:
@@ -569,9 +644,9 @@ components:
       properties:
         Format:
           type: string
-          enum:             
+          enum:
             - base64
-            - svg 
+            - svg
         Tid:
           type: string
         Pid:
@@ -581,12 +656,12 @@ components:
           type: number
           format: int32
         Base64:
-          $ref: '#/components/schemas/Base64Image'
+          $ref: "#/components/schemas/Base64Image"
     ShowQRCodePixLocationRequest:
       properties:
         Format:
           type: string
-          enum:             
+          enum:
             - base64
             - svg
         LocationId:
@@ -595,23 +670,23 @@ components:
           type: number
           format: int32
         Base64:
-          $ref: '#/components/schemas/Base64Image'
+          $ref: "#/components/schemas/Base64Image"
     QrCodeParsePixRequest:
       properties:
         EMV:
           type: string
     CreatePixCashinReply:
       allOf:
-        - $ref: '#/components/schemas/BaseCreateCashinReply'
+        - $ref: "#/components/schemas/BaseCreateCashinReply"
     CreatePixLocationCashinReply:
       allOf:
-        - $ref: '#/components/schemas/BaseCreatePixLocationCashinReply'
+        - $ref: "#/components/schemas/BaseCreatePixLocationCashinReply"
     UnlikPixLocationCashinReply:
       allOf:
-        - $ref: '#/components/schemas/BaseCreatePixLocationCashinReply'
+        - $ref: "#/components/schemas/BaseCreatePixLocationCashinReply"
     ShowQrCodePixCashinReply:
       allOf:
-        - $ref: '#/components/schemas/BaseShowQrCodePixCashinReply'
+        - $ref: "#/components/schemas/BaseShowQrCodePixCashinReply"
     PixRefundRequest:
       properties:
         Tid:
@@ -622,10 +697,10 @@ components:
           type: number
     PixRefundReply:
       allOf:
-        - $ref: '#/components/schemas/BaseReply'
+        - $ref: "#/components/schemas/BaseReply"
     PixRefundsReply:
       allOf:
-        - $ref: '#/components/schemas/BaseReply'
+        - $ref: "#/components/schemas/BaseReply"
       properties:
         Result:
           properties:
@@ -635,85 +710,85 @@ components:
               type: integer
             Refunds:
               items:
-                $ref: '#/components/schemas/Refund'
+                $ref: "#/components/schemas/Refund"
     GetPixCashinReply:
       allOf:
-        - $ref: '#/components/schemas/BaseReply'
+        - $ref: "#/components/schemas/BaseReply"
       properties:
         Result:
           properties:
             Transaction:
               allOf:
-                - $ref: '#/components/schemas/Transaction'
-                - $ref: '#/components/schemas/TransactionStatus'
-                - $ref: '#/components/schemas/PixTransaction'
+                - $ref: "#/components/schemas/Transaction"
+                - $ref: "#/components/schemas/TransactionStatus"
+                - $ref: "#/components/schemas/PixTransaction"
             Parameters:
               type: array
               items:
-                $ref: '#/components/schemas/TransactionParameter'
+                $ref: "#/components/schemas/TransactionParameter"
     SendPixReply:
       allOf:
-        - $ref: '#/components/schemas/BaseReply'
+        - $ref: "#/components/schemas/BaseReply"
       properties:
         Errors:
           type: array
           items:
-            $ref: '#/components/schemas/Error'
+            $ref: "#/components/schemas/Error"
         Result:
           properties:
             Transaction:
               allOf:
-                - $ref: '#/components/schemas/SendTransactionWithBankAccount'
+                - $ref: "#/components/schemas/SendTransactionWithBankAccount"
               properties:
                 Status:
                   type: number
     InitiateSendPixReply:
       allOf:
-        - $ref: '#/components/schemas/BaseReply'
+        - $ref: "#/components/schemas/BaseReply"
       properties:
         Errors:
           type: array
           items:
-            $ref: '#/components/schemas/Error'
+            $ref: "#/components/schemas/Error"
         Result:
           properties:
             Transaction:
               allOf:
-                - $ref: '#/components/schemas/SendTransaction'
+                - $ref: "#/components/schemas/SendTransaction"
               properties:
                 Status:
                   type: number
     ConfirmSendPixReply:
       allOf:
-        - $ref: '#/components/schemas/BaseReply'
+        - $ref: "#/components/schemas/BaseReply"
       properties:
         Errors:
           type: array
           items:
-            $ref: '#/components/schemas/Error'
+            $ref: "#/components/schemas/Error"
     QrCodeParsePixReply:
       allOf:
-        - $ref: '#/components/schemas/BaseReply'
+        - $ref: "#/components/schemas/BaseReply"
       properties:
         Result:
           type: string
         Errors:
           type: array
           items:
-            $ref: '#/components/schemas/Error'
+            $ref: "#/components/schemas/Error"
     ConsultSendPixReply:
       allOf:
-        - $ref: '#/components/schemas/BaseReply'
+        - $ref: "#/components/schemas/BaseReply"
       properties:
         Errors:
           type: array
           items:
-            $ref: '#/components/schemas/Error'
+            $ref: "#/components/schemas/Error"
         Result:
           properties:
             Transaction:
               allOf:
-                - $ref: '#/components/schemas/SendTransactionWithBankAccount'
+                - $ref: "#/components/schemas/SendTransactionWithBankAccount"
               properties:
                 Status:
                   type: number
