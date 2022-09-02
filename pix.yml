@@ -12,7 +12,7 @@ paths:
   /pix/v1/receive:
     post:
       description: >
-        Creates a cashin pix transaction.
+        To create a Pix payment, you must first create a transaction.
       summary: Create pix transaction
       operationId: CreatePixCashin
       tags:
