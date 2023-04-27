@@ -6,7 +6,7 @@ info:
   contact:
     email: dev@fastcash.com.br
 servers:
-  - url: "https://dev.meu.cash/apiv10"
+  - url: "https://www.fastcash.com.br/apiv10Sandbox"
     description: Desenvolvimento
 paths:
   /user/listbankaccounts:
