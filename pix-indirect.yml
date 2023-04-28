@@ -1,0 +1,184 @@
+openapi: 3.0.1
+info:
+  title: PIX INDIRECT
+  version: v1
+servers:
+  - url: "https://www.fastcash.com.br/apiv10Sandbox"
+paths:
+  /v1/dict:
+    post:
+      tags:
+        - Dict
+      summary: Create a PIX Key
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NovaChave'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/NovaChave'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/NovaChave'
+      responses:
+        '200':
+          description: Success
+    delete:
+      tags:
+        - Dict
+      summary: Delete a PIX Key
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RemoverChave'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/RemoverChave'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/RemoverChave'
+      responses:
+        '200':
+          description: Success
+    get:
+      tags:
+        - Dict
+      summary: Consult a PIX Key
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConsultarChave'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ConsultarChave'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/ConsultarChave'
+      responses:
+        '200':
+          description: Success
+  /v1/dict/claims:
+    post:
+      tags:
+        - Dict
+      summary: Claim a PIX Key
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReivindicarChave'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ReivindicarChave'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/ReivindicarChave'
+      responses:
+        '200':
+          description: Success
+components:
+  schemas:
+    Claimer:
+      type: object
+      properties:
+        branch:
+          type: string
+          nullable: true
+        number:
+          type: string
+          nullable: true
+        type:
+          $ref: '#/components/schemas/NovaChaveAccountType'
+      additionalProperties: false
+    ConsultarChave:
+      type: object
+      properties:
+        pid:
+          type: integer
+          format: int32
+        prodId:
+          type: integer
+          format: int32
+        account:
+          $ref: '#/components/schemas/NovaChaveAccount'
+      additionalProperties: false
+    KeyType:
+      enum:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+      type: integer
+      format: int32
+    NovaChave:
+      type: object
+      properties:
+        pid:
+          type: integer
+          format: int32
+        prodId:
+          type: integer
+          format: int32
+        key:
+          $ref: '#/components/schemas/NovaChaveKey'
+        account:
+          $ref: '#/components/schemas/NovaChaveAccount'
+      additionalProperties: false
+    NovaChaveAccount:
+      type: object
+      properties:
+        branch:
+          type: string
+          nullable: true
+        number:
+          type: string
+          nullable: true
+        type:
+          $ref: '#/components/schemas/NovaChaveAccountType'
+      additionalProperties: false
+    NovaChaveAccountType:
+      enum:
+        - 0
+        - 1
+        - 2
+        - 3
+      type: integer
+      format: int32
+    NovaChaveKey:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/KeyType'
+        value:
+          type: string
+          nullable: true
+      additionalProperties: false
+    ReivindicarChave:
+      type: object
+      properties:
+        key:
+          $ref: '#/components/schemas/NovaChaveKey'
+        claimer:
+          $ref: '#/components/schemas/Claimer'
+      additionalProperties: false
+    RemoverChave:
+      type: object
+      properties:
+        pid:
+          type: integer
+          format: int32
+        prodId:
+          type: integer
+          format: int32
+        key:
+          $ref: '#/components/schemas/NovaChaveKey'
+        account:
+          $ref: '#/components/schemas/NovaChaveAccount'
+        document:
+          type: string
+          nullable: true
+      additionalProperties: false
