@@ -5,7 +5,7 @@ info:
 servers:
   - url: "https://www.fastcash.com.br/apiv10Sandbox"
 paths:
-  /v1/dict:
+  /dict:
     post:
       tags:
         - Dict
@@ -60,7 +60,7 @@ paths:
       responses:
         '200':
           description: Success
-  /v1/dict/claims:
+  /dict/claims:
     post:
       tags:
         - Dict
@@ -182,4 +182,3 @@ components:
           type: string
           nullable: true
       additionalProperties: false
-
