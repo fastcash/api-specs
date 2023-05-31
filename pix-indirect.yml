@@ -91,12 +91,13 @@ paths:
         - Dict
       summary: Consult a PIX Key
       parameters:
-        - name: Tid
+        - name: Pid
           in: query
           required: true
           schema:
-            type: string
-        - name: Pid
+            type: integer
+            format: int32
+        - name: ProdId
           in: query
           required: true
           schema:
@@ -159,12 +160,13 @@ components:
       required:
         - key
         - pid
-        - tid
+        - prodId
       type: object
       properties:
-        tid:
-          type: string
         pid:
+          type: integer
+          format: int32
+        prodId:
           type: integer
           format: int32
         key:
@@ -195,12 +197,13 @@ components:
       required:
         - key
         - pid
-        - tid
+        - prodId
       type: object
       properties:
-        tid:
-          type: string
         pid:
+          type: integer
+          format: int32
+        prodId:
           type: integer
           format: int32
         key:
@@ -331,3 +334,4 @@ components:
         AttemptedValue:
           nullable: true
       additionalProperties: false
+
