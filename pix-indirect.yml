@@ -5,7 +5,7 @@ info:
 servers:
   - url: "https://www.fastcash.com.br/apiv10Sandbox"
 paths:
-  /dict:
+  /pix/v1/dict/keys:
     post:
       tags:
         - Dict
@@ -14,16 +14,38 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NovaChave'
+              $ref: '#/components/schemas/CreatePixDictKeyRequest'
           text/json:
             schema:
-              $ref: '#/components/schemas/NovaChave'
+              $ref: '#/components/schemas/CreatePixDictKeyRequest'
           application/*+json:
             schema:
-              $ref: '#/components/schemas/NovaChave'
+              $ref: '#/components/schemas/CreatePixDictKeyRequest'
       responses:
-        '200':
+        '201':
           description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/CreatePixDictKeyReply'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePixDictKeyReply'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CreatePixDictKeyReply'
+        '400':
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/CreatePixDictKeyReply'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePixDictKeyReply'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CreatePixDictKeyReply'
     delete:
       tags:
         - Dict
@@ -32,153 +54,280 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RemoverChave'
+              $ref: '#/components/schemas/DeletePixDictKeyRequest'
           text/json:
             schema:
-              $ref: '#/components/schemas/RemoverChave'
+              $ref: '#/components/schemas/DeletePixDictKeyRequest'
           application/*+json:
             schema:
-              $ref: '#/components/schemas/RemoverChave'
+              $ref: '#/components/schemas/DeletePixDictKeyRequest'
       responses:
-        '200':
+        '204':
           description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/DeletePixDictKeyReply'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletePixDictKeyReply'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/DeletePixDictKeyReply'
+        '400':
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/DeletePixDictKeyReply'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletePixDictKeyReply'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/DeletePixDictKeyReply'
     get:
       tags:
         - Dict
       summary: Consult a PIX Key
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ConsultarChave'
-          text/json:
-            schema:
-              $ref: '#/components/schemas/ConsultarChave'
-          application/*+json:
-            schema:
-              $ref: '#/components/schemas/ConsultarChave'
+      parameters:
+        - name: Tid
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: Pid
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: KeyValue
+          in: query
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: Success
-  /dict/claims:
-    post:
-      tags:
-        - Dict
-      summary: Claim a PIX Key
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ReivindicarChave'
-          text/json:
-            schema:
-              $ref: '#/components/schemas/ReivindicarChave'
-          application/*+json:
-            schema:
-              $ref: '#/components/schemas/ReivindicarChave'
-      responses:
-        '200':
-          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetPixDictKeyReply'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPixDictKeyReply'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetPixDictKeyReply'
+        '400':
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetPixDictKeyReply'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPixDictKeyReply'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetPixDictKeyReply'
 components:
   schemas:
-    Claimer:
+    CreatePixDictKeyReply:
       type: object
       properties:
-        branch:
+        Success:
+          type: boolean
+        Message:
           type: string
           nullable: true
-        number:
-          type: string
+        StatusCode:
+          $ref: '#/components/schemas/HttpStatusCode'
+        result:
+          $ref: '#/components/schemas/CreatePixDictKeyReplyValue'
+        Errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/PropertyErrorData'
           nullable: true
-        type:
-          $ref: '#/components/schemas/NovaChaveAccountType'
       additionalProperties: false
-    ConsultarChave:
+    CreatePixDictKeyReplyValue:
+      type: object
+      additionalProperties: false
+    CreatePixDictKeyRequest:
+      required:
+        - key
+        - pid
+        - tid
       type: object
       properties:
+        tid:
+          type: string
         pid:
-          type: integer
-          format: int32
-        prodId:
-          type: integer
-          format: int32
-        account:
-          $ref: '#/components/schemas/NovaChaveAccount'
-      additionalProperties: false
-    KeyType:
-      enum:
-        - 0
-        - 1
-        - 2
-        - 3
-        - 4
-      type: integer
-      format: int32
-    NovaChave:
-      type: object
-      properties:
-        pid:
-          type: integer
-          format: int32
-        prodId:
           type: integer
           format: int32
         key:
-          $ref: '#/components/schemas/NovaChaveKey'
-        account:
-          $ref: '#/components/schemas/NovaChaveAccount'
+          $ref: '#/components/schemas/KeyDto'
       additionalProperties: false
-    NovaChaveAccount:
+    DeletePixDictKeyReply:
       type: object
       properties:
-        branch:
+        Success:
+          type: boolean
+        Message:
           type: string
           nullable: true
-        number:
-          type: string
+        StatusCode:
+          $ref: '#/components/schemas/HttpStatusCode'
+        result:
+          $ref: '#/components/schemas/DeletePixDictKeyReplyValue'
+        Errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/PropertyErrorData'
           nullable: true
-        type:
-          $ref: '#/components/schemas/NovaChaveAccountType'
       additionalProperties: false
-    NovaChaveAccountType:
+    DeletePixDictKeyReplyValue:
+      type: object
+      additionalProperties: false
+    DeletePixDictKeyRequest:
+      required:
+        - key
+        - pid
+        - tid
+      type: object
+      properties:
+        tid:
+          type: string
+        pid:
+          type: integer
+          format: int32
+        key:
+          $ref: '#/components/schemas/KeyValueDto'
+      additionalProperties: false
+    GetPixDictKeyReply:
+      type: object
+      properties:
+        Success:
+          type: boolean
+        Message:
+          type: string
+          nullable: true
+        StatusCode:
+          $ref: '#/components/schemas/HttpStatusCode'
+        result:
+          $ref: '#/components/schemas/GetPixDictKeyReply'
+        Errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/PropertyErrorData'
+          nullable: true
+      additionalProperties: false
+    HttpStatusCode:
       enum:
-        - 0
-        - 1
-        - 2
-        - 3
-      type: integer
-      format: int32
-    NovaChaveKey:
+        - Continue
+        - SwitchingProtocols
+        - Processing
+        - EarlyHints
+        - OK
+        - Created
+        - Accepted
+        - NonAuthoritativeInformation
+        - NoContent
+        - ResetContent
+        - PartialContent
+        - MultiStatus
+        - AlreadyReported
+        - IMUsed
+        - MultipleChoices
+        - MovedPermanently
+        - Found
+        - SeeOther
+        - NotModified
+        - UseProxy
+        - Unused
+        - TemporaryRedirect
+        - PermanentRedirect
+        - BadRequest
+        - Unauthorized
+        - PaymentRequired
+        - Forbidden
+        - NotFound
+        - MethodNotAllowed
+        - NotAcceptable
+        - ProxyAuthenticationRequired
+        - RequestTimeout
+        - Conflict
+        - Gone
+        - LengthRequired
+        - PreconditionFailed
+        - RequestEntityTooLarge
+        - RequestUriTooLong
+        - UnsupportedMediaType
+        - RequestedRangeNotSatisfiable
+        - ExpectationFailed
+        - MisdirectedRequest
+        - UnprocessableEntity
+        - Locked
+        - FailedDependency
+        - UpgradeRequired
+        - PreconditionRequired
+        - TooManyRequests
+        - RequestHeaderFieldsTooLarge
+        - UnavailableForLegalReasons
+        - InternalServerError
+        - NotImplemented
+        - BadGateway
+        - ServiceUnavailable
+        - GatewayTimeout
+        - HttpVersionNotSupported
+        - VariantAlsoNegotiates
+        - InsufficientStorage
+        - LoopDetected
+        - NotExtended
+        - NetworkAuthenticationRequired
+      type: string
+    KeyDto:
+      required:
+        - type
+        - value
       type: object
       properties:
         type:
           $ref: '#/components/schemas/KeyType'
         value:
           type: string
-          nullable: true
       additionalProperties: false
-    ReivindicarChave:
+    KeyType:
+      enum:
+        - EVP
+        - CPF
+        - CNPJ
+        - EMAIL
+        - PHONE
+      type: string
+    KeyValueDto:
+      required:
+        - value
       type: object
       properties:
-        key:
-          $ref: '#/components/schemas/NovaChaveKey'
-        claimer:
-          $ref: '#/components/schemas/Claimer'
-      additionalProperties: false
-    RemoverChave:
-      type: object
-      properties:
-        pid:
-          type: integer
-          format: int32
-        prodId:
-          type: integer
-          format: int32
-        key:
-          $ref: '#/components/schemas/NovaChaveKey'
-        account:
-          $ref: '#/components/schemas/NovaChaveAccount'
-        document:
+        value:
           type: string
+      additionalProperties: false
+    PropertyErrorData:
+      type: object
+      properties:
+        Code:
+          type: integer
+          format: int32
+          nullable: true
+        PropertyName:
+          type: string
+          nullable: true
+        ErrorMessage:
+          type: string
+          nullable: true
+        AttemptedValue:
           nullable: true
       additionalProperties: false
