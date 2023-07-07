@@ -3069,7 +3069,7 @@ paths:
       security:
         - ApiKeyAuth: []
 servers:
-  - url: https://www.fastcash.com.br/apiv10Sandbox
+  - url: https://www.fastcash.com.br/apiv10Microcash
 components:
   securitySchemes:
     ApiKeyAuth:
