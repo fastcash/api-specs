@@ -3132,8 +3132,6 @@ components:
         Message:
           type: string
           nullable: true
-        StatusCode:
-          $ref: '#/components/schemas/HttpStatusCode'
         result:
           $ref: '#/components/schemas/CreateAccountReplyValue'
         Errors:
