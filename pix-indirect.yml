@@ -5,6 +5,47 @@ info:
 servers:
   - url: "https://www.fastcash.com.br/apiv10Sandbox"
 paths:
+  /pix/v1/dict/keys/check:
+    post:
+      tags:
+        - Dict
+      summary: Check a list PIX keys
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckPixDictKeyRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CheckPixDictKeyRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CheckPixDictKeyRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/CheckPixDictKeyReply'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckPixDictKeyReply'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CheckPixDictKeyReply'
+        '400':
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/CheckPixDictKeyReply'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckPixDictKeyReply'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CheckPixDictKeyReply'
   /pix/v1/dict/keys:
     post:
       tags:
@@ -226,6 +267,52 @@ components:
           items:
             $ref: '#/components/schemas/PropertyErrorData'
           nullable: true
+      additionalProperties: false
+    CheckPixDictKeyReply:
+      type: object
+      properties:
+        Success:
+          type: boolean
+        Message:
+          type: string
+          nullable: true
+        StatusCode:
+          $ref: '#/components/schemas/HttpStatusCode'
+        result:
+          $ref: '#/components/schemas/CheckPixDictKeyReplyValue'
+        Errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/PropertyErrorData'
+          nullable: true
+      additionalProperties: false
+    CheckPixDictKeyReplyValue:
+      type: object
+      properties:
+        Keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/KeyCheckPixDictKeyReplyValue'
+          nullable: true
+      additionalProperties: false
+    CheckPixDictKeyRequest:
+      required:
+        - Keys
+      type: object
+      properties:
+        Keys:
+          type: array
+          items:
+            type: string
+      additionalProperties: false
+    KeyCheckPixDictKeyReplyValue:
+      type: object
+      properties:
+        Key:
+          type: string
+          nullable: true
+        HasEntry:
+          type: boolean
       additionalProperties: false
     HttpStatusCode:
       enum:
