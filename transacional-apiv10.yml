@@ -2772,6 +2772,35 @@ paths:
                 $ref: '#/components/schemas/UserBalanceReply'
       security:
         - ApiKeyAuth: []
+  /user/account:
+    post:
+      tags:
+        - User
+      summary: Create a new account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAccountRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CreateAccountRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CreateAccountRequest'
+      responses:
+        '201':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/CreateAccountReply'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateAccountReply'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CreateAccountReply'
   /version:
     get:
       tags:
@@ -3049,6 +3078,87 @@ components:
       name: Authorization
       in: header
   schemas:
+    KeyDto:
+      required:
+        - Type
+        - Value
+      type: object
+      properties:
+        Type:
+          $ref: '#/components/schemas/KeyType'
+        Value:
+          type: string
+      additionalProperties: false
+    KeyType:
+      enum:
+        - EVP
+        - CPF
+        - CNPJ
+        - EMAIL
+        - PHONE
+      type: string
+    AccountDto:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        number:
+          type: string
+          nullable: true
+        type:
+          $ref: '#/components/schemas/AccountType'
+        bankNumber:
+          type: string
+          nullable: true
+        branch:
+          type: string
+          nullable: true
+        keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/KeyDto'
+          nullable: true
+      additionalProperties: false
+    AccountType:
+      enum:
+        - Payment
+      type: string
+    CreateAccountReply:
+      type: object
+      properties:
+        Success:
+          type: boolean
+        Message:
+          type: string
+          nullable: true
+        StatusCode:
+          $ref: '#/components/schemas/HttpStatusCode'
+        result:
+          $ref: '#/components/schemas/CreateAccountReplyValue'
+        Errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/PropertyErrorData'
+          nullable: true
+      additionalProperties: false
+    CreateAccountReplyValue:
+      type: object
+      properties:
+        account:
+          $ref: '#/components/schemas/AccountDto'
+      additionalProperties: false
+    CreateAccountRequest:
+      required:
+        - Name
+        - Type
+      type: object
+      properties:
+        Name:
+          type: string
+        Type:
+          $ref: '#/components/schemas/AccountType'
+      additionalProperties: false
     CreateCreditCardCashinRequest:
       type: object
       properties:
