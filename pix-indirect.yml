@@ -3,7 +3,7 @@ info:
   title: PIX INDIRECT
   version: v1
 servers:
-  - url: "https://www.fastcash.com.br/apiv10Sandbox"
+  - url: "https://www.fastcash.com.br/apiv10Microcash"
 paths:
   /pix/v1/dict/keys/check:
     post:
