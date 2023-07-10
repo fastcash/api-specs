@@ -2801,6 +2801,29 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/CreateAccountReply'
+  /user/{document}/accounts/{account}/balance:
+    get:
+      tags:
+        - User
+      summary: Get account balance
+      parameters:
+        - name: document
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: account
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAccountBalanceReply'
   /version:
     get:
       tags:
@@ -7860,6 +7883,93 @@ components:
           type: integer
         QrCodeData:
           type: string
+    HttpStatusCode:
+      enum:
+        - Continue
+        - SwitchingProtocols
+        - Processing
+        - EarlyHints
+        - OK
+        - Created
+        - Accepted
+        - NonAuthoritativeInformation
+        - NoContent
+        - ResetContent
+        - PartialContent
+        - MultiStatus
+        - AlreadyReported
+        - IMUsed
+        - MultipleChoices
+        - MovedPermanently
+        - Found
+        - SeeOther
+        - NotModified
+        - UseProxy
+        - Unused
+        - TemporaryRedirect
+        - PermanentRedirect
+        - BadRequest
+        - Unauthorized
+        - PaymentRequired
+        - Forbidden
+        - NotFound
+        - MethodNotAllowed
+        - NotAcceptable
+        - ProxyAuthenticationRequired
+        - RequestTimeout
+        - Conflict
+        - Gone
+        - LengthRequired
+        - PreconditionFailed
+        - RequestEntityTooLarge
+        - RequestUriTooLong
+        - UnsupportedMediaType
+        - RequestedRangeNotSatisfiable
+        - ExpectationFailed
+        - MisdirectedRequest
+        - UnprocessableEntity
+        - Locked
+        - FailedDependency
+        - UpgradeRequired
+        - PreconditionRequired
+        - TooManyRequests
+        - RequestHeaderFieldsTooLarge
+        - UnavailableForLegalReasons
+        - InternalServerError
+        - NotImplemented
+        - BadGateway
+        - ServiceUnavailable
+        - GatewayTimeout
+        - HttpVersionNotSupported
+        - VariantAlsoNegotiates
+        - InsufficientStorage
+        - LoopDetected
+        - NotExtended
+        - NetworkAuthenticationRequired
+      type: string
+    UserAccountBalanceReply:
+      type: object
+      properties:
+        Success:
+          type: boolean
+        Message:
+          type: string
+          nullable: true
+        StatusCode:
+          $ref: '#/components/schemas/HttpStatusCode'
+        result:
+          $ref: '#/components/schemas/UserBalance'
+      additionalProperties: false
+    UserBalance:
+      type: object
+      properties:
+        balance:
+          type: number
+          format: double
+        available:
+          type: number
+          format: double
+      additionalProperties: false
     WithdrawalProcessReply:
       type: object
       properties:
