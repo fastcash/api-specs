@@ -137,18 +137,6 @@ paths:
           required: true
           schema:
             type: string
-        - name: Pid
-          in: query
-          required: true
-          schema:
-            type: integer
-            format: int32
-        - name: ProdId
-          in: query
-          required: true
-          schema:
-            type: integer
-            format: int32
       responses:
         '200':
           description: Success
@@ -200,16 +188,8 @@ components:
     CreatePixDictKeyRequest:
       required:
         - Key
-        - Pid
-        - ProdId
       type: object
       properties:
-        Pid:
-          type: integer
-          format: int32
-        ProdId:
-          type: integer
-          format: int32
         Key:
           $ref: '#/components/schemas/KeyDto'
       additionalProperties: false
@@ -237,16 +217,8 @@ components:
     DeletePixDictKeyRequest:
       required:
         - Key
-        - Pid
-        - ProdId
       type: object
       properties:
-        Pid:
-          type: integer
-          format: int32
-        ProdId:
-          type: integer
-          format: int32
         Key:
           $ref: '#/components/schemas/KeyValueDto'
       additionalProperties: false
@@ -405,6 +377,7 @@ components:
         Value:
           type: string
       additionalProperties: false
+  
     PropertyErrorData:
       type: object
       properties:
@@ -421,3 +394,12 @@ components:
         AttemptedValue:
           nullable: true
       additionalProperties: false
+ 
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: APIKey Authentication
+      name: Authorization
+      in: header
+security:
+  - ApiKey: []
