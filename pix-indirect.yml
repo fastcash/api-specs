@@ -87,51 +87,15 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/CreatePixDictKeyReply'
-    delete:
-      tags:
-        - Dict
-      summary: Delete a PIX Key
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DeletePixDictKeyRequest'
-          text/json:
-            schema:
-              $ref: '#/components/schemas/DeletePixDictKeyRequest'
-          application/*+json:
-            schema:
-              $ref: '#/components/schemas/DeletePixDictKeyRequest'
-      responses:
-        '204':
-          description: Success
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/DeletePixDictKeyReply'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DeletePixDictKeyReply'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/DeletePixDictKeyReply'
-        '400':
-          description: Bad Request
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/DeletePixDictKeyReply'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DeletePixDictKeyReply'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/DeletePixDictKeyReply'
     get:
       tags:
         - Dict
       summary: Get a PIX Key
       parameters:
+        - name: authorization
+          in: header
+          schema:
+            type: string
         - name: KeyValue
           in: query
           required: true
@@ -162,84 +126,44 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/GetPixDictKeyReply'
+  /pix/v1/dict/keys/{keyValue}:
+    delete:
+      tags:
+        - Dict
+      summary: Delete a PIX Key
+      parameters:
+        - name: keyValue
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/DeletePixDictKeyReply'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletePixDictKeyReply'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/DeletePixDictKeyReply'
+        '400':
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/DeletePixDictKeyReply'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletePixDictKeyReply'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/DeletePixDictKeyReply'
 components:
   schemas:
-    CreatePixDictKeyReply:
-      type: object
-      properties:
-        Success:
-          type: boolean
-        Message:
-          type: string
-          nullable: true
-        StatusCode:
-          $ref: '#/components/schemas/HttpStatusCode'
-        result:
-          $ref: '#/components/schemas/CreatePixDictKeyReplyValue'
-        Errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/PropertyErrorData'
-          nullable: true
-      additionalProperties: false
-    CreatePixDictKeyReplyValue:
-      type: object
-      additionalProperties: false
-    CreatePixDictKeyRequest:
-      required:
-        - Key
-      type: object
-      properties:
-        Key:
-          $ref: '#/components/schemas/KeyDto'
-      additionalProperties: false
-    DeletePixDictKeyReply:
-      type: object
-      properties:
-        Success:
-          type: boolean
-        Message:
-          type: string
-          nullable: true
-        StatusCode:
-          $ref: '#/components/schemas/HttpStatusCode'
-        result:
-          $ref: '#/components/schemas/DeletePixDictKeyReplyValue'
-        Errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/PropertyErrorData'
-          nullable: true
-      additionalProperties: false
-    DeletePixDictKeyReplyValue:
-      type: object
-      additionalProperties: false
-    DeletePixDictKeyRequest:
-      required:
-        - Key
-      type: object
-      properties:
-        Key:
-          $ref: '#/components/schemas/KeyValueDto'
-      additionalProperties: false
-    GetPixDictKeyReply:
-      type: object
-      properties:
-        Success:
-          type: boolean
-        Message:
-          type: string
-          nullable: true
-        StatusCode:
-          $ref: '#/components/schemas/HttpStatusCode'
-        result:
-          $ref: '#/components/schemas/GetPixDictKeyReply'
-        Errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/PropertyErrorData'
-          nullable: true
-      additionalProperties: false
     CheckPixDictKeyReply:
       type: object
       properties:
@@ -277,14 +201,79 @@ components:
           items:
             type: string
       additionalProperties: false
-    KeyCheckPixDictKeyReplyValue:
+    CreatePixDictKeyReply:
+      type: object
+      properties:
+        Success:
+          type: boolean
+        Message:
+          type: string
+          nullable: true
+        StatusCode:
+          $ref: '#/components/schemas/HttpStatusCode'
+        result:
+          $ref: '#/components/schemas/CreatePixDictKeyReplyValue'
+        Errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/PropertyErrorData'
+          nullable: true
+      additionalProperties: false
+    CreatePixDictKeyReplyValue:
+      type: object
+      properties:
+        key:
+          $ref: '#/components/schemas/KeyDto'
+        createdAt:
+          type: string
+          format: date-time
+      additionalProperties: false
+    CreatePixDictKeyRequest:
+      required:
+        - Key
       type: object
       properties:
         Key:
+          $ref: '#/components/schemas/KeyDto'
+      additionalProperties: false
+    DeletePixDictKeyReply:
+      type: object
+      properties:
+        Success:
+          type: boolean
+        Message:
           type: string
           nullable: true
-        HasEntry:
+        StatusCode:
+          $ref: '#/components/schemas/HttpStatusCode'
+        result:
+          $ref: '#/components/schemas/DeletePixDictKeyReplyValue'
+        Errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/PropertyErrorData'
+          nullable: true
+      additionalProperties: false
+    DeletePixDictKeyReplyValue:
+      type: object
+      additionalProperties: false
+    GetPixDictKeyReply:
+      type: object
+      properties:
+        Success:
           type: boolean
+        Message:
+          type: string
+          nullable: true
+        StatusCode:
+          $ref: '#/components/schemas/HttpStatusCode'
+        result:
+          $ref: '#/components/schemas/GetPixDictKeyReply'
+        Errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/PropertyErrorData'
+          nullable: true
       additionalProperties: false
     HttpStatusCode:
       enum:
@@ -350,6 +339,15 @@ components:
         - NotExtended
         - NetworkAuthenticationRequired
       type: string
+    KeyCheckPixDictKeyReplyValue:
+      type: object
+      properties:
+        Key:
+          type: string
+          nullable: true
+        HasEntry:
+          type: boolean
+      additionalProperties: false
     KeyDto:
       required:
         - Type
@@ -369,15 +367,6 @@ components:
         - EMAIL
         - PHONE
       type: string
-    KeyValueDto:
-      required:
-        - Value
-      type: object
-      properties:
-        Value:
-          type: string
-      additionalProperties: false
-  
     PropertyErrorData:
       type: object
       properties:
@@ -394,7 +383,6 @@ components:
         AttemptedValue:
           nullable: true
       additionalProperties: false
- 
   securitySchemes:
     ApiKey:
       type: apiKey
