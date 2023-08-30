@@ -6,7 +6,7 @@ info:
   contact:
     email: dev@fastcash.com.br
 servers:
-  - url: 'https://www.fastcash.com.br/apiv10Sandbox'
+  - url: 'https://www.fastcash.com.br/apiv10Microcash'
     description: Development
 paths:
   /transaction/in/bank-slip:
