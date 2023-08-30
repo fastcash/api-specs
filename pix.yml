@@ -791,12 +791,16 @@ components:
         - $ref: "#/components/schemas/BaseShowQrCodePixCashinReply"
     PixRefundRequest:
       properties:
-        Tid:
+        EndToEndId:
           type: string
-        Pid:
-          type: integer
         Amount:
           type: number
+        Description:
+          type: string
+        RefundReason:
+          type: string
+        Code:
+          type: string
     PixRefundReply:
       allOf:
         - $ref: "#/components/schemas/BaseReply"
