@@ -158,7 +158,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ShowQrCodePixCashinReply"
-  /pix/v1/refund:
+  /pix/v1/send/refund:
     post:
       description: N/A
       summary: Refund a received PIX transaction
