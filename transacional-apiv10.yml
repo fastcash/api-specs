@@ -3169,13 +3169,10 @@ components:
     CreateAccountRequest:
       required:
         - Name
-        - Document
         - Type
       type: object
       properties:
         Name:
-          type: string
-        Document:
           type: string
         Type:
           $ref: '#/components/schemas/AccountType'
