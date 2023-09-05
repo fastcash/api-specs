@@ -3131,9 +3131,6 @@ components:
           nullable: true
         type:
           $ref: '#/components/schemas/AccountType'
-        bankNumber:
-          type: string
-          nullable: true
         branch:
           type: string
           nullable: true
@@ -3172,10 +3169,13 @@ components:
     CreateAccountRequest:
       required:
         - Name
+        - Document
         - Type
       type: object
       properties:
         Name:
+          type: string
+        Document:
           type: string
         Type:
           $ref: '#/components/schemas/AccountType'
