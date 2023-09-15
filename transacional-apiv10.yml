@@ -2262,6 +2262,53 @@ paths:
             application/bson:
               schema:
                 $ref: '#/components/schemas/BatchCashOutTransferReply'
+  /transaction/pidbalance:
+    get:
+      tags:
+        - Transaction
+      parameters:
+        - name: Authorization
+          in: header
+          description: Chave de autenticação da API
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Saldo do PID retornado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Result:
+                    type: object
+                    properties:
+                      Total:
+                        type: number
+                      Timestamp:
+                        type: string
+                      ApplicationName:
+                        type: string
+                      Pid:
+                        type: number
+                      Banco:
+                        type: string
+                      Agencia:
+                        type: string
+                      Conta:
+                        type: string
+                      ChavePix:
+                        type: string
+                    example:
+                      Total: 200.0
+                      Timestamp: "2023-09-15T10:06:44.117-03:00"
+                      ApplicationName: "EMPRESA DEMO LTDA"
+                      Pid: 0001
+                      Banco: "537"
+                      Agencia: "0001"
+                      Conta: "000000001"
+                      ChavePix: "415455458454815"
   /transaction/getByTid/{tid}/pid/{pid}:
     get:
       tags:
@@ -2824,6 +2871,66 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserAccountBalanceReply'
+      security:
+        - ApiKeyAuth: []
+  /user/balanceByDocument/{pid}/{document}:
+    get:
+      tags:
+        - User
+      summary: Get Balance By document
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: document
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Sucesso - Saldo do usuário retornado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Result:
+                    type: object
+                    properties:
+                      Id:
+                        type: integer
+                        description: ID do usuário
+                      Balance:
+                        type: number
+                        description: Saldo da conta do usuário
+                      Credit:
+                        type: number
+                        description: Crédito do usuário
+                      PreferredBankCode:
+                        type: integer
+                        description: Código do banco preferido
+                    example:
+                      Id: 1803144
+                      Balance: 2.75
+                      Credit: 0.0
+                      PreferredBankCode: 0
+                  Success:
+                    type: boolean
+                    description: Indica se a operação foi bem-sucedida
+                    example: true
+                  Message:
+                    type: string
+                    description: Mensagem de retorno (pode ser nula)
+                    example: null
+                  StatusCode:
+                    type: integer
+                    description: Código de status da resposta
+                    example: 200
+      security:
+       - ApiKeyAuth: []
   /version:
     get:
       tags:
