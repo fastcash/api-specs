@@ -15,12 +15,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CheckPixDictKeyRequest'
-          text/json:
-            schema:
-              $ref: '#/components/schemas/CheckPixDictKeyRequest'
-          application/*+json:
-            schema:
-              $ref: '#/components/schemas/CheckPixDictKeyRequest'
       responses:
         '200':
           description: Success
@@ -56,23 +50,11 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CreatePixDictKeyRequest'
-          text/json:
-            schema:
-              $ref: '#/components/schemas/CreatePixDictKeyRequest'
-          application/*+json:
-            schema:
-              $ref: '#/components/schemas/CreatePixDictKeyRequest'
       responses:
         '201':
           description: Success
           content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/CreatePixDictKeyReply'
             application/json:
-              schema:
-                $ref: '#/components/schemas/CreatePixDictKeyReply'
-            text/json:
               schema:
                 $ref: '#/components/schemas/CreatePixDictKeyReply'
         '400':
@@ -92,10 +74,6 @@ paths:
         - Dict
       summary: Get a PIX Key
       parameters:
-        - name: authorization
-          in: header
-          schema:
-            type: string
         - name: KeyValue
           in: query
           required: true
@@ -105,25 +83,13 @@ paths:
         '200':
           description: Success
           content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/GetPixDictKeyReply'
             application/json:
-              schema:
-                $ref: '#/components/schemas/GetPixDictKeyReply'
-            text/json:
               schema:
                 $ref: '#/components/schemas/GetPixDictKeyReply'
         '400':
           description: Bad Request
           content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/GetPixDictKeyReply'
             application/json:
-              schema:
-                $ref: '#/components/schemas/GetPixDictKeyReply'
-            text/json:
               schema:
                 $ref: '#/components/schemas/GetPixDictKeyReply'
   /pix/v1/dict/keys/{keyValue}:
@@ -141,25 +107,13 @@ paths:
         '204':
           description: Success
           content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/DeletePixDictKeyReply'
             application/json:
-              schema:
-                $ref: '#/components/schemas/DeletePixDictKeyReply'
-            text/json:
               schema:
                 $ref: '#/components/schemas/DeletePixDictKeyReply'
         '400':
           description: Bad Request
           content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/DeletePixDictKeyReply'
             application/json:
-              schema:
-                $ref: '#/components/schemas/DeletePixDictKeyReply'
-            text/json:
               schema:
                 $ref: '#/components/schemas/DeletePixDictKeyReply'
 components:
