@@ -32,6 +32,8 @@ paths:
                 $ref: "#/components/schemas/CreatePixCashinReply"
         "400":
           description: Invalid Request
+      security:
+        - ApiKeyAuth: []
     put:
       description: >
         Change a cashin pix transaction.
@@ -158,6 +160,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ShowQrCodePixCashinReply"
+      security:
+        - ApiKeyAuth: []
   /pix/v1/send/refund:
     post:
       description: N/A
@@ -179,6 +183,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/PixRefundReply"
+      security:
+        - ApiKeyAuth: []
   /pix/v1/consult/refunds/tid/{tid}:
     get:
       description: N/A
@@ -221,6 +227,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetPixCashinReply"
+      security:
+        - ApiKeyAuth: []
   /pix/v1/send:
     post:
       description: >
@@ -328,6 +336,12 @@ paths:
               schema:
                 $ref: "#/components/schemas/ConsultSendPixReply"
 components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      description: APIKey Authentication
+      name: Authorization
+      in: header
   schemas:
     TransactionStatus:
       properties:
@@ -702,9 +716,7 @@ components:
         - ProdId
         - Tid
         - Amount
-        - Instructions
         - RequestType
-        - Location
         - Customer
       properties:
         Customer:
