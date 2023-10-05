@@ -2,7 +2,8 @@ swagger: '2.0'
 info:
   version: v10
   title: Transactions API
-host: localhost:8003
+host: www.fastcash.com.br
+basePath: /apiv10Microcash
 schemes:
   - https
 paths:
