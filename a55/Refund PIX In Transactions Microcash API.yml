@@ -1,0 +1,88 @@
+openapi: 3.0.0
+servers:
+  - url: https://apis-pix-hml.a55scd.com
+info:
+  title: Refund PIX In Transactions Microcash API
+  version: 1.0.0
+  description: Endpoint to refund PIX in transactions.
+paths:
+  /integracao/pix/recebimentos/devolucoes:
+    post:
+      summary: Refund PIX In Transaction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                correlationId:
+                  type: string
+                  example: 6524e550-fdc3-4041-92d6-bdd04302222f
+                  description: Unique correlation ID for the refund transaction
+                endToEndIdRecebimento:
+                  type: string
+                  example: E18236120202404032007s15e8056f
+                  description: End-to-end ID of the original PIX transaction
+                solicitadoEm:
+                  type: string
+                  format: date-time
+                  example: "2024-05-28T18:10:08.370Z"
+                  description: Timestamp of when the refund is requested
+                valor:
+                  type: number
+                  example: 0.01
+                  description: Amount to be refunded
+                codigoDevolucao:
+                  type: string
+                  example: MD06
+                  description: Code for the refund reason
+                motivoDevolucaoComplemento:
+                  type: string
+                  example: Devolucao
+                  description: Additional reason for the refund
+                informacoesEntreClientes:
+                  type: string
+                  example: Devolucao
+                  description: Information shared between clients regarding the refund
+              required:
+                - correlationId
+                - endToEndIdRecebimento
+                - solicitadoEm
+                - valor
+                - codigoDevolucao
+      responses:
+        "200":
+          description: Successful refund response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  devolucaoId:
+                    type: string
+                    example: 6524e550-fdc3-4041-92d6-bdd04302222f
+                    description: ID of the refund transaction
+                  endToEndId:
+                    type: string
+                    example: D45756448202405231539gK46n
+                    description: End-to-end ID of the refund transaction
+        "400":
+          description: Bad request if parameters are incorrect or missing
+        "401":
+          description: Unauthorized if authorization token is invalid
+      security:
+        - bearerAuth: []
+        - apiKeyAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-clientid
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true
