@@ -1,0 +1,222 @@
+openapi: 3.0.0
+servers:
+  - url: https://apis-pix-hml.a55scd.com
+info:
+  title: PIX Out Transactions Microcash API
+  version: 1.0.0
+  description: API for consulting PIX out transactions by EndToEndId or Tid.
+paths:
+  /integracao/pix/pagamentos:
+    get:
+      summary: Consult PIX Out Transactions
+      parameters:
+        - name: EndToEndId
+          in: query
+          required: false
+          schema:
+            type: string
+            example: E45742343248202405271811EioUu
+          description: The EndToEndId of the PIX transaction.
+        - name: Tid
+          in: query
+          required: false
+          schema:
+            type: string
+            example: ab52cedc-4d3d
+          description: The Tid of the PIX transaction.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    status:
+                      type: integer
+                      example: 2
+                    endToEndId:
+                      type: string
+                      example: E457568202405271811EioUu
+                    tid:
+                      type: string
+                      example: '123456'
+                    pagamentoIndiretoId:
+                      type: string
+                      example: ab52cedc-4d3d-4b3c-298dfc8ca3d2
+                    chavePix:
+                      type: string
+                      example: pix@key.com.br
+                    qrCode:
+                      type: string
+                      nullable: true
+                    tipoIniciacao:
+                      type: integer
+                      example: 1
+                    finalidade:
+                      type: integer
+                      example: 0
+                    infoEntreClientes:
+                      type: string
+                      nullable: true
+                    valor:
+                      type: number
+                      example: 200
+                    correntista:
+                      type: object
+                      properties:
+                        nome:
+                          type: string
+                          example: Company LTDA.
+                        documento:
+                          type: string
+                          example: '11111111000111'
+                        conta:
+                          type: object
+                          properties:
+                            ispb:
+                              type: string
+                              example: '45756448'
+                            codBanco:
+                              type: string
+                              nullable: true
+                            bancoNome:
+                              type: string
+                              nullable: true
+                            agencia:
+                              type: string
+                              example: '1'
+                            numero:
+                              type: string
+                              example: '222222222'
+                            tipo:
+                              type: integer
+                              example: 0
+                    contraparte:
+                      type: object
+                      properties:
+                        nome:
+                          type: string
+                          example: Joao
+                        documento:
+                          type: string
+                          example: '11111111111'
+                        conta:
+                          type: object
+                          properties:
+                            ispb:
+                              type: string
+                              example: '0'
+                            codBanco:
+                              type: string
+                              nullable: true
+                            bancoNome:
+                              type: string
+                              nullable: true
+                            agencia:
+                              type: string
+                              example: '1111'
+                            numero:
+                              type: string
+                              example: '11111111'
+                            tipo:
+                              type: integer
+                              example: 0
+                    qrCodeEstatico:
+                      type: string
+                      nullable: true
+                    qrCodeDinamicoImediato:
+                      type: string
+                      nullable: true
+                    qrCodeDinamicoVencimento:
+                      type: string
+                      nullable: true
+                    venceEmUtc:
+                      type: string
+                      format: date-time
+                      nullable: true
+                    confirmadoEmUtc:
+                      type: string
+                      format: date-time
+                      example: '2024-05-24T18:20:49.6666048+00:00'
+                    realizarEmUtc:
+                      type: string
+                      format: date-time
+                      nullable: true
+                    efetivacaoEnviadaEmUtc:
+                      type: string
+                      format: date-time
+                      example: '2024-05-24T18:20:50.6666048+00:00'
+                    efetivacaoRealizadaEmUtc:
+                      type: string
+                      format: date-time
+                      example: '2024-05-24T18:20:50.6666048+00:00'
+                    bloqueadoEmUtc:
+                      type: string
+                      format: date-time
+                      example: '2024-05-24T18:20:50.6666048+00:00'
+                    bloqueioProtocolo:
+                      type: string
+                      example: '0'
+                    debitoEmUtc:
+                      type: string
+                      format: date-time
+                      example: '2024-05-24T18:20:50.6666048+00:00'
+                    debitoProtocolo:
+                      type: string
+                      example: E45756448202405271811EioUu
+                    estornoProtocolo:
+                      type: string
+                      nullable: true
+                    estornoValor:
+                      type: number
+                      example: 0
+                    erroEmUtc:
+                      type: string
+                      format: date-time
+                      nullable: true
+                    erroCodigo:
+                      type: string
+                      nullable: true
+                    erroDescricao:
+                      type: string
+                      nullable: true
+                    devolvidos:
+                      type: array
+                      items:
+                        type: object
+                    processandoEmUtc:
+                      type: string
+                      format: date-time
+                      nullable: true
+                    chaveIdempotencia:
+                      type: string
+                      nullable: true
+                    id:
+                      type: string
+                      example: 01563184-f0d4-4365-a72ede8bf470
+                    chaveSequencial:
+                      type: integer
+                      example: 25477399
+                    criadoEmUtc:
+                      type: string
+                      format: date-time
+                      example: '2024-05-27T18:11:28.531328+00:00'
+        '400':
+          description: Bad request if parameters are incorrect or missing
+        '401':
+          description: Unauthorized if API key is invalid
+        '404':
+          description: Not found if the transaction is not found
+      security:
+        - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

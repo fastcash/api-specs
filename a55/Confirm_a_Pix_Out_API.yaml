@@ -1,0 +1,285 @@
+openapi: 3.0.0
+servers:
+  - url: https://apis-pix-hml.a55scd.com
+info:
+  title: Confirm a Pix Out API
+  version: 1.0.0
+  description: Endpoint to confirm a Pix Out transaction.
+paths:
+  /integracao/pix/pagamentos/confirmacoes:
+    post:
+      summary: Confirm a Pix Out
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                PagamentoId:
+                  type: string
+                  example: 01563184-f0d4-4365-a72ede8bf470
+                  description: Payment ID for the transaction.
+                Valor:
+                  type: number
+                  example: 0.01
+                  description: Amount to be confirmed.
+              required:
+                - PagamentoId
+                - Valor
+      responses:
+        '200':
+          description: Successful response with transaction confirmation details.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 1
+                    description: Status of the transaction confirmation.
+                  endToEndId:
+                    type: string
+                    example: E45756448202405271811EioUu
+                    description: End-to-end ID for the transaction.
+                  tid:
+                    type: string
+                    example: '123456'
+                    description: Transaction ID.
+                  pagamentoIndiretoId:
+                    type: string
+                    example: ab52cedc-4d3d-4b3c-298dfc8ca3d2
+                    description: Indirect payment ID.
+                  chavePix:
+                    type: string
+                    example: pix@key.com.br
+                    description: The PIX key involved in the transaction.
+                  qrCode:
+                    type: string
+                    nullable: true
+                    description: QR code associated with the transaction, if applicable.
+                  tipoIniciacao:
+                    type: integer
+                    example: 1
+                    description: Type of initiation.
+                  finalidade:
+                    type: integer
+                    example: 0
+                    description: Purpose of the transaction.
+                  infoEntreClientes:
+                    type: string
+                    nullable: true
+                    description: Information shared between clients.
+                  valor:
+                    type: number
+                    example: 0.01
+                    description: Confirmed transaction value.
+                  correntista:
+                    type: object
+                    properties:
+                      nome:
+                        type: string
+                        example: Company LTDA.
+                        description: Name of the account holder.
+                      documento:
+                        type: string
+                        example: '11111111000111'
+                        description: Document number of the account holder.
+                      conta:
+                        type: object
+                        properties:
+                          ispb:
+                            type: string
+                            example: '45756448'
+                            description: ISPB code of the bank.
+                          codBanco:
+                            type: string
+                            nullable: true
+                            description: Bank code.
+                          bancoNome:
+                            type: string
+                            nullable: true
+                            description: Name of the bank.
+                          agencia:
+                            type: string
+                            example: '1'
+                            description: Agency number.
+                          numero:
+                            type: string
+                            example: '222222222'
+                            description: Account number.
+                          tipo:
+                            type: integer
+                            example: 0
+                            description: Type of account.
+                  contraparte:
+                    type: object
+                    properties:
+                      nome:
+                        type: string
+                        example: Joao
+                        description: Name of the counterparty.
+                      documento:
+                        type: string
+                        example: '11111111111'
+                        description: Document number of the counterparty.
+                      conta:
+                        type: object
+                        properties:
+                          ispb:
+                            type: string
+                            example: '0'
+                            description: ISPB code of the bank.
+                          codBanco:
+                            type: string
+                            nullable: true
+                            description: Bank code.
+                          bancoNome:
+                            type: string
+                            nullable: true
+                            description: Name of the bank.
+                          agencia:
+                            type: string
+                            example: '1111'
+                            description: Agency number.
+                          numero:
+                            type: string
+                            example: '11111111'
+                            description: Account number.
+                          tipo:
+                            type: integer
+                            example: 0
+                            description: Type of account.
+                  qrCodeEstatico:
+                    type: string
+                    nullable: true
+                    description: Static QR code.
+                  qrCodeDinamicoImediato:
+                    type: string
+                    nullable: true
+                    description: Immediate dynamic QR code.
+                  qrCodeDinamicoVencimento:
+                    type: string
+                    nullable: true
+                    description: Dynamic QR code with expiration.
+                  venceEmUtc:
+                    type: string
+                    format: date-time
+                    nullable: true
+                    description: Expiration time in UTC.
+                  confirmadoEmUtc:
+                    type: string
+                    format: date-time
+                    example: '2024-05-24T18:20:49.6666048+00:00'
+                    description: Confirmation time in UTC.
+                  realizarEmUtc:
+                    type: string
+                    format: date-time
+                    nullable: true
+                    description: Scheduled execution time in UTC.
+                  efetivacaoEnviadaEmUtc:
+                    type: string
+                    format: date-time
+                    nullable: true
+                    description: Time when the effectuation was sent in UTC.
+                  efetivacaoRealizadaEmUtc:
+                    type: string
+                    format: date-time
+                    nullable: true
+                    description: Time when the effectuation was done in UTC.
+                  bloqueadoEmUtc:
+                    type: string
+                    format: date-time
+                    nullable: true
+                    description: Time when the transaction was blocked in UTC.
+                  bloqueioProtocolo:
+                    type: string
+                    nullable: true
+                    description: Block protocol.
+                  debitoEmUtc:
+                    type: string
+                    format: date-time
+                    nullable: true
+                    description: Debit time in UTC.
+                  debitoProtocolo:
+                    type: string
+                    nullable: true
+                    description: Debit protocol.
+                  estornoProtocolo:
+                    type: string
+                    nullable: true
+                    description: Refund protocol.
+                  estornoValor:
+                    type: number
+                    example: 0
+                    description: Refund value.
+                  erroEmUtc:
+                    type: string
+                    format: date-time
+                    nullable: true
+                    description: Error time in UTC.
+                  erroCodigo:
+                    type: string
+                    nullable: true
+                    description: Error code.
+                  erroDescricao:
+                    type: string
+                    nullable: true
+                    description: Error description.
+                  devolvidos:
+                    type: array
+                    items:
+                      type: object
+                    description: Details of refunded amounts.
+                  processandoEmUtc:
+                    type: string
+                    format: date-time
+                    nullable: true
+                    description: Processing time in UTC.
+                  chaveIdempotencia:
+                    type: string
+                    nullable: true
+                    description: Idempotency key.
+                  id:
+                    type: string
+                    example: 01563184-f0d4-4365-a72ede8bf470
+                    description: Transaction ID.
+                  chaveSequencial:
+                    type: integer
+                    example: 25477399
+                    description: Sequential key.
+                  criadoEmUtc:
+                    type: string
+                    format: date-time
+                    example: '2024-05-27T18:11:28.531328+00:00'
+                    description: Creation time in UTC.
+        '400':
+          description: Bad request if parameters are incorrect or missing
+        '401':
+          description: Unauthorized if authorization token is invalid
+      security:
+        - bearerAuth: []
+        - apiKeyAuth: []
+        - correlationId: []
+        - idempotencyKey: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-clientid
+    correlationId:
+      type: apiKey
+      in: header
+      name: x-correlation-id
+    idempotencyKey:
+      type: apiKey
+      in: header
+      name: Chave-Idempotencia
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

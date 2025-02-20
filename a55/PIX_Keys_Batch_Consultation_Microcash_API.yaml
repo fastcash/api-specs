@@ -1,0 +1,65 @@
+openapi: 3.0.0
+servers:
+  - url: https://apis-pix-hml.a55scd.com
+info:
+  title: PIX Keys Batch Consultation Microcash API
+  version: 1.0.0
+  description: API for consulting multiple PIX Keys in batch.
+paths:
+  /pix/dict/chaves/verificar:
+    post:
+      summary: Consult PIX Keys in Batch
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                chaves:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - pix@key.com.br
+                    - '11111111111'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  dataHoraRetornoDict:
+                    type: string
+                    format: date-time
+                    example: '2024-05-28T17:58:17.571Z'
+                  correlationId:
+                    type: string
+                    example: a2024052-8145-8175-4445-7564482f444b
+                  chavesVerificadas:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        chaveDict:
+                          type: string
+                          example: pix@key.com.br
+                        existe:
+                          type: boolean
+                          example: true
+        '400':
+          description: Bad request if parameters are incorrect or missing
+        '401':
+          description: Unauthorized if API key is invalid
+      security:
+        - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

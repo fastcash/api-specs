@@ -1,0 +1,82 @@
+openapi: 3.0.0
+servers:
+  - url: https://apis-pix-hml.a55scd.com
+info:
+  title: Dynamic QRCode Generation Microcash API
+  version: 1.0.0
+  description: Endpoint to generate dynamic QRCode for immediate Pix integration.
+paths:
+  /integracao/pix/qrcodes/dinamicos-imediatos:
+    post:
+      summary: Generate Dynamic QRCode for Immediate Pix Integration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                chaveIdempotencia:
+                  type: string
+                  example: 07f00f55-9a50-4f78-adf3-4ac38619073d
+                chavePix:
+                  type: string
+                  example: 8992de72-610e-8c76-6dc6bf18bfd5
+                codigoCategoria:
+                  type: string
+                  example: '0000'
+                recebedorNome:
+                  type: string
+                  example: Fastcash Pagamentos
+                solicitacaoPagador:
+                  type: string
+                  example: informação
+                devedorDocumento:
+                  type: string
+                  example: '50742495000100'
+                devedorNome:
+                  type: string
+                  example: Fastcash
+                cidade:
+                  type: string
+                  example: Sao Paulo
+                cep:
+                  type: string
+                valorOriginal:
+                  type: number
+                  example: 1
+                modalidadeAlteracao:
+                  type: integer
+                  example: 0
+                expiracaoEmSegundos:
+                  type: integer
+                  example: 80000
+                dadosAdicionais:
+                  type: string
+                reutilizavel:
+                  type: boolean
+                  example: false
+                tid:
+                  type: string
+                  example: '123456'
+      responses:
+        '200':
+          description: Successful response containing payloadBase64 and txId
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  payloadBase64:
+                    type: string
+                    example: MDAwMjAxMjY4ODAwMTRici5nb3YuYmNiLnBpeDI1NjZxcmNvZGUubWljcm9jYXNoaWYuY29tLmJyL3BpeC9hMzQ4YjY3NS01MTUyLTQxOGItOTg5NS0yNTkzNmIzY2UwZTQ1MjA0MDAwMDUzMDM5ODY1ODAyQlI1OTI1RkFTVENBU0ggRElOSEVJUk8gRElHSVRBTDYwMDlTYW8gUGF1bG82MTA5MDEyMjctMjAwNjIwNzA1MDMqKio2MzA0QkUyOA
+                  txId:
+                    type: string
+                    example: 1b56a20f84a1407c88eff6f934
+        '400':
+          description: Bad request if parameters are incorrect or missing
+        '401':
+          description: Unauthorized if authorization token is invalid
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

@@ -1,0 +1,137 @@
+openapi: 3.0.0
+servers:
+  - url: https://apis-pix-hml.a55scd.com
+info:
+  title: PIX In Webhook Microcash API
+  version: 1.0.0
+  description: Endpoint to receive webhook notifications for PIX In transactions.
+paths:
+  /v1/pix/in:
+    post:
+      summary: Receive PIX In Webhook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tipoIniciacao:
+                  type: integer
+                  example: 3
+                prioridade:
+                  type: integer
+                  example: 0
+                tipoPrioridade:
+                  type: integer
+                  example: 0
+                finalidade:
+                  type: integer
+                  example: 0
+                agente:
+                  type: integer
+                  example: 0
+                ispbPss:
+                  type: string
+                  nullable: true
+                cnpjIniciadorPagamento:
+                  type: string
+                  nullable: true
+                pagador:
+                  type: object
+                  properties:
+                    tipoPessoa:
+                      type: integer
+                      example: 0
+                    documento:
+                      type: string
+                      example: 521******805
+                    nome:
+                      type: string
+                      example: Fernando
+                    conta:
+                      type: object
+                      properties:
+                        agencia:
+                          type: string
+                          example: '1'
+                        numero:
+                          type: string
+                          example: '356064465'
+                        ispb:
+                          type: integer
+                          example: 18236120
+                        tipo:
+                          type: integer
+                          example: 0
+                recebedor:
+                  type: object
+                  properties:
+                    tipoPessoa:
+                      type: integer
+                      example: 0
+                    documento:
+                      type: string
+                      example: '50742495000100'
+                    conta:
+                      type: object
+                      properties:
+                        agencia:
+                          type: string
+                          example: '1'
+                        numero:
+                          type: string
+                          example: '90501'
+                        ispb:
+                          type: integer
+                          example: 45756448
+                        tipo:
+                          type: integer
+                          example: 0
+                creditadoEm:
+                  type: string
+                  format: date-time
+                  example: '2024-04-03T17:08:11.2835463+00:00'
+                valor:
+                  type: string
+                  example: '1.0'
+                valoresDetalhados:
+                  type: array
+                  items:
+                    type: object
+                informacaoEntreClientes:
+                  type: string
+                  example: informação
+                txId:
+                  type: string
+                  example: ebf20eeb5f124c88b44a6b2279
+                endToEndId:
+                  type: string
+                  example: E18236120202404032007s15e809456f
+                chavePix:
+                  type: string
+                  example: 8992de72-610e-8c76-6dc6bf18bfd5
+                correlationId:
+                  type: string
+                  example: 73164360-253f-4062-a56a-383cc4575ca2
+                status:
+                  type: integer
+                  example: 2
+      responses:
+        '200':
+          description: Webhook received successfully
+        '400':
+          description: Bad request if parameters are incorrect or missing
+        '401':
+          description: Unauthorized if x-api-key is invalid
+      security:
+        - apiKeyAuth: []
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true
