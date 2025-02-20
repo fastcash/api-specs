@@ -1,0 +1,141 @@
+openapi: 3.0.0
+servers:
+  - url: https://apis-pix-hml.a55scd.com
+info:
+  title: Consult PIX In Transactions Microcash API
+  version: 1.0.0
+  description: Endpoint to consult PIX in transactions by transaction ID.
+paths:
+  /integracao/pix/qrcodes/dinamicos-imediatos/{txId}:
+    get:
+      summary: Consult PIX In Transaction
+      parameters:
+        - name: txId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: 1b56a20f84a1407c88eff6f934
+          description: Transaction ID to be consulted
+      responses:
+        '200':
+          description: Successful response with transaction details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  chavePix:
+                    type: string
+                    example: 8992de72-610e-8c76-6dc6bf18bfd5
+                  recebedorNome:
+                    type: string
+                    example: Fastcash Pagamentos
+                  solicitacaoPagador:
+                    type: string
+                    example: informação
+                  devedorDocumento:
+                    type: string
+                    example: '50742495000100'
+                  devedorNome:
+                    type: string
+                    example: Fastcash
+                  cidade:
+                    type: string
+                    example: Sao Paulo
+                  cep:
+                    type: string
+                    nullable: true
+                    example: null
+                  valorOriginal:
+                    type: number
+                    example: 1
+                  modalidadeAlteracao:
+                    type: string
+                    example: NaoPermiteAlteracao
+                  valorSaque:
+                    type: string
+                    nullable: true
+                    example: null
+                  modalidadeAltSaque:
+                    type: string
+                    nullable: true
+                    example: ''
+                  ispbPssSaque:
+                    type: string
+                    nullable: true
+                    example: null
+                  modalidadeAgSaque:
+                    type: string
+                    nullable: true
+                    example: ''
+                  valorTroco:
+                    type: string
+                    nullable: true
+                    example: null
+                  modalidadeAltTroco:
+                    type: string
+                    nullable: true
+                    example: ''
+                  ispbPssTroco:
+                    type: string
+                    nullable: true
+                    example: null
+                  modalidadeAgtroco:
+                    type: string
+                    nullable: true
+                    example: ''
+                  expiracaoQR:
+                    type: integer
+                    example: 80000
+                  txId:
+                    type: string
+                    example: ebf20eeb5f124c88b44a6b2279
+                  dadosAdicionais:
+                    type: array
+                    items:
+                      type: object
+                  reutilizavel:
+                    type: boolean
+                    example: false
+                  urlPayloadJson:
+                    type: string
+                    example: qrcode.microcashif.com.br/pix/6b89989a-62af-4db6-81e6-f0a8c34ef18a
+                  payloadBase64:
+                    type: string
+                    example: MDAwMjAxMDEwMjEyMjY4ODAwMTRici5nb3YuYmNiLnBpeDI1NjZxcmNvZGUubWljcm9jYXNoaWYuY29tLmJyL3BpeC82Yjg5OTg5YS02MmFmLTRkYjYtODFlNi1mMGE4YzM0ZWYxOGE1MjA0MDAwMDUzMDM5ODY1ODAyQlI1OTE4SGtwIFBheSBQYWdhbWVudG9zNjAwOVNhbyBQYXVsbzYyMDcwNTAzKioqNjMwNDFEN0E
+                  revisao:
+                    type: integer
+                    example: 0
+                  situacao:
+                    type: string
+                    example: Liquidado
+                  liquidadoEm:
+                    type: string
+                    format: date-time
+                    example: '2024-04-03T14:08:10.936225-03:00'
+                  endToEndIdRecebimento:
+                    type: string
+                    example: E18236120202404032007s15e8056f
+                  valorPago:
+                    type: number
+                    example: 1
+        '400':
+          description: Bad request if parameters are incorrect or missing
+        '401':
+          description: Unauthorized if authorization token is invalid
+      security:
+        - bearerAuth: []
+        - apiKeyAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-client-id
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

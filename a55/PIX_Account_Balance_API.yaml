@@ -1,0 +1,49 @@
+openapi: 3.0.0
+info:
+  title: PIX Account Balance API
+  description: API to get the balance of a PIX account.
+  version: 1.0.0
+servers:
+  - url: https://apis-pix-hml.a55scd.com
+paths:
+  /integracao/pix/accounts/{accountId}/balance:
+    get:
+      summary: Get PIX Account Balance
+      description: Retrieve the balance of a specific PIX account.
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          description: The ID of the PIX account
+          schema:
+            type: string
+            example: '000090512'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  balance:
+                    type: number
+                    format: float
+                    example: 2246.03
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: '2024-06-11T09:10:47.0094361-03:00'
+      security:
+        - bearerAuth: []
+      tags:
+        - PIX
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

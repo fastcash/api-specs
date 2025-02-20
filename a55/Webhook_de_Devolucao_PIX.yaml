@@ -1,0 +1,303 @@
+openapi: 3.0.0
+info:
+  title: Webhook de Devolução PIX
+  version: 1.0.0
+paths:
+  /webhook/pix/refund:
+    post:
+      summary: Recebe notificações de devoluções PIX
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                endToEndId:
+                  type: string
+                  example: D45756448202406281132vv7TuC7aEWn
+                solicitadoEm:
+                  type: string
+                  format: date-time
+                  example: '2024-06-28T14:32:37.177+00:00'
+                iniciadaEm:
+                  type: string
+                  format: date-time
+                  example: '2024-06-28T11:32:37.835905+00:00'
+                efetivadaEm:
+                  type: string
+                  format: date-time
+                  example: '2024-06-28T17:08:44.6238381+00:00'
+                debitadoEm:
+                  type: string
+                  format: date-time
+                  nullable: true
+                tipo:
+                  type: integer
+                  example: 1
+                status:
+                  type: integer
+                  example: 1
+                codigoDevolucao:
+                  type: integer
+                  example: 2
+                valor:
+                  type: string
+                  example: '0.01'
+                motivoDevolucao:
+                  type: string
+                  example: Devolucao
+                informacoesEntreClientes:
+                  type: string
+                  example: Devolucao
+                recebimento:
+                  type: object
+                  properties:
+                    tipoIniciacao:
+                      type: integer
+                      example: 3
+                    prioridade:
+                      type: integer
+                      example: 0
+                    tipoPrioridade:
+                      type: integer
+                      example: 0
+                    finalidade:
+                      type: integer
+                      example: 0
+                    agente:
+                      type: integer
+                      example: 0
+                    ispbPss:
+                      type: string
+                      nullable: true
+                    cnpjIniciadorPagamento:
+                      type: string
+                      nullable: true
+                    pagador:
+                      type: object
+                      properties:
+                        tipoPessoa:
+                          type: integer
+                          example: 0
+                        documento:
+                          type: string
+                          example: '52109978805'
+                        nome:
+                          type: string
+                          example: Fernando Lucas Moura de Souza
+                        conta:
+                          type: object
+                          properties:
+                            agencia:
+                              type: string
+                              example: '1'
+                            numero:
+                              type: string
+                              example: '17331834877'
+                            ispb:
+                              type: integer
+                              example: 10573521
+                            tipo:
+                              type: integer
+                              example: 0
+                            situacao:
+                              type: integer
+                              example: 0
+                            motivoRejeicaoRecebimento:
+                              type: string
+                              nullable: true
+                            motivoRejeicaoComplemento:
+                              type: string
+                              nullable: true
+                            isAtiva:
+                              type: boolean
+                              example: false
+                    recebedor:
+                      type: object
+                      properties:
+                        tipoPessoa:
+                          type: integer
+                          example: 0
+                        documento:
+                          type: string
+                          example: '37233496000153'
+                        conta:
+                          type: object
+                          properties:
+                            agencia:
+                              type: string
+                              example: '1'
+                            numero:
+                              type: string
+                              example: '11'
+                            ispb:
+                              type: integer
+                              example: 45756448
+                            tipo:
+                              type: integer
+                              example: 0
+                            situacao:
+                              type: integer
+                              example: 0
+                            motivoRejeicaoRecebimento:
+                              type: string
+                              nullable: true
+                            motivoRejeicaoComplemento:
+                              type: string
+                              nullable: true
+                            isAtiva:
+                              type: boolean
+                              example: false
+                    validacaoSolicitadaEm:
+                      type: string
+                      format: date-time
+                      example: '2024-06-27T23:50:06.367+00:00'
+                    registroSolicitadoEm:
+                      type: string
+                      format: date-time
+                      example: '2024-06-27T23:50:05.183+00:00'
+                    registroEfetivadoEm:
+                      type: string
+                      format: date-time
+                      example: '2024-06-27T23:50:07.070636+00:00'
+                    validacaoConfirmadoEm:
+                      type: string
+                      format: date-time
+                      example: '2024-06-27T23:50:06.516505+00:00'
+                    validacaoRejeitadoEm:
+                      type: string
+                      format: date-time
+                      nullable: true
+                    creditadoEm:
+                      type: string
+                      format: date-time
+                      example: '2024-06-27T23:50:08.000308+00:00'
+                    valor:
+                      type: string
+                      example: '0.01'
+                    valoresDetalhados:
+                      type: array
+                      items:
+                        type: object
+                    informacaoesEntreClientes:
+                      type: string
+                      example: FASTCASHDINHE
+                    creditoOrdemPagamento:
+                      type: object
+                      properties:
+                        endToEndId:
+                          type: string
+                          example: E10573521202406272349xvJDEhRiKV9
+                        idConciliacaoRecebedor:
+                          type: string
+                          example: 8fe3b8930a7143b0b88397147a
+                        chavePix:
+                          type: string
+                          example: d9fed144-31f7-4f7e-aca7-1cf77fa9e65d
+                    creditoDevolucao:
+                      type: object
+                      properties:
+                        endToEndIdOriginal:
+                          type: string
+                          nullable: true
+                        endToEndDevolucao:
+                          type: string
+                          nullable: true
+                        codigoDevolucao:
+                          type: integer
+                          nullable: true
+                    status:
+                      type: integer
+                      example: 2
+                    motivoRejeicaoRecebimento:
+                      type: string
+                      nullable: true
+                    motivoRejeicaoComplemento:
+                      type: string
+                      nullable: true
+                    chaveIdempotencia:
+                      type: string
+                      example: E10573521202406272349xvJDEhRiKV9
+                    externalId:
+                      type: string
+                      example: 732fe42d-edd1-4fc5-96aa-65c47c7ecc98
+                    endToEndId:
+                      type: string
+                      example: E10573521202406272349xvJDEhRiKV9
+                    recebimentoConfirmado:
+                      type: boolean
+                      example: false
+                    recebimentoEfetivado:
+                      type: boolean
+                      example: true
+                    recebimentoCreditado:
+                      type: boolean
+                      example: true
+                    id:
+                      type: string
+                      example: 16566dfa-2210-487b-b590-7878b71158cf
+                    criadoEmUtc:
+                      type: string
+                      format: date-time
+                      example: '2024-06-27T23:50:06.587157+00:00'
+                    alteradoEmUtc:
+                      type: string
+                      format: date-time
+                      example: '2024-06-27T23:50:08.000309+00:00'
+                    chaveSequencial:
+                      type: integer
+                      example: 174828589
+                    untypedId:
+                      type: string
+                      example: 5d2a036a-75a6-4add-a9f1-577b5b963deb
+                idRequisicaoJD:
+                  type: string
+                  example: e78d2c84-61ac-421b-98f0-249b052c5023
+                idBloqueioFinanceiroContaCorrente:
+                  type: integer
+                  example: 21
+                erroDevolucao:
+                  type: object
+                  properties:
+                    codigo:
+                      type: integer
+                      nullable: true
+                    descricao:
+                      type: string
+                      nullable: true
+                endToEndIdOriginal:
+                  type: string
+                  example: E10573521202406272349xvJDEhRiKV9
+                devolucaoDebitada:
+                  type: boolean
+                  example: false
+                devolucaoIniciada:
+                  type: boolean
+                  example: false
+                devolucaoEstaVigente:
+                  type: boolean
+                  example: true
+                id:
+                  type: string
+                  example: 60f5b024-27e9-4518-ab2f-238063f6df6b
+                criadoEmUtc:
+                  type: string
+                  format: date-time
+                  example: '2024-06-28T14:32:37.835853+00:00'
+                alteradoEmUtc:
+                  type: string
+                  format: date-time
+                  example: '2024-06-28T14:32:37.835855+00:00'
+                chaveSequencial:
+                  type: integer
+                  example: 1189
+                untypedId:
+                  type: string
+                  example: 1a8bf889-1f16-4dc8-8792-6d23108edc2f
+      responses:
+        '200':
+          description: Webhook recebido com sucesso
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

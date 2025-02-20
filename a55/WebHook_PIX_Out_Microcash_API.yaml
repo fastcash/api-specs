@@ -1,0 +1,255 @@
+openapi: 3.0.0
+servers:
+  - url: https://apis-pix-hml.a55scd.com
+info:
+  title: WebHook PIX Out Microcash API
+  version: 1.0.0
+  description: Endpoint to handle PIX Out WebHook notifications.
+paths:
+  /v1/pix/out:
+    post:
+      summary: WebHook PIX Out
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Status:
+                  type: integer
+                  example: 2
+                  description: Status of the PIX transaction.
+                EndToEndId:
+                  type: string
+                  example: E45756448202405271811EioUu
+                  description: End-to-end ID for the transaction.
+                PagamentoIndiretoId:
+                  type: string
+                  example: ab52cedc-4d3d-4b3c-298dfc8ca3d2
+                  description: Indirect payment ID.
+                ChavePix:
+                  type: string
+                  example: pix@key.com.br
+                  description: The PIX key involved in the transaction.
+                QrCode:
+                  type: string
+                  nullable: true
+                  description: QR code associated with the transaction, if applicable.
+                TipoIniciacao:
+                  type: integer
+                  example: 1
+                  description: Type of initiation.
+                Finalidade:
+                  type: integer
+                  example: 0
+                  description: Purpose of the transaction.
+                InfoEntreClientes:
+                  type: string
+                  nullable: true
+                  description: Information shared between clients.
+                Valor:
+                  type: number
+                  example: 0.01
+                  description: Transaction value.
+                correntista:
+                  type: object
+                  properties:
+                    nome:
+                      type: string
+                      example: Company LTDA.
+                      description: Name of the account holder.
+                    documento:
+                      type: string
+                      example: '11111111000111'
+                      description: Document number of the account holder.
+                    conta:
+                      type: object
+                      properties:
+                        ispb:
+                          type: string
+                          example: '45756448'
+                          description: ISPB code of the bank.
+                        codBanco:
+                          type: string
+                          nullable: true
+                          description: Bank code.
+                        bancoNome:
+                          type: string
+                          nullable: true
+                          description: Name of the bank.
+                        agencia:
+                          type: string
+                          example: '1'
+                          description: Agency number.
+                        numero:
+                          type: string
+                          example: '222222222'
+                          description: Account number.
+                        tipo:
+                          type: integer
+                          example: 0
+                          description: Type of account.
+                Contraparte:
+                  type: object
+                  properties:
+                    Nome:
+                      type: string
+                      example: Joao
+                      description: Name of the counterparty.
+                    Documento:
+                      type: string
+                      example: '11111111111'
+                      description: Document number of the counterparty.
+                    Conta:
+                      type: object
+                      properties:
+                        Ispb:
+                          type: string
+                          example: '0'
+                          description: ISPB code of the bank.
+                        CodBanco:
+                          type: string
+                          nullable: true
+                          description: Bank code.
+                        BancoNome:
+                          type: string
+                          nullable: true
+                          description: Name of the bank.
+                        Agencia:
+                          type: string
+                          example: '1111'
+                          description: Agency number.
+                        Numero:
+                          type: string
+                          example: '11111111'
+                          description: Account number.
+                        Tipo:
+                          type: integer
+                          example: 0
+                          description: Type of account.
+                QrCodeEstatico:
+                  type: string
+                  nullable: true
+                  description: Static QR code.
+                QrCodeDinamicoImediato:
+                  type: string
+                  nullable: true
+                  description: Immediate dynamic QR code.
+                QrCodeDinamicoVencimento:
+                  type: string
+                  nullable: true
+                  description: Dynamic QR code with expiration.
+                VenceEmUtc:
+                  type: string
+                  format: date-time
+                  nullable: true
+                  description: Expiration time in UTC.
+                ConfirmadoEmUtc:
+                  type: string
+                  format: date-time
+                  example: '2024-05-24T18:20:49.6666048+00:00'
+                  description: Confirmation time in UTC.
+                RealizarEmUtc:
+                  type: string
+                  format: date-time
+                  nullable: true
+                  description: Scheduled execution time in UTC.
+                EfetivacaoEnviadaEmUtc:
+                  type: string
+                  format: date-time
+                  example: '2024-05-24T18:20:49.6666048+00:00'
+                  description: Time when the effectuation was sent in UTC.
+                EfetivacaoRealizadaEmUtc:
+                  type: string
+                  format: date-time
+                  example: '2024-05-24T18:20:50.6666048+00:00'
+                  description: Time when the effectuation was done in UTC.
+                BloqueadoEmUtc:
+                  type: string
+                  format: date-time
+                  example: '2024-05-24T18:20:50.6666048+00:00'
+                  description: Time when the transaction was blocked in UTC.
+                BloqueioProtocolo:
+                  type: string
+                  example: '0'
+                  description: Block protocol.
+                DebitoEmUtc:
+                  type: string
+                  format: date-time
+                  example: '2024-05-24T18:20:50.6666048+00:00'
+                  description: Debit time in UTC.
+                DebitoProtocolo:
+                  type: string
+                  example: E45756448202405271811EioUu
+                  description: Debit protocol.
+                EstornoProtocolo:
+                  type: string
+                  nullable: true
+                  description: Refund protocol.
+                EstornoValor:
+                  type: number
+                  example: 0
+                  description: Refund value.
+                ErroEmUtc:
+                  type: string
+                  format: date-time
+                  nullable: true
+                  description: Error time in UTC.
+                ErroCodigo:
+                  type: string
+                  nullable: true
+                  description: Error code.
+                ErroDescricao:
+                  type: string
+                  nullable: true
+                  description: Error description.
+                Devolvidos:
+                  type: array
+                  items:
+                    type: object
+                  description: Details of refunded amounts.
+                ProcessandoEmUtc:
+                  type: string
+                  format: date-time
+                  nullable: true
+                  description: Processing time in UTC.
+                ChaveIdempotencia:
+                  type: string
+                  nullable: true
+                  description: Idempotency key.
+                Id:
+                  type: string
+                  example: 01563184-f0d4-4365-a72ede8bf470
+                  description: Transaction ID.
+                Tid:
+                  type: string
+                  example: '123456'
+                  description: Transaction identifier.
+                ChaveSequencial:
+                  type: integer
+                  example: 25477399
+                  description: Sequential key.
+                CriadoEmUtc:
+                  type: string
+                  format: date-time
+                  example: '2024-05-27T18:11:28.531328+00:00'
+                  description: Creation time in UTC.
+      responses:
+        '200':
+          description: Webhook received successfully
+        '400':
+          description: Bad request if parameters are incorrect or missing
+        '401':
+          description: Unauthorized if API key is invalid
+      security:
+        - apiKeyAuth: []
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true
