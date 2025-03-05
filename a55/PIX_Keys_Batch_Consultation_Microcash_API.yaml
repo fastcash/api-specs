@@ -2,7 +2,7 @@ openapi: 3.0.0
 servers:
   - url: https://apis-pix-hml.a55scd.com
 info:
-  title: PIX Keys Batch Consultation Microcash API
+  title: PIX Keys Batch Consultation A55 API
   version: 1.0.0
   description: API for consulting multiple PIX Keys in batch.
 paths:
