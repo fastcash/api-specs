@@ -2,7 +2,7 @@ openapi: 3.0.0
 servers:
   - url: https://apis-pix-hml.a55scd.com
 info:
-  title: Microcash Auth
+  title: A55 Auth
   version: 1.0.0
   description: Endpoint to obtain OAuth2 token for Pix API client credentials.
 paths:

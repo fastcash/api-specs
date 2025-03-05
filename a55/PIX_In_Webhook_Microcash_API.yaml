@@ -2,7 +2,7 @@ openapi: 3.0.0
 servers:
   - url: https://apis-pix-hml.a55scd.com
 info:
-  title: PIX In Webhook Microcash API
+  title: PIX In Webhook A55 API
   version: 1.0.0
   description: Endpoint to receive webhook notifications for PIX In transactions.
 paths:

@@ -2,7 +2,7 @@ openapi: 3.0.0
 servers:
   - url: https://apis-pix-hml.a55scd.com
 info:
-  title: Consult PIX In Transactions Microcash API
+  title: Consult PIX In Transactions A55 API
   version: 1.0.0
   description: Endpoint to consult PIX in transactions by transaction ID.
 paths:
@@ -30,7 +30,7 @@ paths:
                     example: 8992de72-610e-8c76-6dc6bf18bfd5
                   recebedorNome:
                     type: string
-                    example: Fastcash Pagamentos
+                    example: A55 Pagamentos
                   solicitacaoPagador:
                     type: string
                     example: informação
@@ -39,7 +39,7 @@ paths:
                     example: '50742495000100'
                   devedorNome:
                     type: string
-                    example: Fastcash
+                    example: A55
                   cidade:
                     type: string
                     example: Sao Paulo
@@ -100,7 +100,7 @@ paths:
                     example: false
                   urlPayloadJson:
                     type: string
-                    example: qrcode.microcashif.com.br/pix/6b89989a-62af-4db6-81e6-f0a8c34ef18a
+                    example: qrcode-h.pagsm.com.br/pix/6b89989a-62af-4db6-81e6-f0a8c34ef18a
                   payloadBase64:
                     type: string
                     example: MDAwMjAxMDEwMjEyMjY4ODAwMTRici5nb3YuYmNiLnBpeDI1NjZxcmNvZGUubWljcm9jYXNoaWYuY29tLmJyL3BpeC82Yjg5OTg5YS02MmFmLTRkYjYtODFlNi1mMGE4YzM0ZWYxOGE1MjA0MDAwMDUzMDM5ODY1ODAyQlI1OTE4SGtwIFBheSBQYWdhbWVudG9zNjAwOVNhbyBQYXVsbzYyMDcwNTAzKioqNjMwNDFEN0E

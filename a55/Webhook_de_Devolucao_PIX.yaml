@@ -182,7 +182,7 @@ paths:
                         type: object
                     informacaoesEntreClientes:
                       type: string
-                      example: FASTCASHDINHE
+                      example: A55DINHE
                     creditoOrdemPagamento:
                       type: object
                       properties:
