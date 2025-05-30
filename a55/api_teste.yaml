@@ -1,0 +1,602 @@
+swagger: '2.0'
+info:
+  title: apis-pix-interno-hml
+  version: v1
+paths:
+  /integracao/pix/recebimentos/devolucoes:
+    get:
+      tags:
+        - ConsultarDevolucao
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - in: query
+          name: EndToEndId
+          type: string
+        - in: query
+          name: ContaNumero
+          type: string
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/MCPixRecebimentoAppForIntegrationDevolucaoConsultarDevolucaoConsultarDevolucaoResponse'
+        '400':
+          description: Bad Request
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/MCPixUtilitiesModelingApiBadRequestDetail'
+      x-amazon-apigateway-integration:
+        connectionType: VPC_LINK
+        type: http_proxy
+        uri: http://nlb-api-recebimento-hml-e9af0d2adc259aa6.elb.sa-east-1.amazonaws.com/integracao/pix/recebimentos/devolucoes
+        connectionId: ybx59k
+        httpMethod: GET
+        passthroughBehavior: WHEN_NO_MATCH
+      security:
+        - authorizer-pix-direto-hml:
+            - https://b7w030mnk8.execute-api.sa-east-1.amazonaws.com/v1/pix_fastcash
+    post:
+      tags:
+        - IntegracaoIniciarDevolucao
+      consumes:
+        - application/json
+        - text/json
+        - application/*+json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/MCPixRecebimentoAppForIntegrationDevolucaoIniciarIniciarDevolucaoRequest'
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/MCPixRecebimentoAppForIntegrationDevolucaoIniciarIniciarDevolucaoResponse'
+        '400':
+          description: Bad Request
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/MCPixUtilitiesModelingApiBadRequestDetail'
+      x-amazon-apigateway-integration:
+        connectionType: VPC_LINK
+        type: http_proxy
+        uri: http://nlb-api-recebimento-hml-e9af0d2adc259aa6.elb.sa-east-1.amazonaws.com/integracao/pix/recebimentos/devolucoes
+        connectionId: ybx59k
+        httpMethod: POST
+        passthroughBehavior: WHEN_NO_MATCH
+      security:
+        - authorizer-pix-direto-hml:
+            - https://b7w030mnk8.execute-api.sa-east-1.amazonaws.com/v1/pix_fastcash
+  /pix/recebimentos:
+    get:
+      tags:
+        - ConsultarRecebimento
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - in: query
+          name: TxId
+          type: string
+        - in: query
+          name: EndToEndId
+          type: string
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/MCPixRecebimentoAppForIntegrationRecebimentoConsultarRecebimentoConsultarRecebimentoRequest'
+        '400':
+          description: Bad Request
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/MCPixUtilitiesModelingApiBadRequestDetail'
+      x-amazon-apigateway-integration:
+        connectionType: VPC_LINK
+        type: http_proxy
+        uri: http://nlb-api-recebimento-hml-e9af0d2adc259aa6.elb.sa-east-1.amazonaws.com/pix/recebimentos
+        connectionId: ybx59k
+        httpMethod: GET
+        passthroughBehavior: WHEN_NO_MATCH
+      security:
+        - api_key: []
+  /pix/recebimentos/devolucoes:
+    post:
+      tags:
+        - IniciarDevolucao
+      consumes:
+        - application/json
+        - text/json
+        - application/*+json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/MCPixRecebimentoAppForIntegrationDevolucaoIniciarIniciarDevolucaoRequest'
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/MCPixRecebimentoAppForIntegrationDevolucaoIniciarIniciarDevolucaoResponse'
+        '400':
+          description: Bad Request
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/MCPixUtilitiesModelingApiBadRequestDetail'
+      x-amazon-apigateway-integration:
+        connectionType: VPC_LINK
+        type: http_proxy
+        uri: http://nlb-api-recebimento-hml-e9af0d2adc259aa6.elb.sa-east-1.amazonaws.com/pix/recebimentos/devolucoes
+        connectionId: ybx59k
+        httpMethod: POST
+        passthroughBehavior: WHEN_NO_MATCH
+      security:
+        - api_key: []
+  /pix/recebimentos/confirmacoes:
+    post:
+      tags:
+        - RegistrarRecebimento
+      consumes:
+        - application/json
+        - text/json
+        - application/*+json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/MCPixRecebimentoAppForIntegrationRecebimentoRegistrarRecebimentoRegistrarRecebimentoRequest'
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/MCPixRecebimentoAppForIntegrationRecebimentoRegistrarRecebimentoRegistrarRecebimentoResponse'
+        '400':
+          description: Bad Request
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/MCPixUtilitiesModelingApiBadRequestDetail'
+      x-amazon-apigateway-integration:
+        connectionType: VPC_LINK
+        type: http_proxy
+        uri: http://nlb-api-recebimento-hml-e9af0d2adc259aa6.elb.sa-east-1.amazonaws.com/pix/recebimentos/confirmacoes
+        connectionId: ybx59k
+        httpMethod: POST
+        passthroughBehavior: WHEN_NO_MATCH
+      security:
+        - api_key: []
+  /pix/recebimentos/validacoes:
+    post:
+      tags:
+        - ValidarRecebimento
+      consumes:
+        - application/json
+        - text/json
+        - application/*+json
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/MCPixRecebimentoAppForIntegrationRecebimentoValidarRecebimentoValidarRecebimentoRequest'
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/MCPixRecebimentoAppForIntegrationRecebimentoValidarRecebimentoValidarRecebimentoResponse'
+        '400':
+          description: Bad Request
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/MCPixUtilitiesModelingApiBadRequestDetail'
+      x-amazon-apigateway-integration:
+        connectionType: VPC_LINK
+        type: http_proxy
+        uri: http://nlb-api-recebimento-hml-e9af0d2adc259aa6.elb.sa-east-1.amazonaws.com/pix/recebimentos/validacoes
+        connectionId: ybx59k
+        httpMethod: POST
+        passthroughBehavior: WHEN_NO_MATCH
+      security:
+        - api_key: []
+definitions:
+  MCPixRecebimentoAppForIntegrationDevolucaoConsultarDevolucaoConsultarDevolucaoResponse:
+    type: object
+    properties:
+      status:
+        $ref: '#/definitions/MCPixUtilitiesModelingApiResponseStatus'
+      badRequestReason:
+        type: array
+        items:
+          $ref: '#/definitions/MCPixUtilitiesModelingApiBadRequestDetail'
+      response:
+        $ref: '#/definitions/MCPixRecebimentoAppForIntegrationDevolucaoConsultarDevolucaoDevolucaoConsultado'
+  MCPixRecebimentoAppForIntegrationDevolucaoConsultarDevolucaoDevolucaoConsultado:
+    type: object
+    properties:
+      endToEndIdOriginal:
+        type: string
+      endToEndId:
+        type: string
+      solicitadoEm:
+        format: date-time
+        type: string
+      status:
+        $ref: '#/definitions/MCPixRecebimentoDomainEnumsDevolucaoStatusDevolucao'
+      valor:
+        format: double
+        type: number
+      motivoDevolucao:
+        type: string
+  MCPixRecebimentoAppForIntegrationDevolucaoIniciarDevolucaoIniciada:
+    type: object
+    properties:
+      devolucaoId:
+        format: uuid
+        type: string
+      endToEndId:
+        type: string
+  MCPixRecebimentoAppForIntegrationDevolucaoIniciarIniciarDevolucaoRequest:
+    type: object
+    properties:
+      headers:
+        type: object
+        additionalProperties:
+          type: string
+        readOnly: true
+      correlationId:
+        format: uuid
+        type: string
+      correntistaNome:
+        type: string
+      correntistaDocumento:
+        type: string
+      correntistaContaCodBanco:
+        type: string
+      correntistaContaBancoNome:
+        type: string
+      correntistaContaAgencia:
+        type: string
+      correntistaContaNumero:
+        type: string
+      endToEndIdRecebimento:
+        type: string
+      solicitadoEm:
+        format: date-time
+        type: string
+      valor:
+        format: double
+        type: number
+      codigoDevolucao:
+        $ref: '#/definitions/MCPixRecebimentoDomainEnumsDevolucaoCodigoDevolucao'
+      motivoDevolucaoComplemento:
+        type: string
+      informacoesEntreClientes:
+        type: string
+  MCPixRecebimentoAppForIntegrationDevolucaoIniciarIniciarDevolucaoResponse:
+    type: object
+    properties:
+      status:
+        $ref: '#/definitions/MCPixUtilitiesModelingApiResponseStatus'
+      badRequestReason:
+        type: array
+        items:
+          $ref: '#/definitions/MCPixUtilitiesModelingApiBadRequestDetail'
+      response:
+        $ref: '#/definitions/MCPixRecebimentoAppForIntegrationDevolucaoIniciarDevolucaoIniciada'
+  MCPixRecebimentoAppForIntegrationRecebimentoConsultarRecebimentoConsultarRecebimentoRequest:
+    type: object
+    properties:
+      txId:
+        type: string
+      endToEndId:
+        type: string
+  MCPixRecebimentoAppForIntegrationRecebimentoRegistrarRecebimentoRecebimentoRegistrado:
+    type: object
+    properties:
+      idRequisicao:
+        format: uuid
+        type: string
+      efetivadoEm:
+        format: date-time
+        type: string
+  MCPixRecebimentoAppForIntegrationRecebimentoRegistrarRecebimentoRegistrarRecebimentoRequest:
+    type: object
+    properties:
+      headers:
+        type: object
+        additionalProperties:
+          type: string
+        readOnly: true
+      correlationId:
+        format: uuid
+        type: string
+      chaveIdempotencia:
+        type: string
+      endToEndId:
+        type: string
+      externalId:
+        format: uuid
+        type: string
+      solicitadoEm:
+        format: date-time
+        type: string
+  MCPixRecebimentoAppForIntegrationRecebimentoRegistrarRecebimentoRegistrarRecebimentoResponse:
+    type: object
+    properties:
+      status:
+        $ref: '#/definitions/MCPixUtilitiesModelingApiResponseStatus'
+      badRequestReason:
+        type: array
+        items:
+          $ref: '#/definitions/MCPixUtilitiesModelingApiBadRequestDetail'
+      response:
+        $ref: '#/definitions/MCPixRecebimentoAppForIntegrationRecebimentoRegistrarRecebimentoRecebimentoRegistrado'
+  MCPixRecebimentoAppForIntegrationRecebimentoValidarRecebimentoRecebimentoValidadoResponse:
+    type: object
+    properties:
+      valido:
+        type: boolean
+      motivoRejeicao:
+        type: string
+      motivoRejeicaoComplemento:
+        type: string
+  MCPixRecebimentoAppForIntegrationRecebimentoValidarRecebimentoValidarRecebimentoRequest:
+    type: object
+    properties:
+      headers:
+        type: object
+        additionalProperties:
+          type: string
+        readOnly: true
+      correlationId:
+        format: uuid
+        type: string
+      tipoIniciacao:
+        $ref: '#/definitions/MCPixRecebimentoDomainEnumsRecebimentoTipoIniciacao'
+      prioridade:
+        $ref: '#/definitions/MCPixRecebimentoDomainEnumsRecebimentoPrioridadePagamento'
+      tipoPrioridade:
+        $ref: '#/definitions/MCPixRecebimentoDomainEnumsRecebimentoTipoPrioridadePagamento'
+      finalidade:
+        $ref: '#/definitions/MCPixRecebimentoDomainEnumsRecebimentoFinalidade'
+      agente:
+        $ref: '#/definitions/MCPixRecebimentoDomainEnumsRecebimentoModalidadeAgente'
+      ispbPss:
+        format: int32
+        type: integer
+      cnpjIniciadorPagamento:
+        format: int64
+        type: integer
+      pagador:
+        $ref: '#/definitions/MCPixRecebimentoAppSharedPagador'
+      recebedor:
+        $ref: '#/definitions/MCPixRecebimentoAppSharedRecebedor'
+      validacaoSolicitadaEm:
+        format: date-time
+        type: string
+      valor:
+        format: double
+        type: number
+      valoresDetalhados:
+        type: array
+        items:
+          $ref: '#/definitions/MCPixRecebimentoAppSharedValorDetalhado'
+      informacaoesEntreClientes:
+        type: string
+      creditoOrdemPagamento:
+        $ref: '#/definitions/MCPixRecebimentoAppSharedCreditoOrdemPagamento'
+      creditoDevolucao:
+        $ref: '#/definitions/MCPixRecebimentoAppSharedCreditoDevolucao'
+      endToEndId:
+        type: string
+  MCPixRecebimentoAppForIntegrationRecebimentoValidarRecebimentoValidarRecebimentoResponse:
+    type: object
+    properties:
+      status:
+        $ref: '#/definitions/MCPixUtilitiesModelingApiResponseStatus'
+      badRequestReason:
+        type: array
+        items:
+          $ref: '#/definitions/MCPixUtilitiesModelingApiBadRequestDetail'
+      response:
+        $ref: '#/definitions/MCPixRecebimentoAppForIntegrationRecebimentoValidarRecebimentoRecebimentoValidadoResponse'
+  MCPixRecebimentoAppSharedConta:
+    type: object
+    properties:
+      agencia:
+        type: string
+      numero:
+        type: string
+      ispb:
+        format: int32
+        type: integer
+      tipo:
+        $ref: '#/definitions/MCPixRecebimentoDomainEnumsRecebimentoTipoConta'
+  MCPixRecebimentoAppSharedCreditoDevolucao:
+    type: object
+    properties:
+      endToEndIdOriginal:
+        type: string
+      endToEndIdDevolucao:
+        type: string
+      codigoDevolucao:
+        $ref: '#/definitions/MCPixRecebimentoDomainEnumsDevolucaoCodigoDevolucao'
+      motivoDevolucao:
+        type: string
+  MCPixRecebimentoAppSharedCreditoOrdemPagamento:
+    type: object
+    properties:
+      endToEndId:
+        type: string
+      idConciliacaoRecebedor:
+        type: string
+      chavePix:
+        type: string
+  MCPixRecebimentoAppSharedPagador:
+    type: object
+    properties:
+      tipoPessoa:
+        $ref: '#/definitions/MCPixRecebimentoDomainEnumsRecebimentoTipoPessoa'
+      documento:
+        format: int64
+        type: integer
+      nome:
+        type: string
+      conta:
+        $ref: '#/definitions/MCPixRecebimentoAppSharedConta'
+  MCPixRecebimentoAppSharedRecebedor:
+    type: object
+    properties:
+      tipoPessoa:
+        $ref: '#/definitions/MCPixRecebimentoDomainEnumsRecebimentoTipoPessoa'
+      documento:
+        format: int64
+        type: integer
+      conta:
+        $ref: '#/definitions/MCPixRecebimentoAppSharedConta'
+  MCPixRecebimentoAppSharedValorDetalhado:
+    type: object
+    properties:
+      valorTarifaDinheiroCompra:
+        format: double
+        type: number
+      tipo:
+        format: int32
+        type: integer
+  MCPixRecebimentoDomainEnumsDevolucaoCodigoDevolucao:
+    enum:
+      - BE08
+      - FR01
+      - MD06
+      - SL02
+    type: string
+  MCPixRecebimentoDomainEnumsDevolucaoStatusDevolucao:
+    enum:
+      - Iniciada
+      - Efetivada
+      - Debitada
+      - Finalizada
+      - Erro
+    type: string
+  MCPixRecebimentoDomainEnumsRecebimentoFinalidade:
+    enum:
+      - CompraTransferencia
+      - PixTroco
+      - PixSaque
+    type: string
+  MCPixRecebimentoDomainEnumsRecebimentoModalidadeAgente:
+    enum:
+      - FacilitadorServicoSaque
+      - EstabelecimentoComercial
+      - OutraEspeciePJCorrespondentePais
+    type: string
+  MCPixRecebimentoDomainEnumsRecebimentoPrioridadePagamento:
+    enum:
+      - LiquidacaoPrioritaria
+      - LiquidacaoNaoPrioritaria
+    type: string
+  MCPixRecebimentoDomainEnumsRecebimentoTipoConta:
+    enum:
+      - Corrente
+      - Salario
+      - Poupanca
+      - Pagamento
+    type: string
+  MCPixRecebimentoDomainEnumsRecebimentoTipoIniciacao:
+    enum:
+      - Manual
+      - Chave
+      - QrCodeEstatico
+      - QrCodeDinamico
+      - TransacaoPagamento
+      - QrCodePagador
+    type: string
+  MCPixRecebimentoDomainEnumsRecebimentoTipoPessoa:
+    enum:
+      - Fisica
+      - Juridica
+    type: string
+  MCPixRecebimentoDomainEnumsRecebimentoTipoPrioridadePagamento:
+    enum:
+      - PagamentoPrioritario
+      - PagamentoSobAnaliseAntiFraude
+      - PagamentoAgendado
+    type: string
+  MCPixUtilitiesModelingApiBadRequestDetail:
+    type: object
+    properties:
+      descricao:
+        type: string
+      tag:
+        type: string
+  MCPixUtilitiesModelingApiResponseStatus:
+    enum:
+      - OK
+      - Created
+      - Accepted
+      - NoContent
+      - BadRequest
+      - Unauthorized
+      - NotFound
+    type: string
+x-amazon-apigateway-cors:
+  allowOrigins:
+    - '*'
+  allowMethods:
+    - '*'
+  allowHeaders:
+    - '*'
+x-amazon-apigateway-binary-media-types:
+  - application/json; charset=utf-8
+x-amazon-apigateway-request-validators:
+  basic:
+    validateRequestBody: true
+    validateRequestParameters: true
+  params-only:
+    validateRequestBody: false
+    validateRequestParameters: true
+  body-only:
+    validateRequestBody: true
+    validateRequestParameters: false
+  nothing:
+    validateRequestBody: false
+    validateRequestParameters: false
+x-amazon-apigateway-request-validator: nothing
+securityDefinitions:
+  authorizer-pix-direto-hml:
+    type: apiKey
+    name: Authorization
+    in: header
+    x-amazon-apigateway-authtype: cognito_user_pools
+    x-amazon-apigateway-authorizer:
+      type: cognito_user_pools
+      providerARNs:
+        - arn:aws:cognito-idp:sa-east-1:209864062578:userpool/sa-east-1_DuGuzi2qw
+  api_key:
+    type: apiKey
+    name: x-api-key
+    in: header
